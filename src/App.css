@@ -1,33 +1,127 @@
-.App {
-  text-align: center;
+/* Navigation CSS */
+
+#navigation {
+    background-color:darkblue;
+    border-radius:4px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+#navigation a {
+    font-size:16px;
+    color:white;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#navigation a:hover {
+    color:cornsilk;
 }
 
-.App-link {
-  color: #61dafb;
+#navigation li:nth-last-child(1) {
+    background:red;
+    border-radius:4px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Login CSS */
+
+.login-form-left {
+    border-right:1px solid gray;
+    height:500px;
+    float:left;
+    text-align:center;
+}
+
+.login-form-left img {
+    vertical-align:middle;
+    padding-top:150px;
+}
+
+.login-form-right {
+    float:right;
+}
+
+/* Signup CSS */
+
+.signup-form-left {
+    border-right:1px solid gray;
+    height:500px;
+    float:left;
+    text-align:center;   
+}
+
+.signup-form-left img {
+    vertical-align:middle;
+    padding-top:150px;
+}
+
+.signup-form-right {
+    float:right;
+}
+
+/* Forgot Password CSS */
+
+.forgot-password-form-left {
+    border-right:1px solid gray;
+    height:500px;
+    float:left;
+    text-align:center;
+}
+
+.forgot-password-form-left img {
+    vertical-align:middle;
+    padding-top:150px;
+}
+
+.forgot-password-form-right {
+    float:right;
+}
+
+/* All Tickets React Table CSS */
+
+.all-tickets-table {
+    border:0px;
+}
+
+.all-users-table {
+    border:0px;
+}
+
+/* React Table CSS */
+
+.rt-thead.-header {
+    font-weight:900;
+    background-color:darkblue;
+    color:white
+}
+
+.ReactTable .rt-thead .rt-th.-sort-asc {
+    box-shadow: inset 0 3px 0 0 white
+}
+
+.ReactTable .rt-thead .rt-th.-sort-desc {
+    box-shadow: inset 0 -3px 0 0 white
+}
+
+/* .rt-tr-group:nth-child(even) {
+
+} */
+
+.pagination-bottom {
+    background-color:darkblue;
+    color: white;
+}
+
+.-pagination .-previous {
+    border:1px solid white;
+    border-radius:1px;
+}
+
+.-pagination .-next {
+    border:1px solid white;
+    border-radius:1px;
+}
+
+.pagination-bottom .-pagination .-previous .-btn {
+    color:white;
+}
+
+.pagination-bottom .-pagination .-next .-btn {
+    color:white;
 }
