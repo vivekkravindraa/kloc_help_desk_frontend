@@ -446,6 +446,7 @@ export default class Tickets extends Component {
                                     }
                                     </select>
                                     <button
+                                        style={{ backgroundColor: "yellowgreen", color: "black", border: 0 }}
                                         className="btn btn-secondary btn-sm"
                                         onClick={this.handleAssign}
                                     >

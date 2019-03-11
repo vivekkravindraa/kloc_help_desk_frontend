@@ -478,7 +478,7 @@ export default class Profile extends Component {
                                     <div className="btn-group">
                                         <button
                                             type="submit"
-                                            style={{backgroundColor:"orange",color:"black"}}
+                                            style={{ backgroundColor:"orange", color:"black", border:0 }}
                                             className="btn btn-secondary"
                                             onClick={this.handleCancel}
                                         >
@@ -486,7 +486,7 @@ export default class Profile extends Component {
                                         </button>
                                         <button
                                             type="submit"
-                                            style={{backgroundColor:"yellowgreen",color:"black"}}
+                                            style={{ backgroundColor:"yellowgreen", color:"black", border:0 }}
                                             className="btn btn-secondary"
                                             onClick={this.handleSubmitPassword}
                                         >
@@ -568,14 +568,14 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="btn-group">
                                         <button
-                                            style={{backgroundColor:"orange",color:"black"}}
+                                            style={{ backgroundColor:"orange", color:"black", border:0 }}
                                             className="btn btn-secondary"
                                             onClick={this.handleCancel}
                                         >
                                         Cancel
                                         </button>
                                         <button
-                                            style={{backgroundColor:"yellowgreen",color:"black"}}
+                                            style={{ backgroundColor:"yellowgreen", color:"black", border:0 }}
                                             className="btn btn-secondary"
                                             onClick={this.handleUpdateProfile}
                                         >
