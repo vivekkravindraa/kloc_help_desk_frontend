@@ -585,19 +585,7 @@ export default class SingleTicket extends Component {
                                         </Button.Group>
                                     )
                                     :
-                                    (
-                                        <Comment.Actions>
-                                            <Comment.Action active>
-                                                <Button
-                                                    size='mini'
-                                                    attached='left'
-                                                    onClick={this.handleEditComment.bind(this, com._id, com.content)}
-                                                >
-                                                Edit
-                                                </Button>
-                                            </Comment.Action>
-                                        </Comment.Actions>
-                                    )
+                                    null
                                 :
                                 null
                             }
@@ -623,6 +611,34 @@ export default class SingleTicket extends Component {
                                     </Button.Group>
                                 )
                                 :
+                                null
+                            }
+                            <div className="form-inline">
+                            {
+                                com.userId._id === this.state.userId
+                                ?
+                                    this.state.editMode && this.state.replyMode && this.state.commentId === com._id   
+                                    ?   null
+                                    :
+                                    (
+                                        <Comment.Actions>
+                                            <Comment.Action active>
+                                                <Button
+                                                    size='mini'
+                                                    attached='left'
+                                                    onClick={this.handleEditComment.bind(this, com._id, com.content)}
+                                                >
+                                                    Edit
+                                                </Button>
+                                            </Comment.Action>
+                                        </Comment.Actions>
+                                    )
+                                :   null
+                            }
+                            {
+                                this.state.replyMode && this.state.editMode && this.state.commentId === com._id
+                                ?   null
+                                :
                                 (
                                     <Comment.Actions>
                                         <Comment.Action active>
@@ -631,12 +647,13 @@ export default class SingleTicket extends Component {
                                                 attached='right'
                                                 onClick={this.handleReplyComment.bind(this, com._id)}
                                             >
-                                            Reply
+                                                Reply
                                             </Button>
                                         </Comment.Action>
                                     </Comment.Actions>
                                 )
                             }
+                            </div>
                             {
                                 com.subComment.length > 0 ?
                                 com.subComment.map((sub,index) => {
@@ -722,21 +739,7 @@ export default class SingleTicket extends Component {
                                                         </Button.Group>
                                                     )
                                                     :
-                                                    (   
-                                                        // <Comment.Group collapsed={this.state.collapsed}>
-                                                            <Comment.Actions>
-                                                                <Comment.Action active>
-                                                                    <Button
-                                                                        size='mini'
-                                                                        attached='left'
-                                                                        onClick={this.handleEditComment.bind(this, sub._id, sub.subContent)}
-                                                                    >
-                                                                    Edit
-                                                                    </Button>
-                                                                </Comment.Action>
-                                                            </Comment.Actions>
-                                                        // </Comment.Group>
-                                                    )
+                                                    null
                                                 :
                                                 null
                                             }
@@ -762,6 +765,38 @@ export default class SingleTicket extends Component {
                                                     </Button.Group>
                                                 )
                                                 :
+                                                null
+                                            }
+                                            <div className="form-inline">
+                                            {
+                                                sub.userId._id === this.state.userId
+                                                ?
+                                                    this.state.editMode && this.state.replyMode && this.state.commentId === sub._id
+                                                    ?
+                                                    null
+                                                    :
+                                                    (   
+                                                        // <Comment.Group collapsed={this.state.collapsed}>
+                                                            <Comment.Actions>
+                                                                <Comment.Action active>
+                                                                    <Button
+                                                                        size='mini'
+                                                                        attached='left'
+                                                                        onClick={this.handleEditComment.bind(this, sub._id, sub.subContent)}
+                                                                    >
+                                                                    Edit
+                                                                    </Button>
+                                                                </Comment.Action>
+                                                            </Comment.Actions>
+                                                        // </Comment.Group>
+                                                    )
+                                                :   null
+                                            }
+                                            {
+                                                this.state.replyMode && this.state.editMode && this.state.commentId === sub._id
+                                                ?
+                                                null
+                                                :
                                                 (
                                                     // <Comment.Group collapsed={this.state.collapsed}>
                                                         <Comment.Actions>
@@ -778,6 +813,7 @@ export default class SingleTicket extends Component {
                                                     // </Comment.Group>
                                                 )
                                             }
+                                            </div>
                                         </li>
                                     )
                                 })

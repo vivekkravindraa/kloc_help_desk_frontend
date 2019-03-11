@@ -572,9 +572,9 @@ export default class Profile extends Component {
                         :   null
                     :   
                     (
-                        <div>
+                        <div style={{ textAlign: "center" }}>
                             <h2>User profile</h2>
-                            <Card>
+                            <Card className="segment centered">
                                 <Image src={logo} />
                                 <Card.Content>
                                     <Card.Header>
