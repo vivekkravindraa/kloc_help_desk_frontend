@@ -176,10 +176,10 @@ export default class Login extends Component {
                                 Login
                             </button>
                         </form>
-                        <p style={{"marginTop": "10px"}}>
+                        <p style={{ textAlign: "center", marginTop: "10px" }}>
                             Don't have an account? <Link to="/signup">Signup</Link>
                         </p>
-                        <p style={{"marginTop": "10px"}}>
+                        <p style={{ textAlign: "center", marginTop: "10px" }}>
                             <Link to="/forgot_password">Forgot password?</Link>
                         </p>
                     </div>

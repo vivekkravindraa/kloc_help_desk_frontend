@@ -260,7 +260,7 @@ export default class Profile extends Component {
                         error: {
                             ...this.state.error,
                             statusCode: error.response.status,
-                            message: `Incorrect password.`
+                            message: `Incorrect old password.`
                         }
                     }))
                 })
@@ -417,8 +417,8 @@ export default class Profile extends Component {
                             this.state.isChanging
                             ?
                             (
-                                <div className="container">
-                                    <h2>Change password</h2>
+                                <div>
+                                    <h2 style={{textAlign:"center"}}>Change password</h2>
                                     <div className="form-group">
                                         <label>Old password <sup>* </sup>
                                             <span className="badge badge-danger">
@@ -470,7 +470,7 @@ export default class Profile extends Component {
                                             {this.state.minConfirmPassword}
                                         </span>
                                     </div>
-                                    <div className="btn btn-group">
+                                    <div className="btn-group">
                                         <button
                                             type="submit"
                                             style={{backgroundColor:"orange",color:"black"}}
@@ -485,15 +485,34 @@ export default class Profile extends Component {
                                             className="btn btn-secondary"
                                             onClick={this.handleSubmitPassword}
                                         >
-                                        Submit
+                                        Save
+                                        </button>
+                                    </div>
+                                    <div className="btn">
+                                        <button
+                                            style={{backgroundColor:"darkblue"}}
+                                            className="btn btn-secondary"
+                                            onClick={() => {
+                                                this.setState(() => ({
+                                                    isChanging: false,
+                                                    checkOldPassword: false,
+                                                    checkNewPassword: false,
+                                                    checkConfirmPassword: false,
+                                                    minOldPassword: false,
+                                                    minNewPassword: false,
+                                                    minConfirmPassword: false
+                                                }))
+                                            }}
+                                        >
+                                        Edit Profile
                                         </button>
                                     </div>
                                 </div>
                             )        
                             :
                             (
-                                <div className="container">
-                                    <h2>Edit profile</h2>
+                                <div>
+                                    <h2 style={{textAlign:"center"}}>Edit profile</h2>
                                     <div className="form-group">
                                         <label>First name <sup>* </sup><span className="badge badge-danger">
                                             {this.state.checkFirstname}
@@ -542,7 +561,7 @@ export default class Profile extends Component {
                                             {this.state.minMobileNumber}
                                         </span>
                                     </div>
-                                    <div className="btn btn-group">
+                                    <div className="btn-group">
                                         <button
                                             style={{backgroundColor:"orange",color:"black"}}
                                             className="btn btn-secondary"
@@ -558,7 +577,7 @@ export default class Profile extends Component {
                                         Save
                                         </button>
                                     </div>
-                                    <div className="btn btn-group">
+                                    <div className="btn">
                                         <button
                                             style={{backgroundColor:"darkblue"}}
                                             className="btn btn-secondary"
@@ -574,6 +593,13 @@ export default class Profile extends Component {
                     (
                         <div style={{ textAlign: "center" }}>
                             <h2>User profile</h2>
+                            <button
+                                style={{ backgroundColor:"darkblue" }}
+                                className="btn btn-secondary"
+                                onClick={this.handleEditProfile}
+                            >
+                            Edit
+                            </button>
                             <Card className="segment centered">
                                 <Image src={logo} />
                                 <Card.Content>
@@ -592,13 +618,6 @@ export default class Profile extends Component {
                                     </button>
                                 </Card.Content>
                             </Card>
-                            <button
-                                style={{backgroundColor:"darkblue"}}
-                                className="btn btn-secondary"
-                                onClick={this.handleEditProfile}
-                            >
-                            Edit
-                            </button>
                         </div>
                     )
                 }

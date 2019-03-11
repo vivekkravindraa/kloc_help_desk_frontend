@@ -177,7 +177,7 @@ export default class ResetPassword extends Component {
                     !this.state.isReset ?
                     (
                         <div>
-                            <h1 style={{"textAlign":"center"}}>Forgot Password</h1>
+                            <h1 style={{"textAlign":"center"}}>Reset Password</h1>
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-group">
                                     <label>New password <sup>* </sup>
@@ -215,11 +215,12 @@ export default class ResetPassword extends Component {
                                 </div>
                                 <button
                                     type="submit"
+                                    style={{ backgroundColor:"darkblue"}}
                                     className="btn btn-secondary btn-lg btn-block">
                                     Submit
                                 </button>
                             </form>
-                            <p style={{"textAlign": "center", "marginTop": "10px"}}>
+                            <p style={{ textAlign: "center", marginTop: "10px" }}>
                                 Don't want to change? <Link to="/login">Login</Link>
                             </p>
                         </div>

@@ -143,12 +143,12 @@ export default class ForgotPassword extends Component {
                                 </div>
                                 <button
                                     type="submit"
-                                    style={{backgroundColor:"darkblue"}}
+                                    style={{ backgroundColor:"darkblue" }}
                                     className="btn btn-secondary btn-lg btn-block"
                                 >
                                 Submit
                                 </button>
-                                <p style={{"marginTop": "10px"}}>
+                                <p style={{ textAlign: "center",marginTop: "10px" }}>
                                     Don't want to change? <Link to="/login">Login</Link>
                                 </p>
                             </form>

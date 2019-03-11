@@ -37,6 +37,18 @@
     float:right;
 }
 
+.login-form input {
+    border: 0px solid;
+    border-bottom: 1px solid;
+    border-radius: 0px;
+}
+
+.login-form .form-control:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
 /* Signup CSS */
 
 .signup-form-left {
@@ -53,6 +65,18 @@
 
 .signup-form-right {
     float:right;
+}
+
+.signup-form input {
+    border: 0px solid;
+    border-bottom: 1px solid;
+    border-radius: 0px;
+}
+
+.signup-form .form-control:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 /* Forgot Password CSS */
@@ -73,6 +97,18 @@
     float:right;
 }
 
+.forgot-password-form input {
+    border: 0px solid;
+    border-bottom: 1px solid;
+    border-radius: 0px;
+}
+
+.forgot-password-form .form-control:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
 /* Regsiter CSS */
 
 .register-form-left {
@@ -91,6 +127,20 @@
     float:right;
 }
 
+.register-form input {
+    border: 0px solid;
+    border-bottom: 1px solid;
+    border-radius: 0px;
+}
+
+.register-form .form-control:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.register-form input[type="email"][disabled]{background-color:white;}
+
 /* Reset Password CSS */
 
 .reset-password-form-left {
@@ -107,6 +157,18 @@
 
 .reset-password-form-right {
     float:right;
+}
+
+.reset-password-form input {
+    border: 0px solid;
+    border-bottom: 1px solid;
+    border-radius: 0px;
+}
+
+.reset-password-form .form-control:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 /* All Tickets React Table CSS */

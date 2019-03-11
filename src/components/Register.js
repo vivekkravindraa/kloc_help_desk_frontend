@@ -239,7 +239,7 @@ export default class Register extends Component {
                                     </label>
                                     <input
                                         type="text"
-                                        className="form-control form-control"
+                                        className="form-control"
                                         value={this.state.fName}
                                         onChange={this.fNameHandle}
                                     />
@@ -252,7 +252,7 @@ export default class Register extends Component {
                                     </label>
                                     <input
                                         type="text"
-                                        className="form-control form-control"
+                                        className="form-control"
                                         value={this.state.lName}
                                         onChange={this.lNameHandle}
                                     />
@@ -261,21 +261,21 @@ export default class Register extends Component {
                                     <label>Email</label>
                                     <input
                                         type="email"
-                                        className="form-control form-control"
+                                        className="form-control"
                                         value={this.state.eMail}
                                         onChange={this.eMailHandle}
                                         disabled
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Password <sup>* </sup>
+                                    <label>New Password <sup>* </sup>
                                         <span className="badge badge-danger">
                                             {this.state.checkNewPwd}
                                         </span>
                                     </label>
                                     <input
                                         type="password"
-                                        className="form-control form-control"
+                                        className="form-control"
                                         onChange={this.handleNewPwd}
                                         onBlur={this.handleMinNewPwd}
                                         value={this.state.newPwd}
@@ -292,7 +292,7 @@ export default class Register extends Component {
                                     </label>
                                     <input
                                         type="password"
-                                        className="form-control form-control"
+                                        className="form-control"
                                         onChange={this.handleConfirmPwd}
                                         onBlur={this.handleMinConfirmPwd}
                                         value={this.state.confirmPwd}
@@ -301,9 +301,14 @@ export default class Register extends Component {
                                         {this.state.minConfirmPwd}
                                     </span>
                                 </div>
-                                <button className="btn btn-secondary btn-btn-lg btn-block">Submit</button>
+                                <button
+                                    style={{ backgroundColor: "yellowgreen", color: "black", border: 0 }}
+                                    className="btn btn-secondary btn-lg btn-block"
+                                >
+                                Submit
+                                </button>
                             </form>
-                            <p style={{"marginTop": "10px"}}>
+                            <p style={{ textAlign:"center", marginTop: "10px" }}>
                                 Take me to <Link to="/">Home >></Link>
                             </p>
                         </div>

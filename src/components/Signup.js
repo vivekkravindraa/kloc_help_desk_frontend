@@ -306,7 +306,7 @@ export default class Signup extends Component {
                                     Signup
                                     </button>
                                 </form>
-                                <p style={{"marginTop": "10px"}}>
+                                <p style={{ textAlign: "center",marginTop: "10px" }}>
                                     Already have an account? <Link to="/login">Login</Link>
                                 </p>
                             </div>
