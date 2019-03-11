@@ -28,7 +28,7 @@ import Users from './components/Users';
 const Home = () => (
     <div className="container" style={{ textAlign: "center" }}>
         <h2>Welcome to KLoc Helpdesk!</h2>
-        <Link to="/login">Login</Link>
+        <u><Link style={{ fontSize: 20, color:"darkblue" }} to="/login">Login</Link></u>
     </div>
 )
 
