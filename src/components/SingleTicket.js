@@ -18,6 +18,7 @@ export default class SingleTicket extends Component {
             newObj: {},
             commentsData: [],
             images: [],
+            ticketsAssigned: [],
             userId: decodeToken()._id,
             commentId: '',
             role: '',
@@ -53,6 +54,7 @@ export default class SingleTicket extends Component {
                     checkStatus: response.data.ticket.ticketStatus,
                     ticketStatus: response.data.ticket.ticketStatus[0].toUpperCase() + response.data.ticket.ticketStatus.slice(1),
                     ticketPriority: response.data.ticket.ticketPriority,
+                    ticketsAssigned: response.data.ticket.ticketsAssigned,
                     role: response.data.role
                 })
             }
@@ -455,43 +457,50 @@ export default class SingleTicket extends Component {
                     )
                 :   null
             }
-            {this.state.commentsData.length > 1 ? 'Comments' : 'Comment'}: {this.state.commentsData.length}
             {
                 this.state.checkStatus === 'closed'
                 ?
                     null
                 :
                 (
-                    <div>
-                        <label>Write Comment:</label>
-                        <textarea
-                            type="text"
-                            className="form-control"
-                            placeholder="comment here.."
-                            maxLength={1000}
-                            value={this.state.comment}
-                            onChange={this.commentHandle}
-                        >
-                        </textarea>
-                        <div className="btn-group">
-                            <button className="btn btn-secondary" onClick={this.addCommentHandle}>Add Comment</button>
-                            {
-                                decodeToken().role === 'admin' && (
-                                    <Link className="btn btn-secondary" to="/tickets">Back</Link>
-                                )
-                            }
-                            {   
-                                decodeToken().role === 'customer' && (
-                                    <Link className="btn btn-secondary" to="/my_tickets">Back</Link>
-                                )
-                            }
-                            {
-                                decodeToken().role === 'moderator' && (
-                                    <Link className="btn btn-secondary" to="/moderator_tickets">Back</Link>
-                                )
-                            }
+                    this.state.ticketsAssigned.length !== 0
+                    ?
+                    (
+                        <div>
+                            <p>
+                                {this.state.commentsData.length > 1 ? 'Comments' : 'Comment'}: {this.state.commentsData.length}
+                            </p>
+                            <label>Write Comment:</label>
+                            <textarea
+                                type="text"
+                                className="form-control"
+                                placeholder="comment here.."
+                                maxLength={1000}
+                                value={this.state.comment}
+                                onChange={this.commentHandle}
+                            >
+                            </textarea>
+                            <div className="btn-group">
+                                <button className="btn btn-secondary" onClick={this.addCommentHandle}>Add Comment</button>
+                                {
+                                    decodeToken().role === 'admin' && (
+                                        <Link className="btn btn-secondary" to="/tickets">Back</Link>
+                                    )
+                                }
+                                {   
+                                    decodeToken().role === 'customer' && (
+                                        <Link className="btn btn-secondary" to="/my_tickets">Back</Link>
+                                    )
+                                }
+                                {
+                                    decodeToken().role === 'moderator' && (
+                                        <Link className="btn btn-secondary" to="/moderator_tickets">Back</Link>
+                                    )
+                                }
+                            </div>
                         </div>
-                    </div>
+                    )
+                    :   null
                 )
             }
             {/* {

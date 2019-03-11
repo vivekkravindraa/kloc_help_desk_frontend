@@ -55,8 +55,8 @@ export default class Profile extends Component {
         .then((response) => {
             this.setState({
                 profileData: response.data,
-                firstName: response.data.firstName,
-                lastName: response.data.lastName,
+                firstName: response.data.firstName ? response.data.firstName[0].toUpperCase() + response.data.firstName.slice(1) : '',
+                lastName: response.data.lastName ? response.data.lastName[0].toUpperCase() + response.data.lastName.slice(1) : '',
                 email: response.data.email,
                 mobileNumber: response.data.mobileNumber,
                 role: response.data.role[0].toUpperCase() + response.data.role.slice(1)

@@ -197,7 +197,7 @@ export default class ModeratorTickets extends Component {
                 Cell: props => {
                     return (
                         <button
-                            style={{backgroundColor: "gray", color: "#fefefe"}}
+                            style={{backgroundColor: "yellowgreen", color: "black"}}
                             onClick={() =>{
                                 this.handleAssign(props.original._id)
                             }}
@@ -279,7 +279,6 @@ export default class ModeratorTickets extends Component {
                         }
                     </div>
                 </form>
-
                 <ReactTable
                     columns={columns}
                     data={this.state.filterData}
