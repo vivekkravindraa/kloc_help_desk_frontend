@@ -465,14 +465,15 @@ export default class SingleTicket extends Component {
                     <div>
                         <label>Write Comment:</label>
                         <textarea
-                            className="form-control"
                             type="text"
+                            className="form-control"
+                            placeholder="comment here.."
                             maxLength={1000}
                             value={this.state.comment}
                             onChange={this.commentHandle}
                         >
                         </textarea>
-                        <div className="btn btn-group">
+                        <div className="btn-group">
                             <button className="btn btn-secondary" onClick={this.addCommentHandle}>Add Comment</button>
                             {
                                 decodeToken().role === 'admin' && (
@@ -553,6 +554,7 @@ export default class SingleTicket extends Component {
                                             rows={2}
                                             maxLength={1000}
                                             className="form-control"
+                                            placeholder="reply here.."
                                             value={this.state.reply}
                                             onChange={this.handleReply}
                                         >
@@ -707,6 +709,7 @@ export default class SingleTicket extends Component {
                                                             rows={2}
                                                             maxLength={1000}
                                                             className="form-control"
+                                                            placeholder="reply here.."
                                                             value={this.state.reply}
                                                             onChange={this.handleReply}
                                                         >

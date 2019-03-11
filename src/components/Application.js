@@ -219,7 +219,7 @@ export default class Application extends Component {
                                 <p key={index}>{mode.email}</p>
                             )
                         }) 
-                    :   <b><i>Linked to all moderators.</i></b>
+                    :   <b>Linked to all moderators.</b>
                 ),
                 resizable: false,
                 width: 250

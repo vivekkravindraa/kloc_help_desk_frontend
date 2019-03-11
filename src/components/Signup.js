@@ -182,7 +182,7 @@ export default class Signup extends Component {
                             <h6>
                                 Account has been created and the verification link has been sent to your email.
                                 Please visit your email to verify. If not found in the inbox, check the spam folder. 
-                                <Link to="/">Go to home</Link>
+                                <Link to="/"> Go to home >></Link>
                             </h6>
                             </div>
                         )   :   null

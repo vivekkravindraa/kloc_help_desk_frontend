@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import kloc from '../images/kloc.jpeg';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import qs from 'query-string';
@@ -163,139 +164,153 @@ export default class Register extends Component {
     }
 
     render() {
-        return this.state.isConfirmed
-        ?   
-        (
-            <div>
-                <h6 style={{"textAlign":"center"}}>
-                    Successfully Updated Profile.
-                    <Link to={{ pathname: "/login" }}> Login</Link>
-                </h6>
+        return (
+            <div className="container register-form col-md-12">
+                <div className="container register-form-left col-md-6">
+                    <img src={kloc} alt="#" />
+                </div>
+                <div className="container register-form-right col-md-6">
+                {
+                    this.state.error.message !== '' ? 
+                    (   
+                        <div
+                            style={{ 
+                                textAlign: "center",
+                                visibility: this.state.error.message !== '' ? 'visible' : 'hidden'
+                            }}
+                        className="alert alert-danger"
+                        role="alert"
+                        >
+                        Unable to register, make sure you've entered the correct details!
+                        </div> 
+                    )   : null
+                }
+                {
+                    this.state.isIncorrect ?
+                    (
+                        <div
+                            style={{ 
+                                textAlign: "center",
+                                visibility: this.state.isIncorrect ? 'visible' : 'hidden'
+                            }}
+                            className="alert alert-warning"
+                            role="alert"
+                        >
+                        Passwords does not match!
+                        </div>
+                    )   : null
+                }
+                {
+                    this.state.isEmpty ?
+                    (
+                        <div
+                            style={{ 
+                                textAlign: "center",
+                                visibility: this.state.isEmpty ? 'visible' : 'hidden'
+                            }}
+                            className="alert alert-warning"
+                            role="alert"
+                        >
+                        Please enter the required credentials!
+                        </div>
+                    )   : null
+                }
+                {
+                    this.state.isConfirmed
+                    ?   
+                    (
+                        <div>
+                            <h6 style={{"textAlign":"center"}}>
+                                Successfully Updated Profile.
+                                <Link to={{ pathname: "/login" }}> Login</Link>
+                            </h6>
+                        </div>
+                    ) 
+                    :
+                    (
+                        <div>
+                            <h1>Register</h1>
+                            <form onSubmit={this.handleUpdate}>
+                                <div className="form-group">
+                                    <label>First Name <sup>* </sup>
+                                        <span className="badge badge-danger">
+                                            {this.state.checkfName}
+                                        </span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control form-control"
+                                        value={this.state.fName}
+                                        onChange={this.fNameHandle}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Last Name <sup>* </sup>
+                                        <span className="badge badge-danger">
+                                            {this.state.checklName}
+                                        </span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control form-control"
+                                        value={this.state.lName}
+                                        onChange={this.lNameHandle}
+                                    />
+                                </div> 
+                                <div className="form-group">
+                                    <label>Email</label>
+                                    <input
+                                        type="email"
+                                        className="form-control form-control"
+                                        value={this.state.eMail}
+                                        onChange={this.eMailHandle}
+                                        disabled
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Password <sup>* </sup>
+                                        <span className="badge badge-danger">
+                                            {this.state.checkNewPwd}
+                                        </span>
+                                    </label>
+                                    <input
+                                        type="password"
+                                        className="form-control form-control"
+                                        onChange={this.handleNewPwd}
+                                        onBlur={this.handleMinNewPwd}
+                                        value={this.state.newPwd}
+                                    />
+                                    <span className="badge badge-danger">
+                                        {this.state.minNewPwd}
+                                    </span>
+                                </div>
+                                <div className="form-group">
+                                    <label>Confirm Password <sup>* </sup>
+                                        <span className="badge badge-danger">
+                                            {this.state.checkConfirmPwd}
+                                        </span>
+                                    </label>
+                                    <input
+                                        type="password"
+                                        className="form-control form-control"
+                                        onChange={this.handleConfirmPwd}
+                                        onBlur={this.handleMinConfirmPwd}
+                                        value={this.state.confirmPwd}
+                                    />
+                                    <span className="badge badge-danger">
+                                        {this.state.minConfirmPwd}
+                                    </span>
+                                </div>
+                                <button className="btn btn-secondary btn-btn-lg btn-block">Submit</button>
+                            </form>
+                            <p style={{"marginTop": "10px"}}>
+                                Take me to <Link to="/">Home >></Link>
+                            </p>
+                        </div>
+                    )
+                }
+                </div>
             </div>
-        ) 
-        :
-        (
-            <div className="container" style={{width:"30%"}}>
-            {
-                this.state.error.message !== '' ? 
-                (   
-                    <div
-                        style={{ 
-                            textAlign: "center",
-                            visibility: this.state.error.message !== '' ? 'visible' : 'hidden'
-                        }}
-                    className="alert alert-danger"
-                    role="alert"
-                    >
-                    Unable to register, make sure you've entered the correct details!
-                    </div> 
-                )   : null
-            }
-            {
-                this.state.isIncorrect ?
-                (
-                    <div
-                        style={{ 
-                            textAlign: "center",
-                            visibility: this.state.isIncorrect ? 'visible' : 'hidden'
-                        }}
-                        className="alert alert-warning"
-                        role="alert"
-                    >
-                    Passwords does not match!
-                    </div>
-                )   : null
-            }
-            {
-                this.state.isEmpty ?
-                (
-                    <div
-                        style={{ 
-                            textAlign: "center",
-                            visibility: this.state.isEmpty ? 'visible' : 'hidden'
-                        }}
-                        className="alert alert-warning"
-                        role="alert"
-                    >
-                    Please enter the required credentials!
-                    </div>
-                )   : null
-            }
-            <h1 style={{"textAlign":"center"}}>Register</h1>
-                <form onSubmit={this.handleUpdate}>
-                    <div className="form-group">
-                        <label>First Name <sup>* </sup>
-                            <span className="badge badge-danger">
-                                {this.state.checkfName}
-                            </span>
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control form-control-sm"
-                            value={this.state.fName}
-                            onChange={this.fNameHandle}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Last Name <sup>* </sup>
-                            <span className="badge badge-danger">
-                                {this.state.checklName}
-                            </span>
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control form-control-sm"
-                            value={this.state.lName}
-                            onChange={this.lNameHandle}
-                        />
-                    </div> 
-                    <div className="form-group">
-                        <label>Email</label>
-                        <input
-                            type="email"
-                            className="form-control form-control-sm"
-                            value={this.state.eMail}
-                            onChange={this.eMailHandle}
-                            disabled
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>New Password <sup>* </sup>
-                            <span className="badge badge-danger">
-                                {this.state.checkNewPwd}
-                            </span>
-                        </label>
-                        <input
-                            type="password"
-                            className="form-control form-control-sm"
-                            onChange={this.handleNewPwd}
-                            onBlur={this.handleMinNewPwd}
-                            value={this.state.newPwd}
-                        />
-                        <span className="badge badge-danger">
-                            {this.state.minNewPwd}
-                        </span>
-                    </div>
-                    <div className="form-group">
-                        <label>Confirm Password <sup>* </sup>
-                            <span className="badge badge-danger">
-                                {this.state.checkConfirmPwd}
-                            </span>
-                        </label>
-                        <input
-                            type="password"
-                            className="form-control form-control-sm"
-                            onChange={this.handleConfirmPwd}
-                            onBlur={this.handleMinConfirmPwd}
-                            value={this.state.confirmPwd}
-                        />
-                        <span className="badge badge-danger">
-                            {this.state.minConfirmPwd}
-                        </span>
-                    </div>
-                    <button className="btn btn-secondary btn-btn-lg btn-block">Submit</button>
-                </form>
-            </div>   
         )
     }
 }

@@ -73,6 +73,42 @@
     float:right;
 }
 
+/* Regsiter CSS */
+
+.register-form-left {
+    border-right:1px solid gray;
+    height:500px;
+    float:left;
+    text-align:center;
+}
+
+.register-form-left img {
+    vertical-align:middle;
+    padding-top:150px;
+}
+
+.register-form-right {
+    float:right;
+}
+
+/* Reset Password CSS */
+
+.reset-password-form-left {
+    border-right:1px solid gray;
+    height:500px;
+    float:left;
+    text-align:center;
+}
+
+.reset-password-form-left img {
+    vertical-align:middle;
+    padding-top:150px;
+}
+
+.reset-password-form-right {
+    float:right;
+}
+
 /* All Tickets React Table CSS */
 
 .all-tickets-table {

@@ -257,6 +257,7 @@ export default class Tickets extends Component {
                 width: 100,
                 maxWidth: 100,
                 minWidth: 100,
+                style: { textAlign: "center" },
                 show: this.state.isVisible ? true : false
             },
             {
@@ -264,19 +265,23 @@ export default class Tickets extends Component {
                 accessor: "_id",
                 sortable: false,
                 resizable: false,
-                width: 250
+                width: 250,
+                style: { textAlign: "center" }
+
             },
             {
                 Header: "Subject",
                 accessor: "subject",
                 sortable: true,
-                resizable: false
+                resizable: false,
+                style: { textAlign: "center" }
             },
             {
                 Header: "Description",
                 accessor: "description",
                 sortable: true,
-                resizable: false
+                resizable: false,
+                style: { textAlign: "center" }
             },
             {
                 Header: "Priority",
@@ -286,7 +291,8 @@ export default class Tickets extends Component {
                 resizable: false,
                 width: 100,
                 maxWidth: 100,
-                minWidth: 100
+                minWidth: 100,
+                style: { textAlign: "center" }
             },
             {
                 Header: "Status",
@@ -296,7 +302,8 @@ export default class Tickets extends Component {
                 resizable: false,
                 width: 100,
                 maxWidth: 100,
-                minWidth: 100
+                minWidth: 100,
+                style: { textAlign: "center" }
             },
             {
                 Header: "View Ticket",
@@ -310,7 +317,8 @@ export default class Tickets extends Component {
                 resizable: false,
                 width: 100,
                 maxWidth: 100,
-                minWidth: 100
+                minWidth: 100,
+                style: { textAlign: "center" }
             },
             {
                 Header: "Delete",
@@ -330,7 +338,8 @@ export default class Tickets extends Component {
                 resizable: false,
                 width: 100,
                 maxWidth: 100,
-                minWidth: 100
+                minWidth: 100,
+                style: { textAlign: "center" }
             }
         ]
 

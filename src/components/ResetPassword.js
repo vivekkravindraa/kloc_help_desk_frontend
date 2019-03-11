@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
+import kloc from '../images/kloc.jpeg';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import '../App.css';
@@ -107,120 +108,125 @@ export default class ResetPassword extends Component {
 
     render() {
         return (
-            <div className="container" style={{width:"30%"}}>
-            {
-                this.state.isReset ?
-                (
-                    <div
-                        style={{ 
-                            textAlign: "center",
-                            visibility: this.state.isReset ? 'visible' : 'hidden'
-                        }}
-                        className="alert alert-success"
-                        role="alert"
-                    >
-                    Successfully changed the password. Click here to<Link to="/login"> Login</Link>
-                    </div>
-                )   :   null
-            }
-            {   
-                this.state.error.message !== '' ?
-                (
-                    <div
-                        style={{ 
-                            textAlign: "center",
-                            visibility: this.state.error.message !== '' ? 'visible' : 'hidden'
-                        }}
-                        className="alert alert-danger"
-                        role="alert"
-                    >
-                    Email doesn't exist or invalid password!
-                    </div>
-                )   :   null
-            }
-            {
-                this.state.isIncorrect ?
-                (
-                    <div
-                        style={{ 
-                            textAlign: "center",
-                            visibility: this.state.isIncorrect ? 'visible' : 'hidden'
-                        }}
-                        className="alert alert-warning"
-                        role="alert"
-                    >
-                    Passwords does not match!
-                    </div>
-                )   :   null
-            }
-            {   
-                this.state.isEmpty ?
-                (
-                    <div
-                        style={{ 
-                            textAlign: "center",
-                            visibility: this.state.isEmpty ? 'visible' : 'hidden'
-                        }}
-                        className="alert alert-warning"
-                        role="alert"
-                    >
-                    Please enter the required credentials!
-                    </div>
-                )   :   null
-            }
-            {
-                !this.state.isReset ?
-                (
-                    <div>
-                        <h1 style={{"textAlign":"center"}}>Forgot Password</h1>
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="form-group">
-                                <label>New password <sup>* </sup>
+            <div className="container reset-password-form col-md-12">
+                <div className="container reset-password-form-left col-md-6">
+                    <img src={kloc} alt="#" />
+                </div>
+                <div className="container reset-password-form-right col-md-6">
+                {
+                    this.state.isReset ?
+                    (
+                        <div
+                            style={{ 
+                                textAlign: "center",
+                                visibility: this.state.isReset ? 'visible' : 'hidden'
+                            }}
+                            className="alert alert-success"
+                            role="alert"
+                        >
+                        Successfully changed the password. Click here to<Link to="/login"> Login</Link>
+                        </div>
+                    )   :   null
+                }
+                {   
+                    this.state.error.message !== '' ?
+                    (
+                        <div
+                            style={{ 
+                                textAlign: "center",
+                                visibility: this.state.error.message !== '' ? 'visible' : 'hidden'
+                            }}
+                            className="alert alert-danger"
+                            role="alert"
+                        >
+                        Email doesn't exist or invalid password!
+                        </div>
+                    )   :   null
+                }
+                {
+                    this.state.isIncorrect ?
+                    (
+                        <div
+                            style={{ 
+                                textAlign: "center",
+                                visibility: this.state.isIncorrect ? 'visible' : 'hidden'
+                            }}
+                            className="alert alert-warning"
+                            role="alert"
+                        >
+                        Passwords does not match!
+                        </div>
+                    )   :   null
+                }
+                {   
+                    this.state.isEmpty ?
+                    (
+                        <div
+                            style={{ 
+                                textAlign: "center",
+                                visibility: this.state.isEmpty ? 'visible' : 'hidden'
+                            }}
+                            className="alert alert-warning"
+                            role="alert"
+                        >
+                        Please enter the required credentials!
+                        </div>
+                    )   :   null
+                }
+                {
+                    !this.state.isReset ?
+                    (
+                        <div>
+                            <h1 style={{"textAlign":"center"}}>Forgot Password</h1>
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="form-group">
+                                    <label>New password <sup>* </sup>
+                                        <span className="badge badge-danger">
+                                            {this.state.checkNewPassword}
+                                        </span>
+                                    </label>
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        value={this.state.newPassword}
+                                        onChange={this.handleNewPassword}
+                                        onBlur={this.handleMinNewPassword}
+                                    />
                                     <span className="badge badge-danger">
-                                        {this.state.checkNewPassword}
+                                        {this.state.minNewPassword}
                                     </span>
-                                </label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    value={this.state.newPassword}
-                                    onChange={this.handleNewPassword}
-                                    onBlur={this.handleMinNewPassword}
-                                />
-                                <span className="badge badge-danger">
-                                    {this.state.minNewPassword}
-                                </span>
-                            </div>
-                            <div className="form-group">
-                                <label>Confirm password <sup>* </sup>
+                                </div>
+                                <div className="form-group">
+                                    <label>Confirm password <sup>* </sup>
+                                        <span className="badge badge-danger">
+                                            {this.state.checkConfirmPassword}
+                                        </span>
+                                    </label>
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        value={this.state.confirmPassword}
+                                        onChange={this.handleConfirmPassword}
+                                        onBlur={this.handleMinConfirmPassword}
+                                    />
                                     <span className="badge badge-danger">
-                                        {this.state.checkConfirmPassword}
+                                        {this.state.minConfirmPassword}
                                     </span>
-                                </label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    value={this.state.confirmPassword}
-                                    onChange={this.handleConfirmPassword}
-                                    onBlur={this.handleMinConfirmPassword}
-                                />
-                                <span className="badge badge-danger">
-                                    {this.state.minConfirmPassword}
-                                </span>
-                            </div>
-                            <button
-                                type="submit"
-                                className="btn btn-secondary btn-lg btn-block">
-                                Submit
-                            </button>
-                        </form>
-                        <p style={{"textAlign": "center", "marginTop": "10px"}}>
-                            Don't want to change? <Link to="/login">Login</Link>
-                        </p>
-                    </div>
-                )
-                :   null
-            }
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="btn btn-secondary btn-lg btn-block">
+                                    Submit
+                                </button>
+                            </form>
+                            <p style={{"textAlign": "center", "marginTop": "10px"}}>
+                                Don't want to change? <Link to="/login">Login</Link>
+                            </p>
+                        </div>
+                    )
+                    :   null
+                }
+                </div>
             </div>
         )
     }
