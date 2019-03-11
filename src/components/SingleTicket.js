@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Checkbox, Button, Comment, Form } from 'semantic-ui-react';
+import { Button, Comment, Form } from 'semantic-ui-react';
+// import { Checkbox } from 'semantic-ui-react';
 // import { Image, Modal } from 'semantic-ui-react';
 import axios from 'axios';
 import { baseURL } from '../base_url';
@@ -281,24 +282,26 @@ export default class SingleTicket extends Component {
             parentId: id
         }
 
-        axios.post(`${baseURL}/comments/${id}/sub_commmets?parentId=${id}`,formData, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-        .then((response) => {
-            if(response.data) {
-                this.setState({
-                    replyMode: false,
-                    reply: ''
-                })
-                this.getComments(this.state.ticketData._id)
-            }
-        })
-        .catch((error) => {
-            this.setState(() => ({
-                error: {...this.state.error, statusCode: error.response.status, message: error.message }
-            }))
-        })
+        if(this.state.reply.length > 0) {
+            axios.post(`${baseURL}/comments/${id}/sub_commmets?parentId=${id}`,formData, {headers: {'x-auth': localStorage.getItem('x-auth')}})
+            .then((response) => {
+                if(response.data) {
+                    this.setState({
+                        replyMode: false,
+                        reply: ''
+                    })
+                    this.getComments(this.state.ticketData._id)
+                }
+            })
+            .catch((error) => {
+                this.setState(() => ({
+                    error: {...this.state.error, statusCode: error.response.status, message: error.message }
+                }))
+            })
+        }
     }
 
-    handleCheckbox = (e, { checked }) => this.setState({ collapsed: checked })
+    // handleCheckbox = (e, { checked }) => this.setState({ collapsed: checked })
 
     render() {
         if(!decodeToken()) {
@@ -490,7 +493,7 @@ export default class SingleTicket extends Component {
                     </div>
                 )
             }
-            {
+            {/* {
                 this.state.commentsData.length > 0 ?
                 (
                     <div>
@@ -498,7 +501,7 @@ export default class SingleTicket extends Component {
                     </div>
                 )
                 :   null
-            }
+            } */}
             {   
                 this.state.commentsData.length > 0 ?
                 this.state.commentsData.map((com,index) => {
@@ -561,50 +564,40 @@ export default class SingleTicket extends Component {
                             {
                                 com.userId._id === this.state.userId
                                 ?
-                                (
-                                    <div>
-                                    {
-                                        this.state.editMode && this.state.commentId === com._id
-                                        ?
-                                        (
-                                            <div className="btn btn-group">
-                                                <Button.Group>
-                                                    <Button
-                                                        size='mini'
-                                                        onClick={this.handleEditCancel}
-                                                    >
-                                                    Don't Edit
-                                                    </Button>
-                                                    <Button.Or />
-                                                    <Button
-                                                        positive
-                                                        size='mini'
-                                                        onClick={this.handleCommentSubmit.bind(this, com._id)}
-                                                    >
-                                                    Submit Comment
-                                                    </Button>
-                                                </Button.Group>
-                                            </div>
-                                        )
-                                        :
-                                        (
-                                            <div>
-                                                <Comment.Actions>
-                                                    <Comment.Action active>
-                                                        <Button
-                                                            size='mini'
-                                                            attached='left'
-                                                            onClick={this.handleEditComment.bind(this, com._id, com.content)}
-                                                        >
-                                                        Edit
-                                                        </Button>
-                                                    </Comment.Action>
-                                                </Comment.Actions>
-                                            </div>
-                                        )
-                                    }
-                                    </div>
-                                )
+                                    this.state.editMode && this.state.commentId === com._id
+                                    ?
+                                    (
+                                        <Button.Group>
+                                            <Button
+                                                size='mini'
+                                                onClick={this.handleEditCancel}
+                                            >
+                                            Don't Edit
+                                            </Button>
+                                            <Button.Or />
+                                            <Button
+                                                positive
+                                                size='mini'
+                                                onClick={this.handleCommentSubmit.bind(this, com._id)}
+                                            >
+                                            Submit Comment
+                                            </Button>
+                                        </Button.Group>
+                                    )
+                                    :
+                                    (
+                                        <Comment.Actions>
+                                            <Comment.Action active>
+                                                <Button
+                                                    size='mini'
+                                                    attached='left'
+                                                    onClick={this.handleEditComment.bind(this, com._id, com.content)}
+                                                >
+                                                Edit
+                                                </Button>
+                                            </Comment.Action>
+                                        </Comment.Actions>
+                                    )
                                 :
                                 null
                             }
@@ -612,40 +605,36 @@ export default class SingleTicket extends Component {
                                 this.state.replyMode && this.state.commentId === com._id
                                 ?
                                 (
-                                    <div className="btn btn-group">
-                                        <Button.Group>
-                                            <Button
-                                                size='mini'
-                                                onClick={this.handleReplyCancel}
-                                            >
-                                            Don't Reply
-                                            </Button>
-                                            <Button.Or />
-                                            <Button
-                                                positive
-                                                size='mini'
-                                                onClick={this.handleReplySubmit.bind(this, com._id)}
-                                            >
-                                            Submit Reply
-                                            </Button>
-                                        </Button.Group>
-                                    </div>
+                                    <Button.Group>
+                                        <Button
+                                            size='mini'
+                                            onClick={this.handleReplyCancel}
+                                        >
+                                        Don't Reply
+                                        </Button>
+                                        <Button.Or />
+                                        <Button
+                                            positive
+                                            size='mini'
+                                            onClick={this.handleReplySubmit.bind(this, com._id)}
+                                        >
+                                        Submit Reply
+                                        </Button>
+                                    </Button.Group>
                                 )
                                 :
                                 (
-                                    <div>
-                                        <Comment.Actions>
-                                            <Comment.Action active>
-                                                <Button
-                                                    size='mini'
-                                                    attached='right'
-                                                    onClick={this.handleReplyComment.bind(this, com._id)}
-                                                >
-                                                Reply
-                                                </Button>
-                                            </Comment.Action>
-                                        </Comment.Actions>
-                                    </div>
+                                    <Comment.Actions>
+                                        <Comment.Action active>
+                                            <Button
+                                                size='mini'
+                                                attached='right'
+                                                onClick={this.handleReplyComment.bind(this, com._id)}
+                                            >
+                                            Reply
+                                            </Button>
+                                        </Comment.Action>
+                                    </Comment.Actions>
                                 )
                             }
                             {
@@ -678,15 +667,17 @@ export default class SingleTicket extends Component {
                                                 )
                                                 :
                                                 (
-                                                    <Comment.Group collapsed={this.state.collapsed}>
-                                                        <Comment>
-                                                        <Comment.Avatar as='a' src={steve} />
-                                                        <Comment.Content>
-                                                            <Comment.Author as='a'>{sub.userId.firstName}</Comment.Author>
-                                                            <Comment.Text>{sub.subContent}</Comment.Text>
-                                                        </Comment.Content>
-                                                        </Comment>
-                                                    </Comment.Group>
+                                                    // <Comment.Group collapsed={this.state.collapsed}>
+                                                        <Comment.Group>
+                                                            <Comment>
+                                                                <Comment.Avatar as='a' src={steve} />
+                                                                <Comment.Content>
+                                                                    <Comment.Author as='a'>{sub.userId.firstName}</Comment.Author>
+                                                                    <Comment.Text>{sub.subContent}</Comment.Text>
+                                                                </Comment.Content>
+                                                            </Comment>
+                                                        </Comment.Group>
+                                                    // </Comment.Group>
                                                 )
                                             }
                                             {
@@ -710,35 +701,31 @@ export default class SingleTicket extends Component {
                                             {
                                                 sub.userId._id === this.state.userId
                                                 ?
-                                                (
-                                                    <div>
-                                                    {
-                                                        this.state.editMode && this.state.commentId === sub._id
-                                                        ?
-                                                        (
-                                                            <div>
-                                                                <Button.Group>
-                                                                    <Button
-                                                                        size='mini'
-                                                                        onClick={this.handleEditCancel}
-                                                                    >
-                                                                    Don't Edit
-                                                                    </Button>
-                                                                    <Button.Or />
-                                                                    <Button
-                                                                        positive
-                                                                        size='mini'
-                                                                        onClick={this.handleSubCommentSubmit.bind(this, com._id, sub._id)}
-                                                                    >
-                                                                    Submit Comment
-                                                                    </Button>
-                                                                </Button.Group>
-                                                            </div>
-                                                        )
-                                                        :
-                                                        (   
-                                                            <div>
-                                                                <Comment.Group collapsed={this.state.collapsed}>
+                                                    this.state.editMode && this.state.commentId === sub._id
+                                                    ?
+                                                    (
+                                                        <Button.Group>
+                                                            <Button
+                                                                size='mini'
+                                                                onClick={this.handleEditCancel}
+                                                            >
+                                                            Don't Edit
+                                                            </Button>
+                                                            <Button.Or />
+                                                            <Button
+                                                                positive
+                                                                size='mini'
+                                                                onClick={this.handleSubCommentSubmit.bind(this, com._id, sub._id)}
+                                                            >
+                                                            Submit Comment
+                                                            </Button>
+                                                        </Button.Group>
+                                                    )
+                                                    :
+                                                    (   
+                                                        // <Comment.Group collapsed={this.state.collapsed}>
+                                                            <Comment.Actions>
+                                                                <Comment.Action active>
                                                                     <Button
                                                                         size='mini'
                                                                         attached='left'
@@ -746,12 +733,10 @@ export default class SingleTicket extends Component {
                                                                     >
                                                                     Edit
                                                                     </Button>
-                                                                </Comment.Group>
-                                                            </div>
-                                                        )
-                                                    }
-                                                    </div>
-                                                )
+                                                                </Comment.Action>
+                                                            </Comment.Actions>
+                                                        // </Comment.Group>
+                                                    )
                                                 :
                                                 null
                                             }
@@ -759,40 +744,38 @@ export default class SingleTicket extends Component {
                                                 this.state.replyMode && this.state.commentId === sub._id
                                                 ?
                                                 (
-                                                    <div className="btn btn-group">
-                                                        <Button.Group>
-                                                            <Button
-                                                                size='mini'
-                                                                onClick={this.handleReplyCancel}
-                                                            >
-                                                            Don't Reply
-                                                            </Button>
-                                                            <Button.Or />
-                                                            <Button
-                                                                positive
-                                                                size='mini'
-                                                                onClick={this.handleReplySubmit.bind(this, sub.parentId)}
-                                                            >
-                                                            Submit Reply
-                                                            </Button>
-                                                        </Button.Group>
-                                                    </div>
+                                                    <Button.Group>
+                                                        <Button
+                                                            size='mini'
+                                                            onClick={this.handleReplyCancel}
+                                                        >
+                                                        Don't Reply
+                                                        </Button>
+                                                        <Button.Or />
+                                                        <Button
+                                                            positive
+                                                            size='mini'
+                                                            onClick={this.handleReplySubmit.bind(this, sub.parentId)}
+                                                        >
+                                                        Submit Reply
+                                                        </Button>
+                                                    </Button.Group>
                                                 )
                                                 :
                                                 (
-                                                    <div>
-                                                        <Comment.Group
-                                                            collapsed={this.state.collapsed}
-                                                        >
-                                                            <Button
-                                                                size='mini'
-                                                                attached='right'
-                                                                onClick={this.handleReplyComment.bind(this, sub._id)}
-                                                            >
-                                                            Reply
-                                                            </Button>
-                                                        </Comment.Group>
-                                                    </div>
+                                                    // <Comment.Group collapsed={this.state.collapsed}>
+                                                        <Comment.Actions>
+                                                            <Comment.Action active>
+                                                                <Button
+                                                                    size='mini'
+                                                                    attached='right'
+                                                                    onClick={this.handleReplyComment.bind(this, sub._id)}
+                                                                >
+                                                                Reply
+                                                                </Button>
+                                                            </Comment.Action>
+                                                        </Comment.Actions>
+                                                    // </Comment.Group>
                                                 )
                                             }
                                         </li>
