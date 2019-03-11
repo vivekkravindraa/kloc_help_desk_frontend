@@ -358,7 +358,6 @@ export default class Form extends Component {
                         <small>1000 / {1000 - this.state.descriptionChars} characters remaining. </small>
                         <span className="badge badge-danger">{this.state.minDescription}</span>
                     </div>
-                    <small>Ex: john@abc.com,stephen@xyz.com</small>
                     <div className="form-group">
                         <input
                             type="text"
@@ -368,20 +367,19 @@ export default class Form extends Component {
                             onChange={this.handleRecipients}
                             multiple
                         />
+                        <small>Ex: john@abc.com,stephen@xyz.com</small>
                     </div>
-                    <small>Allowed file formats: *.jpg, *.jpeg, *.gif, *.png, *.pdf</small>
                     <div className="input-group mb-2">
                         <label className="custom-file-label">Choose file</label>
-                        <div className="custom-file">
-                            <input
-                                type="file"
-                                className="custom-file-input"
-                                onChange={this.handleSelectedFile}
-                                disabled={this.state.isUploading ? true : false}
-                                accept=".png,.jpg,.jpeg,.gif,.pdf"
-                                multiple
-                            />
-                        </div>
+                        <input
+                            type="file"
+                            className="custom-file-input"
+                            onChange={this.handleSelectedFile}
+                            disabled={this.state.isUploading ? true : false}
+                            accept=".png,.jpg,.jpeg,.gif,.pdf"
+                            multiple
+                        />
+                        <small>Allowed file formats: *.jpg, *.jpeg, *.gif, *.png, *.pdf</small>
                     </div>
                     {
                         this.state.isVisible
@@ -438,17 +436,20 @@ export default class Form extends Component {
                                         <span className="badge badge-light">{this.state.files.length}</span>
                                     </button>
                                 )
-                            :   null
+                            :
+                            null
                         :   
-                        this.state.imageNames.length > 0
-                        ?   this.state.imageNames.map((file,index) => {
-                                return (
-                                    <li key={index} style={{listStyleType: "none"}}>
-                                        {`${file} `}
-                                    </li>
-                                )
-                            })
-                        :   null
+                            this.state.imageNames.length > 0
+                            ?   
+                                this.state.imageNames.map((file,index) => {
+                                    return (
+                                        <li key={index} style={{listStyleType: "none"}}>
+                                            {`${file} `}
+                                        </li>
+                                    )
+                                })
+                            :
+                            null
                     }
                     {
                         this.state.isUploading

@@ -97,7 +97,12 @@ export default class Profile extends Component {
             checkConfirmPassword: '',
             minOldPassword: '',
             minNewPassword: '',
-            minConfirmPassword: ''
+            minConfirmPassword: '',
+            minMobileNumber: '',
+            error: {
+                statusCode: '',
+                message: ''
+            }
         })
         this.getUser()
     }
