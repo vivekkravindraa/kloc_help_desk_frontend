@@ -477,26 +477,23 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="btn-group">
                                         <button
-                                            type="submit"
+                                            className="btn"
                                             style={{ backgroundColor:"orange", color:"black", border:0 }}
-                                            className="btn btn-secondary"
                                             onClick={this.handleCancel}
                                         >
                                         Cancel
                                         </button>
                                         <button
                                             type="submit"
+                                            className="btn"
                                             style={{ backgroundColor:"yellowgreen", color:"black", border:0 }}
-                                            className="btn btn-secondary"
                                             onClick={this.handleSubmitPassword}
                                         >
                                         Save
                                         </button>
-                                    </div>
-                                    <div className="btn">
                                         <button
-                                            style={{backgroundColor:"darkblue"}}
-                                            className="btn btn-secondary"
+                                            style={{ backgroundColor:"darkblue", color:"white", outline:0 }}
+                                            className="btn"
                                             onClick={() => {
                                                 this.setState(() => ({
                                                     isChanging: false,
@@ -568,24 +565,36 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="btn-group">
                                         <button
-                                            style={{ backgroundColor:"orange", color:"black", border:0 }}
-                                            className="btn btn-secondary"
+                                            className="btn"
+                                            style={{
+                                                backgroundColor:"orange",
+                                                color:"black",
+                                                border:0,
+                                                outline:0
+                                            }}
                                             onClick={this.handleCancel}
                                         >
                                         Cancel
                                         </button>
                                         <button
-                                            style={{ backgroundColor:"yellowgreen", color:"black", border:0 }}
-                                            className="btn btn-secondary"
+                                            type="submit"
+                                            className="btn"
+                                            style={{
+                                                backgroundColor:"yellowgreen",
+                                                color:"black",
+                                                border:0,
+                                                outline:0
+                                            }}
                                             onClick={this.handleUpdateProfile}
                                         >
                                         Save
                                         </button>
-                                    </div>
-                                    <div className="btn">
                                         <button
-                                            style={{backgroundColor:"darkblue"}}
-                                            className="btn btn-secondary"
+                                            className="btn"
+                                            style={{
+                                                backgroundColor:"darkblue",
+                                                color:"white"
+                                            }}
                                             onClick={this.handleChangePassword}
                                         >
                                         Change password
