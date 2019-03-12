@@ -18,7 +18,8 @@ export default class Tickets extends Component {
             ticketsData: [],
             filterData: [],
             moderators: [],
-            options: [],
+            selected: {},
+            selectAll: 0,
             isArchived: false,
             isVisible: false,
             error: {
@@ -90,7 +91,11 @@ export default class Tickets extends Component {
         })
         .catch((error) => {
             this.setState(() => ({
-                error: {...this.state.error, statusCode: error.response.status, message: error.message }
+                error: {
+                    ...this.state.error,
+                    statusCode: error.response.status,
+                    message: error.message
+                }
             }))
         })
     }
@@ -192,43 +197,63 @@ export default class Tickets extends Component {
         })
     }
 
-    handleCheckbox = (id,e) => {
-        let eventChecked = e.target.checked;
+    toggleRow = (id) => {
+		const newSelected = Object.assign({}, this.state.selected);
+		newSelected[id] = !this.state.selected[id];
+		this.setState({
+			selected: newSelected,
+			selectAll: 2
+		});
+    }
+    
+    toggleSelectAll = () => {
+		let newSelected = {};
 
-        if(eventChecked) {
-            this.state.options.push(id);
-        } else {
-            let index = this.state.options.indexOf(id);
-            this.state.options.splice(index,1);
-        }
-    } 
+		if (this.state.selectAll === 0) {
+			this.state.filterData.forEach(x => {
+				newSelected[x._id] = true;
+			});
+		}
 
+		this.setState({
+			selected: newSelected,
+			selectAll: this.state.selectAll === 0 ? 1 : 0
+		});
+    }
+    
     handleAssignTo = (e) => {
         let assignTo = e.target.value;
-        this.state.assignTo = assignTo;
+        this.setState({
+            assignTo: assignTo
+        })
     }
 
     handleAssign = (e) => {
         e.preventDefault();
 
         let formData = {
-            tickets: this.state.options,
+            tickets: this.state.selected !== {} ? Object.keys(this.state.selected) : [],
             user: this.state.assignTo
         }
 
-        if(this.state.options.length > 0 && this.state.assignTo !== '') {
+        if(this.state.selected !== {} && this.state.assignTo !== '') {
             axios.post(`${baseURL}/tickets/ticket_assign`, formData, {headers: {'x-auth': localStorage.getItem('x-auth')}})
             .then((response) => {
                 this.setState({
                     isAssigned: true,
-                    options: [],
-                    assignTo: ''
+                    assignTo: '',
+                    selected: {},
+                    selectAll: 0
                 })
                 this.getUnassigned();
             })
             .catch((error) => {
                 this.setState(() => ({
-                    error: { ...this.state.error, statusCode: error.response.status, message: error.message }
+                    error: {
+                        ...this.state.error,
+                        statusCode: error.response.status,
+                        message: error.message
+                    }
                 }))
             })
         }
@@ -241,14 +266,30 @@ export default class Tickets extends Component {
         
         const columns = [
             {
-                Header: "Select Ticket",
+                id: "checkbox",
                 accessor: "",
-                Cell: props => {
+                Cell: ({ original }) => {
                     return (
                         <input
                             type="checkbox"
                             className="checkbox"
-                            onChange={this.handleCheckbox.bind(this,props.original._id)}
+                            checked={this.state.selected[original._id] === true}
+                            onChange={() => this.toggleRow(original._id)}
+                        />
+                    );
+                },
+                Header: x => {
+                    return (
+                        <input
+                            type="checkbox"
+                            className="checkbox"
+                            checked={this.state.selectAll === 1}
+                            ref={input => {
+                                if (input) {
+                                    input.indeterminate = this.state.selectAll === 2;
+                                }
+                            }}
+                            onChange={() => this.toggleSelectAll()}
                         />
                     );
                 },
