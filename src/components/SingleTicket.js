@@ -482,7 +482,7 @@ export default class SingleTicket extends Component {
                 this.state.commentsData.length > 0 ?
                 this.state.commentsData.map((com,index) => {
                     return (
-                        <Segment key={index} style={{ listStyleType: "none" }}>
+                        <Segment key={index}>
                             {
                                 this.state.editMode && this.state.commentId === com._id
                                 ?
@@ -531,10 +531,30 @@ export default class SingleTicket extends Component {
                                         placeholder="reply here.."
                                         value={this.state.reply}
                                         onChange={this.handleReply}
+                                        style={{ marginBottom: 14 }}
                                     >
                                     </textarea>
                                 )
                                 :   null
+                            }
+                            {
+                                com.userId._id === this.state.userId
+                                ?
+                                    this.state.editMode && this.state.replyMode && this.state.commentId === com._id   
+                                    ?   null
+                                    :
+                                    (
+                                        <Button content='Edit' labelPosition='left' icon='edit' size='mini' onClick={this.handleEditComment.bind(this, com._id, com.content)} primary />
+                                    )
+                                :   null
+                            }
+                            {
+                                this.state.replyMode && this.state.editMode && this.state.commentId === com._id
+                                ?   null
+                                :
+                                (
+                                    <Button content='Reply' labelPosition='left' icon='reply' size='mini' onClick={this.handleReplyComment.bind(this, com._id)} primary />
+                                )
                             }
                             {
                                 com.userId._id === this.state.userId
@@ -584,32 +604,16 @@ export default class SingleTicket extends Component {
                                 :
                                 null
                             }
-                            <div className="form-inline">
-                            {
-                                com.userId._id === this.state.userId
-                                ?
-                                    this.state.editMode && this.state.replyMode && this.state.commentId === com._id   
-                                    ?   null
-                                    :
-                                    (
-                                        <Button content='Edit' labelPosition='left' icon='edit' size='mini' onClick={this.handleEditComment.bind(this, com._id, com.content)} primary />
-                                    )
-                                :   null
-                            }
-                            {
-                                this.state.replyMode && this.state.editMode && this.state.commentId === com._id
-                                ?   null
-                                :
-                                (
-                                    <Button content='Reply' labelPosition='left' icon='reply' size='mini' onClick={this.handleReplyComment.bind(this, com._id)} primary />
-                                )
-                            }
-                            </div>
                             {
                                 com.subComment.length > 0 ?
                                 com.subComment.map((sub,index) => {
                                     return (
-                                        <Segment key={index} style={{paddingLeft: "100px"}}>
+                                        <Segment
+                                            key={index}
+                                            style={{
+                                                paddingLeft: "100px"
+                                            }}
+                                        >
                                             {
                                                 this.state.editMode && this.state.commentId === sub._id
                                                 ?
@@ -660,10 +664,32 @@ export default class SingleTicket extends Component {
                                                         placeholder="reply here.."
                                                         value={this.state.reply}
                                                         onChange={this.handleReply}
+                                                        style={{ marginBottom: 14 }}
                                                     >
                                                     </textarea>
                                                 )
                                                 :   null
+                                            }
+                                            {
+                                                sub.userId._id === this.state.userId
+                                                ?
+                                                    this.state.editMode && this.state.replyMode && this.state.commentId === sub._id
+                                                    ?
+                                                    null
+                                                    :
+                                                    (   
+                                                        <Button content='Edit' labelPosition='left' icon='edit' size='mini' onClick={this.handleEditComment.bind(this, sub._id, sub.subContent)} primary />
+                                                    )
+                                                :   null
+                                            }
+                                            {
+                                                this.state.replyMode && this.state.editMode && this.state.commentId === sub._id
+                                                ?
+                                                null
+                                                :
+                                                (
+                                                    <Button content='Reply' labelPosition='left' icon='reply' size='mini' onClick={this.handleReplyComment.bind(this, sub._id)} primary />
+                                                )
                                             }
                                             {
                                                 sub.userId._id === this.state.userId
@@ -713,29 +739,6 @@ export default class SingleTicket extends Component {
                                                 :
                                                 null
                                             }
-                                            <div className="form-inline">
-                                            {
-                                                sub.userId._id === this.state.userId
-                                                ?
-                                                    this.state.editMode && this.state.replyMode && this.state.commentId === sub._id
-                                                    ?
-                                                    null
-                                                    :
-                                                    (   
-                                                        <Button content='Edit' labelPosition='left' icon='edit' size='mini' onClick={this.handleEditComment.bind(this, sub._id, sub.subContent)} primary />
-                                                    )
-                                                :   null
-                                            }
-                                            {
-                                                this.state.replyMode && this.state.editMode && this.state.commentId === sub._id
-                                                ?
-                                                null
-                                                :
-                                                (
-                                                    <Button content='Reply' labelPosition='left' icon='reply' size='mini' onClick={this.handleReplyComment.bind(this, sub._id)} primary />
-                                                )
-                                            }
-                                            </div>
                                         </Segment>
                                     )
                                 })
