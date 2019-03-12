@@ -30,7 +30,6 @@ export default class SingleTicket extends Component {
             checkStatus: '',
             ticketStatus: '',
             ticketPriority: null,
-            isUpdated: false,
             editMode: false,
             replyMode: false,
             collapsed: false,
@@ -145,8 +144,7 @@ export default class SingleTicket extends Component {
             this.setState({
                 ticketData: response.data,
                 checkStatus: response.data.ticketStatus,
-                ticketStatus: response.data.ticketStatus[0].toUpperCase() + response.data.ticketStatus.slice(1),
-                isUpdated: true
+                ticketStatus: response.data.ticketStatus[0].toUpperCase() + response.data.ticketStatus.slice(1)
             })
         })
         .catch((error) => {
@@ -155,8 +153,7 @@ export default class SingleTicket extends Component {
                     ...this.state.error,
                     statusCode: error.response.status,
                     message: error.message,
-                },
-                isUpdated: false
+                }
             }))
         })
     }
@@ -169,8 +166,7 @@ export default class SingleTicket extends Component {
         .then((response) => {
             this.setState({
                 ticketData: response.data,
-                ticketPriority: response.data.ticketPriority.toString(),
-                isUpdated: true
+                ticketPriority: response.data.ticketPriority.toString()
             })
         })
         .catch((error) => {
@@ -179,8 +175,7 @@ export default class SingleTicket extends Component {
                     ...this.state.error,
                     statusCode: error.response.status,
                     message: error.message,
-                },
-                isUpdated: false
+                }
             }))
         })
     }
@@ -312,22 +307,6 @@ export default class SingleTicket extends Component {
         return (
             <div className="container">
             <Navigation />
-            {
-                this.state.isUpdated ?
-                (
-                    <div
-                        style={{ 
-                            textAlign: "center",
-                            visibility: this.state.isUpdated ? 'visible' : 'hidden'
-                        }}
-                    className="alert alert-success"
-                    role="alert"
-                    >
-                    Success!
-                    </div>
-                )
-                :   null
-            }
             <h2 style={{ textAlign: "center" }}>Ticket information</h2>
             <div className="card text-center">
                 <div className="card-header">Ticket ID: {this.state.ticketData._id}</div>
@@ -371,7 +350,7 @@ export default class SingleTicket extends Component {
                             )
                         })
                     }
-                    <p>Status: {this.state.ticketStatus}</p>
+                    <p>Status: {this.state.ticketStatus === 'Assigned' ? 'Processing' : this.state.ticketStatus}</p>
                     {   
                         this.state.role === 'admin' || this.state.role === 'moderator'
                         ?
@@ -402,7 +381,7 @@ export default class SingleTicket extends Component {
                                 Open
                                 </option>
                                 <option
-                                    value="processing"
+                                    value="assigned"
                                     disabled={this.state.role === 'customer' ? true : false}
                                 >
                                 Processing
