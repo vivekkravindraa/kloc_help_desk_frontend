@@ -175,11 +175,7 @@
 
 /* All Tickets React Table CSS */
 
-.all-tickets-table {
-    border:0px;
-}
-
-.all-users-table {
+.ReactTable {
     border:0px;
 }
 
