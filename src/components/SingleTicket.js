@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Button, Comment } from 'semantic-ui-react';
+import { Button, Comment, Segment } from 'semantic-ui-react';
 // import { Checkbox } from 'semantic-ui-react';
 import axios from 'axios';
 import { baseURL } from '../base_url';
@@ -432,24 +432,29 @@ export default class SingleTicket extends Component {
                                 onChange={this.commentHandle}
                             >
                             </textarea>
-                            <div className="btn-group">
-                                <button className="btn btn-secondary" onClick={this.addCommentHandle}>Add Comment</button>
-                                {
-                                    decodeToken().role === 'admin' && (
-                                        <Link className="btn btn-secondary" to="/tickets">Back</Link>
-                                    )
-                                }
-                                {   
-                                    decodeToken().role === 'customer' && (
-                                        <Link className="btn btn-secondary" to="/my_tickets">Back</Link>
-                                    )
-                                }
-                                {
-                                    decodeToken().role === 'moderator' && (
-                                        <Link className="btn btn-secondary" to="/moderator_tickets">Back</Link>
-                                    )
-                                }
-                            </div>
+                            <Button
+                                positive
+                                onClick={this.addCommentHandle}
+                            >
+                            Submit Comment
+                            </Button>
+                            <Button>
+                            {
+                                decodeToken().role === 'admin' && (
+                                    <Link to="/tickets">Go Back</Link>
+                                )
+                            }
+                            {   
+                                decodeToken().role === 'customer' && (
+                                    <Link to="/my_tickets">Go Back</Link>
+                                )
+                            }
+                            {
+                                decodeToken().role === 'moderator' && (
+                                    <Link to="/moderator_tickets">Go Back</Link>
+                                )
+                            }
+                            </Button>
                         </div>
                     )
                     :   null
@@ -477,7 +482,7 @@ export default class SingleTicket extends Component {
                 this.state.commentsData.length > 0 ?
                 this.state.commentsData.map((com,index) => {
                     return (
-                        <li key={index} style={{ listStyleType: "none" }}>
+                        <Segment key={index} style={{ listStyleType: "none" }}>
                             {
                                 this.state.editMode && this.state.commentId === com._id
                                 ?
@@ -604,7 +609,7 @@ export default class SingleTicket extends Component {
                                 com.subComment.length > 0 ?
                                 com.subComment.map((sub,index) => {
                                     return (
-                                        <li key={index} style={{paddingLeft: "100px"}}>
+                                        <Segment key={index} style={{paddingLeft: "100px"}}>
                                             {
                                                 this.state.editMode && this.state.commentId === sub._id
                                                 ?
@@ -731,12 +736,12 @@ export default class SingleTicket extends Component {
                                                 )
                                             }
                                             </div>
-                                        </li>
+                                        </Segment>
                                     )
                                 })
                                 :   null
                             }
-                        </li>
+                        </Segment>
                     )
                 })
                 :   null
