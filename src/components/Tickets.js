@@ -13,7 +13,7 @@ export default class Tickets extends Component {
         this.state = {
             assignTo: '',
             filterBy: '',
-            search : '',
+            search: '',
             userId: decodeToken()._id,
             ticketsData: [],
             filterData: [],
@@ -35,79 +35,79 @@ export default class Tickets extends Component {
     }
 
     getAll = () => {
-        axios.get(`${baseURL}/tickets`, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-        .then((response) => {
-            this.setState({
-                ticketsData: response.data,
-                filterData: response.data
+        axios.get(`${baseURL}/tickets`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+            .then((response) => {
+                this.setState({
+                    ticketsData: response.data,
+                    filterData: response.data
+                })
             })
-        })
-        .catch((error) => {
-            this.setState({
-                ticketsData: [],
-                filterData: []
+            .catch((error) => {
+                this.setState({
+                    ticketsData: [],
+                    filterData: []
+                })
             })
-        })
     }
 
     getUnassigned = () => {
-        axios.get(`${baseURL}/tickets/filter_unassigned_tickets`, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-        .then((response) => {
-            this.setState({
-                ticketsData: response.data,
-                filterData: response.data
+        axios.get(`${baseURL}/tickets/filter_unassigned_tickets`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+            .then((response) => {
+                this.setState({
+                    ticketsData: response.data,
+                    filterData: response.data
+                })
             })
-        })
-        .catch((error) => {
-            this.setState({
-                ticketsData: [],
-                filterData: []
+            .catch((error) => {
+                this.setState({
+                    ticketsData: [],
+                    filterData: []
+                })
             })
-        })
     }
 
     getAssigned = () => {
-        axios.get(`${baseURL}/tickets/filter_assigned_tickets`, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-        .then((response) => {
-            this.setState({
-                ticketsData: response.data,
-                filterData: response.data
+        axios.get(`${baseURL}/tickets/filter_assigned_tickets`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+            .then((response) => {
+                this.setState({
+                    ticketsData: response.data,
+                    filterData: response.data
+                })
             })
-        })
-        .catch((error) => {
-            this.setState({
-                ticketsData: [],
-                filterData: []
+            .catch((error) => {
+                this.setState({
+                    ticketsData: [],
+                    filterData: []
+                })
             })
-        })
     }
 
     getModerators = () => {
-        axios.get(`${baseURL}/users?user=moderator`, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-        .then((response) => {
-            this.setState({
-                moderators: response.data
+        axios.get(`${baseURL}/users?user=moderator`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+            .then((response) => {
+                this.setState({
+                    moderators: response.data
+                })
             })
-        })
-        .catch((error) => {
-            this.setState(() => ({
-                error: {
-                    ...this.state.error,
-                    statusCode: error.response.status,
-                    message: error.message
-                }
-            }))
-        })
+            .catch((error) => {
+                this.setState(() => ({
+                    error: {
+                        ...this.state.error,
+                        statusCode: error.response.status,
+                        message: error.message
+                    }
+                }))
+            })
     }
- 
+
     getPriority = (priority) => {
-        if(Number(priority) === 1) {
+        if (Number(priority) === 1) {
             return 'Low';
-        } else if(Number(priority) === 2) {
+        } else if (Number(priority) === 2) {
             return 'Medium';
-        } else if(Number(priority) === 3) {
+        } else if (Number(priority) === 3) {
             return 'High';
-        } else if(Number(priority) === 4) {
+        } else if (Number(priority) === 4) {
             return 'Urgent';
         }
     }
@@ -121,19 +121,19 @@ export default class Tickets extends Component {
     }
 
     handleSelectFilters = (e) => {
-        if(e.target.value === 'all') {
+        if (e.target.value === 'all') {
             this.setState({
                 filterBy: e.target.value,
                 isVisible: false
             })
             return this.getAll();
-        } else if(e.target.value === 'unassigned') {
+        } else if (e.target.value === 'unassigned') {
             this.setState({
                 filterBy: e.target.value,
                 isVisible: true
             })
             return this.getUnassigned();
-        } else if(e.target.value === 'assigned') {
+        } else if (e.target.value === 'assigned') {
             this.setState({
                 filterBy: e.target.value,
                 isVisible: false
@@ -144,84 +144,84 @@ export default class Tickets extends Component {
                 filterBy: e.target.value,
                 isVisible: false
             })
-        } 
+        }
     }
 
     handleFilterByStatus = (e) => {
         let value = e.target.value;
-        axios.get(`${baseURL}/tickets/filter_by_status?ticketStatus=${value}&filterTickets=all`, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-        .then((response) => {
-            this.setState({
-                ticketsData: response.data,
-                filterData: response.data
+        axios.get(`${baseURL}/tickets/filter_by_status?ticketStatus=${value}&filterTickets=all`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+            .then((response) => {
+                this.setState({
+                    ticketsData: response.data,
+                    filterData: response.data
+                })
             })
-        })
-        .catch((error) => {
-            this.setState({
-                ticketsData: [],
-                filterData: []
+            .catch((error) => {
+                this.setState({
+                    ticketsData: [],
+                    filterData: []
+                })
             })
-        })
     }
 
     handleFilterByPriority = (e) => {
         let value = e.target.value;
-        axios.get(`${baseURL}/tickets/filter_by_priority?ticketPriority=${value}&filterTickets=all`, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-        .then((response) => {
-            this.setState({
-                ticketsData: response.data,
-                filterData: response.data
+        axios.get(`${baseURL}/tickets/filter_by_priority?ticketPriority=${value}&filterTickets=all`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+            .then((response) => {
+                this.setState({
+                    ticketsData: response.data,
+                    filterData: response.data
+                })
             })
-        })
-        .catch((error) => {
-            this.setState({
-                ticketsData: [],
-                filterData: []
+            .catch((error) => {
+                this.setState({
+                    ticketsData: [],
+                    filterData: []
+                })
             })
-        })
     }
 
     handleDeleteTicket = (id) => {
-        axios.delete(`${baseURL}/tickets/${id}/archive`, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-        .then((response) => {
-            this.setState({
-                isArchived: true
+        axios.delete(`${baseURL}/tickets/${id}/archive`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+            .then((response) => {
+                this.setState({
+                    isArchived: true
+                })
+                this.getAll()
             })
-            this.getAll()
-        })
-        .catch((error) => {
-            this.setState({
-                ticketsData: [],
-                filterData: []
+            .catch((error) => {
+                this.setState({
+                    ticketsData: [],
+                    filterData: []
+                })
             })
-        })
     }
 
     toggleRow = (id) => {
 
         const newSelected = Object.assign({}, this.state.selected);
         newSelected[id] = !this.state.selected[id];
-		this.setState({
-			selected: newSelected,
-			selectAll: 2
+        this.setState({
+            selected: newSelected,
+            selectAll: 2
         });
     }
-    
+
     toggleSelectAll = () => {
-		let newSelected = {};
+        let newSelected = {};
 
-		if (this.state.selectAll === 0) {
-			this.state.filterData.forEach(x => {
-				newSelected[x._id] = true;
-			});
-		}
+        if (this.state.selectAll === 0) {
+            this.state.filterData.forEach(x => {
+                newSelected[x._id] = true;
+            });
+        }
 
-		this.setState({
-			selected: newSelected,
-			selectAll: this.state.selectAll === 0 ? 1 : 0
-		});
+        this.setState({
+            selected: newSelected,
+            selectAll: this.state.selectAll === 0 ? 1 : 0
+        });
     }
-    
+
     handleAssignTo = (e) => {
         let assignTo = e.target.value;
         this.setState({
@@ -235,9 +235,9 @@ export default class Tickets extends Component {
         let selected = this.state.selected;
         let local = [];
 
-        if(selected !== {}) {
-            for(let key in selected) {
-                if(selected[key] === true) {
+        if (selected !== {}) {
+            for (let key in selected) {
+                if (selected[key] === true) {
                     local.push(key)
                 }
             }
@@ -248,34 +248,34 @@ export default class Tickets extends Component {
             user: this.state.assignTo
         }
 
-        if(this.state.selected !== {} && this.state.assignTo !== '') {
-            axios.post(`${baseURL}/tickets/ticket_assign`, formData, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-            .then((response) => {
-                this.setState({
-                    isAssigned: true,
-                    assignTo: '',
-                    selected: {},
-                    selectAll: 0
+        if (this.state.selected !== {} && this.state.assignTo !== '') {
+            axios.post(`${baseURL}/tickets/ticket_assign`, formData, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+                .then((response) => {
+                    this.setState({
+                        isAssigned: true,
+                        assignTo: '',
+                        selected: {},
+                        selectAll: 0
+                    })
+                    this.getUnassigned();
                 })
-                this.getUnassigned();
-            })
-            .catch((error) => {
-                this.setState(() => ({
-                    error: {
-                        ...this.state.error,
-                        statusCode: error.response.status,
-                        message: error.message
-                    }
-                }))
-            })
+                .catch((error) => {
+                    this.setState(() => ({
+                        error: {
+                            ...this.state.error,
+                            statusCode: error.response.status,
+                            message: error.message
+                        }
+                    }))
+                })
         }
     }
-    
+
     render() {
-        if(!decodeToken() || (decodeToken().role !== 'admin')) {
+        if (!decodeToken() || (decodeToken().role !== 'admin')) {
             return <Redirect to="/login" />
         }
-        
+
         const columns = [
             {
                 id: "checkbox",
@@ -361,7 +361,7 @@ export default class Tickets extends Component {
             {
                 Header: "View Ticket",
                 Cell: props => <Link to={{
-                    pathname:`/tickets/${props.original._id}`,
+                    pathname: `/tickets/${props.original._id}`,
                     state: {
                         userId: `${this.state.userId}`
                     }
@@ -378,8 +378,8 @@ export default class Tickets extends Component {
                 Cell: props => {
                     return (
                         <button
-                            style={{backgroundColor: "red", color: "#fefefe"}}
-                            onClick={() =>{
+                            style={{ backgroundColor: "red", color: "#fefefe" }}
+                            onClick={() => {
                                 this.handleDeleteTicket(props.original._id)
                             }}
                         >
@@ -400,21 +400,22 @@ export default class Tickets extends Component {
             <div className="container">
                 <Navigation />
                 <form>
-                    <h2 style={{textAlign:"center"}}>All tickets</h2>
+                    <h2 style={{ textAlign: "center" }}>All tickets</h2>
                     {
                         this.state.isArchived ?
                         (
                             <div
-                                style={{ 
+                                style={{
                                     textAlign: "center",
                                     visibility: this.state.isArchived ? 'visible' : 'hidden'
                                 }}
                                 className="alert alert-success"
                                 role="alert"
                             >
-                            Successfully deleted the ticket!
+                                Successfully deleted the ticket!
                             </div>
-                        )   :   null
+                        )
+                        :   null
                     }
                     <div className="form-inline">
                         <div className="search-subject">
@@ -443,67 +444,68 @@ export default class Tickets extends Component {
                         {
                             this.state.filterBy === 'status'
                             ?
-                                <div className="filter-by-status">
-                                    <label>Filter by Status:</label>
-                                    <select
-                                        className="custom-select custom-select-sm"
-                                        onChange={this.handleFilterByStatus}
-                                    >
-                                        <option selected disabled={true}>Select Status</option>
-                                        <option value="open">Open</option>
-                                        <option value="processing">Processing</option>
-                                        <option value="pending">Pending</option>
-                                        <option value="resolved">Resolve</option>
-                                        <option value="closed">Close</option>
-                                    </select>
-                                </div>
+                            <div className="filter-by-status">
+                                <label>Filter by Status:</label>
+                                <select
+                                    className="custom-select custom-select-sm"
+                                    onChange={this.handleFilterByStatus}
+                                >
+                                    <option selected disabled={true}>Select Status</option>
+                                    <option value="open">Open</option>
+                                    <option value="processing">Processing</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="resolved">Resolve</option>
+                                    <option value="closed">Close</option>
+                                </select>
+                            </div>
                             :   null
                         }
                         {
                             this.state.filterBy === 'priority'
                             ?
-                                <div className="filter-by-priority">
-                                    <label>Filter by Priority:</label>
-                                    <select
-                                        className="custom-select custom-select-sm"
-                                        onChange={this.handleFilterByPriority}
-                                    >
-                                        <option selected disabled={true}>Select Priority</option>
-                                        <option value={1}>Low</option>
-                                        <option value={2}>Medium</option>
-                                        <option value={3}>High</option>
-                                        <option value={4}>Urgent</option>
-                                    </select>
-                                </div>
+                            <div className="filter-by-priority">
+                                <label>Filter by Priority:</label>
+                                <select
+                                    className="custom-select custom-select-sm"
+                                    onChange={this.handleFilterByPriority}
+                                >
+                                    <option selected disabled={true}>Select Priority</option>
+                                    <option value={1}>Low</option>
+                                    <option value={2}>Medium</option>
+                                    <option value={3}>High</option>
+                                    <option value={4}>Urgent</option>
+                                </select>
+                            </div>
                             :   null
                         }
                         {
-                            this.state.filterData.length > 0 && this.state.filterBy === 'unassigned' ?
+                            this.state.filterData.length > 0 && this.state.filterBy === 'unassigned'
+                            ?
                                 <div className="assign-to">
                                     <label>Assign To:</label>
                                     <select
                                         className="custom-select custom-select-sm"
                                         onChange={this.handleAssignTo}
                                     >
-                                    <option selected disabled>Select Asignee</option>
-                                    {
-                                        this.state.moderators.length > 0 ?
-                                        (
-                                            this.state.moderators.map((mode,index) => {
-                                                return (
-                                                    <option key={index} value={mode._id}>{mode.email}</option>
+                                        <option selected disabled>Select Asignee</option>
+                                        {
+                                            this.state.moderators.length > 0 ?
+                                                (
+                                                    this.state.moderators.map((mode, index) => {
+                                                        return (
+                                                            <option key={index} value={mode._id}>{mode.email}</option>
+                                                        )
+                                                    })
                                                 )
-                                            })
-                                        )
-                                        :   null
-                                    }
+                                                : null
+                                        }
                                     </select>
                                     <button
                                         style={{ backgroundColor: "yellowgreen", color: "black", border: 0 }}
                                         className="btn btn-secondary btn-sm"
                                         onClick={this.handleAssign}
                                     >
-                                    Assign
+                                        Assign
                                     </button>
                                 </div>
                             :   null
