@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Button, Comment, Form } from 'semantic-ui-react';
+import { Button, Comment } from 'semantic-ui-react';
 // import { Checkbox } from 'semantic-ui-react';
 // import { Image, Modal } from 'semantic-ui-react';
 import axios from 'axios';
@@ -541,18 +541,16 @@ export default class SingleTicket extends Component {
                                 this.state.replyMode && this.state.commentId === com._id
                                 ?
                                 (
-                                    <Form>
-                                        <textarea
-                                            type="text"
-                                            rows={2}
-                                            maxLength={1000}
-                                            className="form-control"
-                                            placeholder="reply here.."
-                                            value={this.state.reply}
-                                            onChange={this.handleReply}
-                                        >
-                                        </textarea>
-                                    </Form>
+                                    <textarea
+                                        type="text"
+                                        rows={2}
+                                        maxLength={1000}
+                                        className="form-control"
+                                        placeholder="reply here.."
+                                        value={this.state.reply}
+                                        onChange={this.handleReply}
+                                    >
+                                    </textarea>
                                 )
                                 :   null
                             }
@@ -696,18 +694,16 @@ export default class SingleTicket extends Component {
                                                 this.state.replyMode && this.state.commentId === sub._id
                                                 ?
                                                 (
-                                                    <Form>
-                                                        <textarea
-                                                            type="text"
-                                                            rows={2}
-                                                            maxLength={1000}
-                                                            className="form-control"
-                                                            placeholder="reply here.."
-                                                            value={this.state.reply}
-                                                            onChange={this.handleReply}
-                                                        >
-                                                        </textarea>
-                                                    </Form>
+                                                    <textarea
+                                                        type="text"
+                                                        rows={2}
+                                                        maxLength={1000}
+                                                        className="form-control"
+                                                        placeholder="reply here.."
+                                                        value={this.state.reply}
+                                                        onChange={this.handleReply}
+                                                    >
+                                                    </textarea>
                                                 )
                                                 :   null
                                             }
