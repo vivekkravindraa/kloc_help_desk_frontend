@@ -50,7 +50,11 @@ export default class ManageApplication extends Component {
         })
         .catch((error) => {
             this.setState(() => ({
-                error: { ...this.state.error, statusCode: error.response.status, message: error.message }
+                error: {
+                    ...this.state.error,
+                    statusCode: error.response.status,
+                    message: error.message
+                }
             }))
         })
     }
@@ -132,16 +136,20 @@ export default class ManageApplication extends Component {
             axios.put(`${baseURL}/applications/${this.state.appData._id}`, formData, {headers: {'x-auth': localStorage.getItem('x-auth')}})
             .then((response) => {
                 this.setState({
-                    isSuccess: true,
-                    editMode: false,
                     appData: response.data,
                     appName: response.data.name,
                     appDescription: response.data.description,
+                    isSuccess: true,
+                    editMode: false
                 })
             })
             .catch((error) => {
                 this.setState(() => ({
-                    error: { ...this.state.error, statusCode: error.response.status, message: error.message }
+                    error: {
+                        ...this.state.error,
+                        statusCode: error.response.status,
+                        message: error.message
+                    }
                 }))
             })
         }
@@ -157,7 +165,11 @@ export default class ManageApplication extends Component {
         })
         .catch((error) => {
             this.setState(() => ({
-                error: { ...this.state.error, statusCode: error.response.status, message: error.message }
+                error: {
+                    ...this.state.error,
+                    statusCode: error.response.status,
+                    message: error.message
+                }
             }))
         })
     }
@@ -182,7 +194,8 @@ export default class ManageApplication extends Component {
                         >
                         Unable to update the application!
                         </div>
-                    )   :   null
+                    )
+                    :   null
                 }
                 {
                     this.state.isSuccess ? 
@@ -245,7 +258,8 @@ export default class ManageApplication extends Component {
                         >
                         Please enter the required details!
                         </div>
-                    )   :   null
+                    )
+                    :   null
                 }
                 {
                     !this.state.editMode ?
@@ -331,54 +345,52 @@ export default class ManageApplication extends Component {
                             (   
                                 <div>
                                     <h2 style={{textAlign: "center"}}>Edit application</h2>
-                                    <form>
-                                        <div className="form-group">
-                                            <label>Application Name *</label>
-                                            <input 
-                                                type="text" 
-                                                className="form-control"
-                                                value={this.state.appName}
-                                                onChange={this.appNameHandle}
-                                                onBlur={this.handleMinName}
-                                                minLength="3"
-                                                maxLength="50"
-                                            />
-                                            <small>50 / {50 - this.state.appNameChars} characters remaining. </small>
-                                            <span className="badge badge-danger">{this.state.minName}</span>
-                                        </div>
-                                        <div className="form-group">
-                                            <label>Application Description *</label>
-                                            <textarea 
-                                                type="text"
-                                                rows="4"
-                                                className="form-control" 
-                                                value={this.state.appDescription}
-                                                onChange={this.appDescriptionHandle}
-                                                onBlur={this.handleMinDescription}
-                                                minLength="10"
-                                                maxLength="1000"
-                                            />
-                                            <small>1000 / {1000 - this.state.appDescriptionChars} characters remaining. </small>
-                                            <span className="badge badge-danger">{this.state.minDescription}</span>
-                                        </div>
-                                        <div className="btn btn-group">
-                                            <Button.Group>
-                                            <button
-                                                className="btn btn-secondary"
-                                                onClick={this.handleUpdateApplication}
-                                            >
-                                            Save
-                                            </button>
-                                            <Button.Or />
-                                            <button
-                                                className="btn btn-secondary"
-                                                onClick={this.handleCancel}
-                                            >
-                                            Cancel
-                                            </button>
-                                            </Button.Group>
-                                        </div>
-                                    </form>
+                                    <div className="form-group">
+                                        <label>Application Name *</label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control"
+                                            value={this.state.appName}
+                                            onChange={this.appNameHandle}
+                                            onBlur={this.handleMinName}
+                                            minLength="3"
+                                            maxLength="50"
+                                        />
+                                        <small>50 / {50 - this.state.appNameChars} characters remaining. </small>
+                                        <span className="badge badge-danger">{this.state.minName}</span>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Application Description *</label>
+                                        <textarea 
+                                            type="text"
+                                            rows="4"
+                                            className="form-control" 
+                                            value={this.state.appDescription}
+                                            onChange={this.appDescriptionHandle}
+                                            onBlur={this.handleMinDescription}
+                                            minLength="10"
+                                            maxLength="1000"
+                                        />
+                                        <small>1000 / {1000 - this.state.appDescriptionChars} characters remaining. </small>
+                                        <span className="badge badge-danger">{this.state.minDescription}</span>
+                                    </div>
+                                    <div className="btn btn-group">
+                                        <Button.Group>
+                                        <button
+                                            className="btn btn-secondary"
+                                            onClick={this.handleUpdateApplication}
+                                        >
+                                        Save
+                                        </button>
+                                        <Button.Or />
+                                        <button
+                                            className="btn btn-secondary"
+                                            onClick={this.handleCancel}
+                                        >
+                                        Cancel
+                                        </button>
+                                        </Button.Group>
+                                    </div>
                                 </div>
                             )
                             :   null

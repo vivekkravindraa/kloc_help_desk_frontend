@@ -438,7 +438,6 @@ export default class SingleTicket extends Component {
                             >
                             Submit Comment
                             </Button>
-                            <Button>
                             {
                                 decodeToken().role === 'admin' && (
                                     <Link to="/tickets">Go Back</Link>
@@ -454,7 +453,6 @@ export default class SingleTicket extends Component {
                                     <Link to="/moderator_tickets">Go Back</Link>
                                 )
                             }
-                            </Button>
                         </div>
                     )
                     :   null
