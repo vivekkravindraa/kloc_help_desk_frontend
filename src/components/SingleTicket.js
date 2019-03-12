@@ -537,9 +537,8 @@ export default class SingleTicket extends Component {
                                     this.state.editMode && this.state.commentId === com._id
                                     ?
                                     (
-                                        <Button.Group>
+                                        <Button.Group size="mini">
                                             <Button
-                                                size='mini'
                                                 onClick={this.handleEditCancel}
                                             >
                                             Don't Edit
@@ -547,7 +546,6 @@ export default class SingleTicket extends Component {
                                             <Button.Or />
                                             <Button
                                                 positive
-                                                size='mini'
                                                 onClick={this.handleCommentSubmit.bind(this, com._id)}
                                             >
                                             Submit Comment
@@ -563,9 +561,8 @@ export default class SingleTicket extends Component {
                                 this.state.replyMode && this.state.commentId === com._id
                                 ?
                                 (
-                                    <Button.Group>
+                                    <Button.Group size="mini">
                                         <Button
-                                            size='mini'
                                             onClick={this.handleReplyCancel}
                                         >
                                         Don't Reply
@@ -573,7 +570,6 @@ export default class SingleTicket extends Component {
                                         <Button.Or />
                                         <Button
                                             positive
-                                            size='mini'
                                             onClick={this.handleReplySubmit.bind(this, com._id)}
                                         >
                                         Submit Reply
@@ -670,9 +666,8 @@ export default class SingleTicket extends Component {
                                                     this.state.editMode && this.state.commentId === sub._id
                                                     ?
                                                     (
-                                                        <Button.Group>
+                                                        <Button.Group size="mini">
                                                             <Button
-                                                                size='mini'
                                                                 onClick={this.handleEditCancel}
                                                             >
                                                             Don't Edit
@@ -680,7 +675,6 @@ export default class SingleTicket extends Component {
                                                             <Button.Or />
                                                             <Button
                                                                 positive
-                                                                size='mini'
                                                                 onClick={this.handleSubCommentSubmit.bind(this, com._id, sub._id)}
                                                             >
                                                             Submit Comment
@@ -696,9 +690,8 @@ export default class SingleTicket extends Component {
                                                 this.state.replyMode && this.state.commentId === sub._id
                                                 ?
                                                 (
-                                                    <Button.Group>
+                                                    <Button.Group size="mini">
                                                         <Button
-                                                            size='mini'
                                                             onClick={this.handleReplyCancel}
                                                         >
                                                         Don't Reply
@@ -706,7 +699,6 @@ export default class SingleTicket extends Component {
                                                         <Button.Or />
                                                         <Button
                                                             positive
-                                                            size='mini'
                                                             onClick={this.handleReplySubmit.bind(this, sub.parentId)}
                                                         >
                                                         Submit Reply
