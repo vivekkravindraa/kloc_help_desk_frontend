@@ -509,7 +509,7 @@ export default class SingleTicket extends Component {
                                         <Comment>
                                             <Comment.Avatar as='a' src={steve} />
                                             <Comment.Content>
-                                                <Comment.Author as='a'>{com.userId.firstName}</Comment.Author>
+                                                <Comment.Author as='a'>{com.userId.firstName[0].toUpperCase() + com.userId.firstName.slice(1)}</Comment.Author>
                                                 <Comment.Text>
                                                     <textarea
                                                         type="text"
@@ -530,7 +530,7 @@ export default class SingleTicket extends Component {
                                         <Comment>
                                             <Comment.Avatar as='a' src={steve} />
                                             <Comment.Content>
-                                                <Comment.Author as='a'>{com.userId.firstName}</Comment.Author>
+                                                <Comment.Author as='a'>{com.userId.firstName[0].toUpperCase() + com.userId.firstName.slice(1)}</Comment.Author>
                                                 <Comment.Text>{com.content}</Comment.Text>
                                             </Comment.Content>
                                         </Comment>
@@ -623,7 +623,7 @@ export default class SingleTicket extends Component {
                                                     attached='left'
                                                     onClick={this.handleEditComment.bind(this, com._id, com.content)}
                                                 >
-                                                    Edit
+                                                Edit
                                                 </Button>
                                             </Comment.Action>
                                         </Comment.Actions>
@@ -642,7 +642,7 @@ export default class SingleTicket extends Component {
                                                 attached='right'
                                                 onClick={this.handleReplyComment.bind(this, com._id)}
                                             >
-                                                Reply
+                                            Reply
                                             </Button>
                                         </Comment.Action>
                                     </Comment.Actions>
@@ -662,7 +662,7 @@ export default class SingleTicket extends Component {
                                                         <Comment>
                                                             <Comment.Avatar as='a' src={steve} />
                                                             <Comment.Content>
-                                                                <Comment.Author as='a'>{sub.userId.firstName}</Comment.Author>
+                                                                <Comment.Author as='a'>{sub.userId.firstName[0].toUpperCase() + sub.userId.firstName.slice(1)}</Comment.Author>
                                                                 <Comment.Text>
                                                                     <textarea
                                                                         type="text"
@@ -684,7 +684,7 @@ export default class SingleTicket extends Component {
                                                             <Comment>
                                                                 <Comment.Avatar as='a' src={steve} />
                                                                 <Comment.Content>
-                                                                    <Comment.Author as='a'>{sub.userId.firstName}</Comment.Author>
+                                                                    <Comment.Author as='a'>{sub.userId.firstName[0].toUpperCase() + sub.userId.firstName.slice(1)}</Comment.Author>
                                                                     <Comment.Text>{sub.subContent}</Comment.Text>
                                                                 </Comment.Content>
                                                             </Comment>
