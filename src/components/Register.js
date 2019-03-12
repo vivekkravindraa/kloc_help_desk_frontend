@@ -47,7 +47,11 @@ export default class Register extends Component {
         })
         .catch((error) => {
             this.setState(() => ({
-                error: {...this.state.error, statusCode: error.response.status, message: error.message }
+                error: {
+                    ...this.state.error,
+                    statusCode: error.response.status,
+                    message: `We're sorry. The link has been expired.`
+                }
             }))
         })
     }
@@ -157,7 +161,11 @@ export default class Register extends Component {
             })
             .catch((error) => {
                 this.setState(() => ({
-                    error: {...this.state.error, statusCode: error.response.status, message: error.message }
+                    error: {
+                        ...this.state.error,
+                        statusCode: error.response.status,
+                        message: `Unable to register! Make sure you've entered the correct details.`
+                    }
                 }))
             })
         }
@@ -181,7 +189,7 @@ export default class Register extends Component {
                         className="alert alert-danger"
                         role="alert"
                         >
-                        Unable to register, make sure you've entered the correct details!
+                        {this.state.error.message}
                         </div> 
                     )   : null
                 }
@@ -308,9 +316,6 @@ export default class Register extends Component {
                                 Submit
                                 </button>
                             </form>
-                            <p style={{ textAlign:"center", marginTop: "10px" }}>
-                                Take me to <Link to="/">Home >></Link>
-                            </p>
                         </div>
                     )
                 }
