@@ -38,15 +38,15 @@
 }
 
 .login-form input {
-    border: 0px solid;
-    border-bottom: 1px solid;
-    border-radius: 0px;
+    border:0px solid;
+    border-bottom:1px solid;
+    border-radius:0px;
 }
 
 .login-form .form-control:focus {
-    border-color: inherit;
-    -webkit-box-shadow: none;
-    box-shadow: none;
+    border-color:inherit;
+    -webkit-box-shadow:none;
+    box-shadow:none;
 }
 
 /* Signup CSS */
@@ -68,15 +68,15 @@
 }
 
 .signup-form input {
-    border: 0px solid;
-    border-bottom: 1px solid;
-    border-radius: 0px;
+    border:0px solid;
+    border-bottom:1px solid;
+    border-radius:0px;
 }
 
 .signup-form .form-control:focus {
-    border-color: inherit;
-    -webkit-box-shadow: none;
-    box-shadow: none;
+    border-color:inherit;
+    -webkit-box-shadow:none;
+    box-shadow:none;
 }
 
 /* Forgot Password CSS */
@@ -98,15 +98,15 @@
 }
 
 .forgot-password-form input {
-    border: 0px solid;
-    border-bottom: 1px solid;
-    border-radius: 0px;
+    border:0px solid;
+    border-bottom:1px solid;
+    border-radius:0px;
 }
 
 .forgot-password-form .form-control:focus {
-    border-color: inherit;
-    -webkit-box-shadow: none;
-    box-shadow: none;
+    border-color:inherit;
+    -webkit-box-shadow:none;
+    box-shadow:none;
 }
 
 /* Regsiter CSS */
@@ -128,18 +128,20 @@
 }
 
 .register-form input {
-    border: 0px solid;
-    border-bottom: 1px solid;
-    border-radius: 0px;
+    border:0px solid;
+    border-bottom:1px solid;
+    border-radius:0px;
 }
 
 .register-form .form-control:focus {
-    border-color: inherit;
-    -webkit-box-shadow: none;
-    box-shadow: none;
+    border-color:inherit;
+    -webkit-box-shadow:none;
+    box-shadow:none;
 }
 
-.register-form input[type="email"][disabled]{background-color:white;}
+.register-form input[type="email"][disabled] {
+    background-color:white;
+}
 
 /* Reset Password CSS */
 
@@ -160,15 +162,15 @@
 }
 
 .reset-password-form input {
-    border: 0px solid;
-    border-bottom: 1px solid;
-    border-radius: 0px;
+    border:0px solid;
+    border-bottom:1px solid;
+    border-radius:0px;
 }
 
 .reset-password-form .form-control:focus {
-    border-color: inherit;
-    -webkit-box-shadow: none;
-    box-shadow: none;
+    border-color:inherit;
+    -webkit-box-shadow:none;
+    box-shadow:none;
 }
 
 /* All Tickets React Table CSS */
@@ -190,11 +192,11 @@
 }
 
 .ReactTable .rt-thead .rt-th.-sort-asc {
-    box-shadow: inset 0 3px 0 0 white
+    box-shadow:inset 0 3px 0 0 white
 }
 
 .ReactTable .rt-thead .rt-th.-sort-desc {
-    box-shadow: inset 0 -3px 0 0 white
+    box-shadow:inset 0 -3px 0 0 white
 }
 
 /* .rt-tr-group:nth-child(even) {
@@ -203,7 +205,7 @@
 
 .pagination-bottom {
     background-color:darkblue;
-    color: white;
+    color:white;
 }
 
 .-pagination .-previous {
