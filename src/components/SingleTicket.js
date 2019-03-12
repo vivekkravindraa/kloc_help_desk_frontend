@@ -157,7 +157,6 @@ export default class SingleTicket extends Component {
             }))
         })
     }
-
     priorityHandle = (e) => {
         let priority = e.target.value;
         let formData = { ticketPriority: Number(priority) }
@@ -446,9 +445,6 @@ export default class SingleTicket extends Component {
                     ?
                     (
                         <div>
-                            <p>
-                                {this.state.commentsData.length > 1 ? 'Comments' : 'Comment'}: {this.state.commentsData.length}
-                            </p>
                             <label>Write Comment:</label>
                             <textarea
                                 type="text"
@@ -481,6 +477,15 @@ export default class SingleTicket extends Component {
                     )
                     :   null
                 )
+            }
+            {
+                this.state.ticketsAssigned.length > 0 ?
+                (
+                    <p style={{ visibility: this.state.ticketsAssigned.length !== 0 ? 'visible' : 'hidden' }}>
+                    {this.state.commentsData.length > 1 ? 'Comments' : 'Comment'}: {this.state.commentsData.length}
+                    </p>
+                )
+                :   null
             }
             {/* {
                 this.state.commentsData.length > 0 ?
