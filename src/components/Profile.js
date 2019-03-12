@@ -78,6 +78,7 @@ export default class Profile extends Component {
             isSuccess: false,
             minMobileNumber: ''
         })
+        this.getUser()
     }
     handleCancel = () => {
         this.setState({
@@ -283,11 +284,11 @@ export default class Profile extends Component {
             let formData = {
                 firstName:
                     this.state.firstName
-                    ?   this.state.firstName
+                    ?   this.state.firstName.toLowerCase()
                     :   this.setState({ checkFirstname: `field can't be blank`}),
                 lastName:
                     this.state.lastName
-                    ?   this.state.lastName
+                    ?   this.state.lastName.toLowerCase()
                     :   this.setState({ checkLastname: `field can't be blank`}),
                 mobileNumber: this.state.mobileNumber
             }
