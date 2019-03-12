@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Button, Comment } from 'semantic-ui-react';
 // import { Checkbox } from 'semantic-ui-react';
-// import { Image, Modal } from 'semantic-ui-react';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
@@ -324,28 +323,6 @@ export default class SingleTicket extends Component {
                                     width={100}
                                     alt=""
                                 />
-                                // <Modal
-                                //     trigger={
-                                //     <img
-                                //         key={index}
-                                //         src={index}
-                                //         // onMouseOver={this.handleMouseOver}
-                                //         // onMouseLeave={this.handleMouseLeave}
-                                //         height={100}
-                                //         width={100}
-                                //         alt=""
-                                //     />}
-                                // >
-                                // <Modal.Header>Image</Modal.Header>
-                                // <Modal.Content image>
-                                // <Image
-                                //         wrapped
-                                //         centered
-                                //         size='large'
-                                //         src={index}
-                                //     />
-                                //     </Modal.Content>
-                                // </Modal> 
                             )
                         })
                     }
@@ -614,17 +591,7 @@ export default class SingleTicket extends Component {
                                     ?   null
                                     :
                                     (
-                                        <Comment.Actions>
-                                            <Comment.Action active>
-                                                <Button
-                                                    size='mini'
-                                                    attached='left'
-                                                    onClick={this.handleEditComment.bind(this, com._id, com.content)}
-                                                >
-                                                Edit
-                                                </Button>
-                                            </Comment.Action>
-                                        </Comment.Actions>
+                                        <Button content='Edit' labelPosition='left' icon='edit' size='mini' onClick={this.handleEditComment.bind(this, com._id, com.content)} primary />
                                     )
                                 :   null
                             }
@@ -633,17 +600,7 @@ export default class SingleTicket extends Component {
                                 ?   null
                                 :
                                 (
-                                    <Comment.Actions>
-                                        <Comment.Action active>
-                                            <Button
-                                                size='mini'
-                                                attached='right'
-                                                onClick={this.handleReplyComment.bind(this, com._id)}
-                                            >
-                                            Reply
-                                            </Button>
-                                        </Comment.Action>
-                                    </Comment.Actions>
+                                    <Button content='Reply' labelPosition='left' icon='reply' size='mini' onClick={this.handleReplyComment.bind(this, com._id)} primary />
                                 )
                             }
                             </div>
@@ -768,19 +725,7 @@ export default class SingleTicket extends Component {
                                                     null
                                                     :
                                                     (   
-                                                        // <Comment.Group collapsed={this.state.collapsed}>
-                                                            <Comment.Actions>
-                                                                <Comment.Action active>
-                                                                    <Button
-                                                                        size='mini'
-                                                                        attached='left'
-                                                                        onClick={this.handleEditComment.bind(this, sub._id, sub.subContent)}
-                                                                    >
-                                                                    Edit
-                                                                    </Button>
-                                                                </Comment.Action>
-                                                            </Comment.Actions>
-                                                        // </Comment.Group>
+                                                        <Button content='Edit' labelPosition='left' icon='edit' size='mini' onClick={this.handleEditComment.bind(this, sub._id, sub.subContent)} primary />
                                                     )
                                                 :   null
                                             }
@@ -790,19 +735,7 @@ export default class SingleTicket extends Component {
                                                 null
                                                 :
                                                 (
-                                                    // <Comment.Group collapsed={this.state.collapsed}>
-                                                        <Comment.Actions>
-                                                            <Comment.Action active>
-                                                                <Button
-                                                                    size='mini'
-                                                                    attached='right'
-                                                                    onClick={this.handleReplyComment.bind(this, sub._id)}
-                                                                >
-                                                                Reply
-                                                                </Button>
-                                                            </Comment.Action>
-                                                        </Comment.Actions>
-                                                    // </Comment.Group>
+                                                    <Button content='Reply' labelPosition='left' icon='reply' size='mini' onClick={this.handleReplyComment.bind(this, sub._id)} primary />
                                                 )
                                             }
                                             </div>
