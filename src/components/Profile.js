@@ -478,7 +478,11 @@ export default class Profile extends Component {
                                     <div className="btn-group">
                                         <button
                                             className="btn"
-                                            style={{ backgroundColor:"orange", color:"black", border:0 }}
+                                            style={{
+                                                backgroundColor:"orange",
+                                                color:"black",
+                                                border: 0
+                                            }}
                                             onClick={this.handleCancel}
                                         >
                                         Cancel
@@ -486,14 +490,22 @@ export default class Profile extends Component {
                                         <button
                                             type="submit"
                                             className="btn"
-                                            style={{ backgroundColor:"yellowgreen", color:"black", border:0 }}
+                                            style={{
+                                                backgroundColor:"yellowgreen",
+                                                color:"black",
+                                                border:0
+                                            }}
                                             onClick={this.handleSubmitPassword}
                                         >
                                         Save
                                         </button>
                                         <button
-                                            style={{ backgroundColor:"darkblue", color:"white", outline:0 }}
                                             className="btn"
+                                            style={{
+                                                backgroundColor:"darkblue",
+                                                color:"white",
+                                                border: 0
+                                            }}
                                             onClick={() => {
                                                 this.setState(() => ({
                                                     isChanging: false,
@@ -569,8 +581,7 @@ export default class Profile extends Component {
                                             style={{
                                                 backgroundColor:"orange",
                                                 color:"black",
-                                                border:0,
-                                                outline:0
+                                                border:0
                                             }}
                                             onClick={this.handleCancel}
                                         >
@@ -582,8 +593,7 @@ export default class Profile extends Component {
                                             style={{
                                                 backgroundColor:"yellowgreen",
                                                 color:"black",
-                                                border:0,
-                                                outline:0
+                                                border:0
                                             }}
                                             onClick={this.handleUpdateProfile}
                                         >
@@ -593,7 +603,8 @@ export default class Profile extends Component {
                                             className="btn"
                                             style={{
                                                 backgroundColor:"darkblue",
-                                                color:"white"
+                                                color:"white",
+                                                border:0
                                             }}
                                             onClick={this.handleChangePassword}
                                         >
