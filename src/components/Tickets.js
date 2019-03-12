@@ -198,12 +198,13 @@ export default class Tickets extends Component {
     }
 
     toggleRow = (id) => {
-		const newSelected = Object.assign({}, this.state.selected);
-		newSelected[id] = !this.state.selected[id];
+
+        const newSelected = Object.assign({}, this.state.selected);
+        newSelected[id] = !this.state.selected[id];
 		this.setState({
 			selected: newSelected,
 			selectAll: 2
-		});
+        });
     }
     
     toggleSelectAll = () => {
@@ -231,8 +232,19 @@ export default class Tickets extends Component {
     handleAssign = (e) => {
         e.preventDefault();
 
+        let selected = this.state.selected;
+        let local = [];
+
+        if(selected !== {}) {
+            for(let key in selected) {
+                if(selected[key] === true) {
+                    local.push(key)
+                }
+            }
+        }
+
         let formData = {
-            tickets: this.state.selected !== {} ? Object.keys(this.state.selected) : [],
+            tickets: local,
             user: this.state.assignTo
         }
 
