@@ -349,8 +349,7 @@ export default class Profile extends Component {
                             className="alert alert-danger"
                             role="alert"
                         >
-                        Passwords does not match!
-                        New password and confirm password should be same!
+                        New password and confirm password does not match!
                         </div>
                     )   :   null
                 }
