@@ -477,17 +477,6 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="btn-group">
                                         <button
-                                            className="btn"
-                                            style={{
-                                                backgroundColor:"orange",
-                                                color:"black",
-                                                border: 0
-                                            }}
-                                            onClick={this.handleCancel}
-                                        >
-                                        Cancel
-                                        </button>
-                                        <button
                                             type="submit"
                                             className="btn"
                                             style={{
@@ -498,6 +487,17 @@ export default class Profile extends Component {
                                             onClick={this.handleSubmitPassword}
                                         >
                                         Save
+                                        </button>
+                                        <button
+                                            className="btn"
+                                            style={{
+                                                backgroundColor:"lightblue",
+                                                color:"black",
+                                                border: 0
+                                            }}
+                                            onClick={this.handleCancel}
+                                        >
+                                        Cancel
                                         </button>
                                         <button
                                             className="btn"
@@ -577,17 +577,6 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="btn-group">
                                         <button
-                                            className="btn"
-                                            style={{
-                                                backgroundColor:"orange",
-                                                color:"black",
-                                                border:0
-                                            }}
-                                            onClick={this.handleCancel}
-                                        >
-                                        Cancel
-                                        </button>
-                                        <button
                                             type="submit"
                                             className="btn"
                                             style={{
@@ -598,6 +587,17 @@ export default class Profile extends Component {
                                             onClick={this.handleUpdateProfile}
                                         >
                                         Save
+                                        </button>
+                                        <button
+                                            className="btn"
+                                            style={{
+                                                backgroundColor:"lightblue",
+                                                color:"black",
+                                                border:0
+                                            }}
+                                            onClick={this.handleCancel}
+                                        >
+                                        Cancel
                                         </button>
                                         <button
                                             className="btn"

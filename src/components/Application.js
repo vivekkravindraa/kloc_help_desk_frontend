@@ -35,41 +35,41 @@ export default class Application extends Component {
     componentDidMount() {
         this.getApplications();
 
-        axios.get(`${baseURL}/users?user=moderator`, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-        .then((response) => {
-            let data = response.data.map((mode) => ({
-                value: mode._id,
-                label: mode.email
-            }))
-            this.setState({
-                moderators: data
+        axios.get(`${baseURL}/users?user=moderator`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+            .then((response) => {
+                let data = response.data.map((mode) => ({
+                    value: mode._id,
+                    label: mode.email
+                }))
+                this.setState({
+                    moderators: data
+                })
             })
-        })
-        .catch((error) => {
-            this.setState({
-                moderators: []
+            .catch((error) => {
+                this.setState({
+                    moderators: []
+                })
             })
-        })
     }
 
     getApplications = () => {
-        axios.get(`${baseURL}/applications`, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-        .then((response) => {
-            this.setState({
-                appData: response.data,
-                filterData: response.data
+        axios.get(`${baseURL}/applications`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+            .then((response) => {
+                this.setState({
+                    appData: response.data,
+                    filterData: response.data
+                })
             })
-        })
-        .catch((error) => {
-            this.setState({
-                appData: [],
-                filterData: []
+            .catch((error) => {
+                this.setState({
+                    appData: [],
+                    filterData: []
+                })
             })
-        })
     }
 
     handleName = (e) => {
-        this.setState({ 
+        this.setState({
             appName: e.target.value,
             appNameChars: e.target.value.length,
             isEmpty: false,
@@ -94,8 +94,8 @@ export default class Application extends Component {
             }
         })
     }
-    handleChange = (selectedOption) => { 
-        this.setState({ 
+    handleChange = (selectedOption) => {
+        this.setState({
             selectedOption,
             isEmpty: false,
             isSuccess: false,
@@ -107,14 +107,14 @@ export default class Application extends Component {
     }
 
     handleMinName = () => {
-        if(this.state.appName.length < 3) {
+        if (this.state.appName.length < 3) {
             this.setState({
                 minName: 'Should be at least 3 characters!'
             })
         }
     }
     handleMinDescription = () => {
-        if(this.state.appDescription.length < 10) {
+        if (this.state.appDescription.length < 10) {
             this.setState({
                 minDescription: 'Should be at least 10 characters!'
             })
@@ -124,45 +124,45 @@ export default class Application extends Component {
     handleAddApplication = (e) => {
         e.preventDefault();
 
-        if(this.state.appName === '' || this.state.appDescription === '') {
+        if (this.state.appName === '' || this.state.appDescription === '') {
             this.setState({ isEmpty: true })
-        } else if(this.state.appName !== '' && this.state.appDescription !== '') {
+        } else if (this.state.appName !== '' && this.state.appDescription !== '') {
             let formData = {
                 name: this.state.appName,
                 description: this.state.appDescription,
                 user: this.state.selectedOption === null ? [] : this.state.selectedOption.map((option) => option.value)
             }
 
-            axios.post(`${baseURL}/applications`, formData, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-            .then((response) => {
-                this.getApplications();
-                this.setState({
-                    newObj: response.data
+            axios.post(`${baseURL}/applications`, formData, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+                .then((response) => {
+                    this.getApplications();
+                    this.setState({
+                        newObj: response.data
+                    })
+                    let newData = [];
+                    newData.push(this.state.newObj)
+                    this.setState({
+                        isSuccess: true,
+                        appData: this.state.appData.concat(newData),
+                        appName: '',
+                        appDescription: '',
+                        selectedOption: null
+                    })
                 })
-                let newData = [];
-                newData.push(this.state.newObj)
-                this.setState({
-                    isSuccess: true,
-                    appData: this.state.appData.concat(newData),
-                    appName: '',
-                    appDescription: '',
-                    selectedOption: null
+                .catch((error) => {
+                    this.setState(() => ({
+                        error: {
+                            ...this.state.error,
+                            statusCode: error.response.status,
+                            message: `Unable to add application / application already exists.`
+                        }
+                    }))
                 })
-            })
-            .catch((error) => {
-                this.setState(() => ({
-                    error: {
-                        ...this.state.error,
-                        statusCode: error.response.status,
-                        message: `Unable to add application / application already exists.`
-                    }
-                }))
-            })
         }
-    } 
+    }
 
     render() {
-        if(!decodeToken() || (decodeToken().role !== 'admin')) {
+        if (!decodeToken() || (decodeToken().role !== 'admin')) {
             return <Redirect to="/login" />
         }
 
@@ -178,31 +178,31 @@ export default class Application extends Component {
                 accessor: "description",
                 Cell: props => (
                     <div>
-                    {
-                        props.original.description.length > 100
-                        ?   props.original.description.slice(0,49) + ' ..'
-                        :   props.original.description
-                    }
-                    {
-                        props.original.description.length > 100
-                        ?
-                        (
-                            <button
-                                className="btn btn-outline-basic btn-sm"
-                                onClick={this.handleViewMore}
-                            >
-                            <Link to={{
-                                pathname: "/manage_application",
-                                state: {
-                                    appId: `${props.original._id}`
-                                }
-                            }}>
-                            View more
+                        {
+                            props.original.description.length > 100
+                                ? props.original.description.slice(0, 49) + ' ..'
+                                : props.original.description
+                        }
+                        {
+                            props.original.description.length > 100
+                                ?
+                                (
+                                    <button
+                                        className="btn btn-outline-basic btn-sm"
+                                        onClick={this.handleViewMore}
+                                    >
+                                        <Link to={{
+                                            pathname: "/manage_application",
+                                            state: {
+                                                appId: `${props.original._id}`
+                                            }
+                                        }}>
+                                            view more >>
                             </Link>
-                            </button>
-                        )
-                        :   null
-                    }
+                                    </button>
+                                )
+                                : null
+                        }
                     </div>
                 ),
                 resizable: false,
@@ -213,13 +213,13 @@ export default class Application extends Component {
                 accessor: "user",
                 Cell: props => (
                     props.original.user.length > 0
-                    ?
-                        props.original.user.map((mode,index) => {
+                        ?
+                        props.original.user.map((mode, index) => {
                             return (
                                 <p key={index}>{mode.email}</p>
                             )
-                        }) 
-                    :   <b>Linked to all moderators.</b>
+                        })
+                        : <b>Linked to all moderators.</b>
                 ),
                 resizable: false,
                 width: 250
@@ -234,7 +234,7 @@ export default class Application extends Component {
                             appId: `${props.original._id}`
                         }
                     }}>
-                    Edit
+                        Edit
                     </Link>
                 ),
                 resizable: false,
@@ -248,53 +248,53 @@ export default class Application extends Component {
         return (
             <div className="container">
                 <Navigation />
-                {   
+                {
                     this.state.error.message !== '' ?
                     (
                         <div
-                            style={{ 
+                            style={{
                                 textAlign: "center",
                                 visibility: this.state.error.message !== '' ? 'visible' : 'hidden'
                             }}
                             className="alert alert-danger"
                             role="alert"
                         >
-                        {this.state.error.message}
+                            {this.state.error.message}
                         </div>
                     )   :   null
                 }
-                {   
+                {
                     this.state.isEmpty ?
                     (
                         <div
-                            style={{ 
+                            style={{
                                 textAlign: "center",
                                 visibility: this.state.isEmpty ? 'visible' : 'hidden'
                             }}
                             className="alert alert-warning"
                             role="alert"
                         >
-                        Please fill all mandatory * fields!
-                        </div>
+                            Please fill all mandatory * fields!
+                    </div>
                     )   :   null
                 }
                 {
                     this.state.isSuccess ?
                     (
                         <div
-                            style={{ 
+                            style={{
                                 textAlign: "center",
                                 visibility: this.state.isSuccess ? 'visible' : 'hidden'
                             }}
                             className="alert alert-success"
                             role="alert"
                         >
-                        Application successfully added!
-                        </div>
+                            Application successfully added!
+                    </div>
                     )   :   null
                 }
                 <form onSubmit={this.handleAddApplication}>
-                    <h2 style={{textAlign:"center"}}>Add topic</h2>
+                    <h2 style={{ textAlign: "center" }}>Add topic</h2>
                     <div className="form-group">
                         <input
                             type="text"
@@ -335,32 +335,31 @@ export default class Application extends Component {
                         />
                     </div>
                     <button
-                        style={{backgroundColor:"yellowgreen"}}
+                        style={{ backgroundColor: "yellowgreen" }}
                         className="btn btn-md btn-block"
                     >
-                    Submit
+                        Submit
                     </button>
                 </form>
                 {
                     this.state.appData.length === 0 ?
                     (
                         <div
-                            style={{ 
+                            style={{
                                 textAlign: "center",
                                 visibility: this.state.appData.length === 0 ? 'visible' : 'hidden'
                             }}
                             className="alert alert-info"
                             role="alert"
                         >
-                        No applications found!
+                            No applications found!
                         </div>
                     )   :   null
                 }
                 {
                     this.state.appData.length > 0 ?
                     (
-                        <div style={{textAlign: "center"}}>
-                            <h2 style={{marginTop: 10, textAlign: "center"}}>Listing application{this.state.appData.length > 1 ? 's' : null} - {this.state.appData.length}</h2>
+                        <div style={{ marginTop: 10, textAlign: "center" }}>
                             <ReactTable
                                 columns={columns}
                                 data={this.state.filterData}
