@@ -295,6 +295,7 @@ export default class Tickets extends Component {
                         <input
                             type="checkbox"
                             className="checkbox"
+                            disabled
                             checked={this.state.selectAll === 1}
                             ref={input => {
                                 if (input) {
