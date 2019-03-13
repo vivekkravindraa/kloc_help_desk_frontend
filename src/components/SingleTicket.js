@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Button, Comment, Segment } from 'semantic-ui-react';
+import { Button, Comment, Segment, Grid, Label } from 'semantic-ui-react';
 // import { Checkbox } from 'semantic-ui-react';
 import axios from 'axios';
 import { baseURL } from '../base_url';
@@ -305,12 +305,34 @@ export default class SingleTicket extends Component {
         return (
             <div className="container">
                 <Navigation />
-                <h2 style={{ textAlign: "center" }}>Ticket information</h2>
-                <div className="card text-center">
-                    <div className="card-header">Ticket ID: {this.state.ticketData._id}</div>
-                    <div className="card-body">
-                        <h5 className="card-title">Subject: {this.state.ticketData.subject}</h5>
-                        <p className="card-text">Description: {this.state.ticketData.description}</p>
+                <form>
+                    <h2 style={{ textAlign: "center" }}>Ticket information</h2>
+                    <div>
+                        <Grid.Column>
+                            <Segment raised>
+                                <Label as='a' color='blue' ribbon>Created On</Label>
+                                <p>{this.state.createdDate} at {this.state.createdTime}</p>
+                                <Label as='a' color='blue' ribbon>Ticket ID</Label>
+                                <p>{this.state.ticketData._id}</p>
+                                <Label as='a' color='blue' ribbon>Subject</Label>
+                                <p>{this.state.ticketData.subject}</p>
+                                <Label as='a' color='blue' ribbon>Description</Label>
+                                <p>{this.state.ticketData.description}</p>
+                                <Label as='a' color='blue' ribbon>Status</Label>
+                                <p>{this.state.ticketStatus === 'Assigned' ? 'Processing' : this.state.ticketStatus}</p>
+                                {
+                                    this.state.role === 'admin' || this.state.role === 'moderator'
+                                    ?
+                                    (
+                                        <div>
+                                            <Label as='a' color='blue' ribbon>Priority</Label>
+                                            <p>{this.getPriority(this.state.ticketPriority)}</p>
+                                        </div>
+                                    )
+                                    :   null
+                                }
+                            </Segment>
+                        </Grid.Column>
                         {
                             this.state.images.map((index) => {
                                 return (
@@ -326,27 +348,14 @@ export default class SingleTicket extends Component {
                                 )
                             })
                         }
-                        <p>Status: {this.state.ticketStatus === 'Assigned' ? 'Processing' : this.state.ticketStatus}</p>
-                        {
-                            this.state.role === 'admin' || this.state.role === 'moderator'
-                                ?
-                                (
-                                    <div>
-                                        <p>Priority: {this.getPriority(this.state.ticketPriority)}</p>
-                                    </div>
-                                )
-                                : null
-                        }
                     </div>
-                    <div className="card-footer text-muted">
-                        Created on {this.state.createdDate} at {this.state.createdTime}
-                    </div>
-                </div>
+                </form>
                 {
                     this.state.role === 'admin' || this.state.role === 'moderator' || this.state.role === 'customer'
-                        ?
-                        (
-                            <div className="form-inline">
+                    ?
+                    (
+                        <Segment>
+                            <div>
                                 <label>Change Status: </label>
                                 <select className="custom-select custom-select-sm" onChange={this.statusHandle}>
                                     <option selected disabled>Select Status</option>
@@ -387,85 +396,86 @@ export default class SingleTicket extends Component {
                                         Re-Open
                                     </option>
                                 </select>
-                                {
-                                    this.state.role === 'customer'
-                                        ?
-                                        null
-                                        :
-                                        (
-                                            <div className="form-inline">
-                                                <label>Change Priority: </label>
-                                                <select
-                                                    className="custom-select custom-select-sm"
-                                                    onChange={this.priorityHandle}
-                                                >
-                                                    <option selected disabled>Select Priority</option>
-                                                    <option value={1}>Low</option>
-                                                    <option value={2}>Medium</option>
-                                                    <option value={3}>High</option>
-                                                    <option value={4}>Urgent</option>
-                                                </select>
-                                            </div>
-                                        )
-                                }
                             </div>
-                        )
-                        : null
+                            {
+                                this.state.role === 'customer'
+                                ?
+                                    null
+                                :
+                                (
+                                    <div>
+                                        <label>Change Priority: </label>
+                                        <select
+                                            className="custom-select custom-select-sm"
+                                            onChange={this.priorityHandle}
+                                        >
+                                            <option selected disabled>Select Priority</option>
+                                            <option value={1}>Low</option>
+                                            <option value={2}>Medium</option>
+                                            <option value={3}>High</option>
+                                            <option value={4}>Urgent</option>
+                                        </select>
+                                    </div>
+                                )
+                            }
+                        </Segment>
+                    )
+                    :   null
                 }
                 {
                     this.state.checkStatus === 'closed'
-                        ?
+                    ?
                         null
-                        :
+                    :
+                    (
+                        this.state.ticketsAssigned.length !== 0
+                        ?
                         (
-                            this.state.ticketsAssigned.length !== 0
-                                ?
-                                (
-                                    <div>
-                                        <label>Write Comment:</label>
-                                        <textarea
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="comment here.."
-                                            maxLength={1000}
-                                            value={this.state.comment}
-                                            onChange={this.commentHandle}
-                                        >
-                                        </textarea>
-                                        <Button
-                                            positive
-                                            onClick={this.addCommentHandle}
-                                        >
-                                            Submit Comment
-                                        </Button>
-                                        {
-                                            decodeToken().role === 'admin' && (
-                                                <Link to="/tickets">Go Back</Link>
-                                            )
-                                        }
-                                        {
-                                            decodeToken().role === 'customer' && (
-                                                <Link to="/my_tickets">Go Back</Link>
-                                            )
-                                        }
-                                        {
-                                            decodeToken().role === 'moderator' && (
-                                                <Link to="/moderator_tickets">Go Back</Link>
-                                            )
-                                        }
-                                    </div>
-                                )
-                                : null
+                            <div>
+                                <label>Write Comment:</label>
+                                <textarea
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="comment here.."
+                                    maxLength={1000}
+                                    value={this.state.comment}
+                                    onChange={this.commentHandle}
+                                >
+                                </textarea>
+                                <Button
+                                    positive
+                                    onClick={this.addCommentHandle}
+                                >
+                                    Submit Comment
+                                </Button>
+                                {
+                                    decodeToken().role === 'admin' && (
+                                        <Link to="/tickets">Go Back</Link>
+                                    )
+                                }
+                                {
+                                    decodeToken().role === 'customer' && (
+                                        <Link to="/my_tickets">Go Back</Link>
+                                    )
+                                }
+                                {
+                                    decodeToken().role === 'moderator' && (
+                                        <Link to="/moderator_tickets">Go Back</Link>
+                                    )
+                                }
+                            </div>
                         )
+                        :   null
+                    )
                 }
                 {
                     this.state.ticketsAssigned.length > 0 ?
-                        (
-                            <p style={{ visibility: this.state.ticketsAssigned.length !== 0 ? 'visible' : 'hidden' }}>
-                                {this.state.commentsData.length > 1 ? 'Comments' : 'Comment'}: {this.state.commentsData.length}
-                            </p>
-                        )
-                        : null
+                    (
+                        <p style={{ visibility: this.state.ticketsAssigned.length !== 0 ? 'visible' : 'hidden' }}>
+                            {this.state.commentsData.length > 1 ? 'Comments' : 'Comment'}: {this.state.commentsData.length}
+                        </p>
+                    )
+                    :   null
                 }
                 {/* {
                     this.state.commentsData.length > 0 ?
@@ -483,124 +493,124 @@ export default class SingleTicket extends Component {
                                 <Segment key={index}>
                                     {
                                         this.state.editMode && this.state.commentId === com._id
-                                            ?
-                                            (
-                                                <Comment.Group>
-                                                    <Comment>
-                                                        <Comment.Avatar as='a' src={steve} />
-                                                        <Comment.Content>
-                                                            <Comment.Author as='a'>{com.userId.firstName[0].toUpperCase() + com.userId.firstName.slice(1)}</Comment.Author>
-                                                            <Comment.Text>
-                                                                <textarea
-                                                                    type="text"
-                                                                    className="form-control"
-                                                                    maxLength={1000}
-                                                                    value={this.state.edited}
-                                                                    onChange={this.handleEdit}
-                                                                >
-                                                                </textarea>
-                                                            </Comment.Text>
-                                                        </Comment.Content>
-                                                    </Comment>
-                                                </Comment.Group>
-                                            )
-                                            :
-                                            (
-                                                <Comment.Group>
-                                                    <Comment>
-                                                        <Comment.Avatar as='a' src={steve} />
-                                                        <Comment.Content>
-                                                            <Comment.Author as='a'>{com.userId.firstName[0].toUpperCase() + com.userId.firstName.slice(1)}</Comment.Author>
-                                                            <Comment.Text>{com.content}</Comment.Text>
-                                                        </Comment.Content>
-                                                    </Comment>
-                                                </Comment.Group>
-                                            )
+                                        ?
+                                        (
+                                            <Comment.Group>
+                                                <Comment>
+                                                    <Comment.Avatar as='a' src={steve} />
+                                                    <Comment.Content>
+                                                        <Comment.Author as='a'>{com.userId.firstName[0].toUpperCase() + com.userId.firstName.slice(1)}</Comment.Author>
+                                                        <Comment.Text>
+                                                            <textarea
+                                                                type="text"
+                                                                className="form-control"
+                                                                maxLength={1000}
+                                                                value={this.state.edited}
+                                                                onChange={this.handleEdit}
+                                                            >
+                                                            </textarea>
+                                                        </Comment.Text>
+                                                    </Comment.Content>
+                                                </Comment>
+                                            </Comment.Group>
+                                        )
+                                        :
+                                        (
+                                            <Comment.Group>
+                                                <Comment>
+                                                    <Comment.Avatar as='a' src={steve} />
+                                                    <Comment.Content>
+                                                        <Comment.Author as='a'>{com.userId.firstName[0].toUpperCase() + com.userId.firstName.slice(1)}</Comment.Author>
+                                                        <Comment.Text>{com.content}</Comment.Text>
+                                                    </Comment.Content>
+                                                </Comment>
+                                            </Comment.Group>
+                                        )
                                     }
                                     {
                                         this.state.replyMode && this.state.commentId === com._id
-                                            ?
-                                            (
-                                                <textarea
-                                                    type="text"
-                                                    rows={2}
-                                                    maxLength={1000}
-                                                    className="form-control"
-                                                    placeholder="reply here.."
-                                                    value={this.state.reply}
-                                                    onChange={this.handleReply}
-                                                    style={{ marginBottom: 14 }}
-                                                >
-                                                </textarea>
-                                            )
-                                            : null
+                                        ?
+                                        (
+                                            <textarea
+                                                type="text"
+                                                rows={2}
+                                                maxLength={1000}
+                                                className="form-control"
+                                                placeholder="reply here.."
+                                                value={this.state.reply}
+                                                onChange={this.handleReply}
+                                                style={{ marginBottom: 14 }}
+                                            >
+                                            </textarea>
+                                        )
+                                        :   null
                                     }
                                     {
-                                        com.userId._id === this.state.userId
-                                            ?
+                                        com.userId._id === this.state.userId && this.state.ticketStatus !== 'Closed'
+                                        ?
                                             this.state.editMode && this.state.replyMode && this.state.commentId === com._id
-                                                ? null
-                                                :
-                                                (
-                                                    <Button content='Edit' labelPosition='left' icon='edit' size='mini' onClick={this.handleEditComment.bind(this, com._id, com.content)} primary />
-                                                )
-                                            : null
-                                    }
-                                    {
-                                        this.state.replyMode && this.state.editMode && this.state.commentId === com._id
-                                            ? null
+                                            ?   null
                                             :
                                             (
-                                                <Button content='Reply' labelPosition='left' icon='reply' size='mini' onClick={this.handleReplyComment.bind(this, com._id)} primary />
+                                                <Button content='Edit' labelPosition='left' icon='edit' size='mini' onClick={this.handleEditComment.bind(this, com._id, com.content)} primary />
                                             )
+                                        :   null
+                                    }
+                                    {
+                                        (this.state.replyMode && this.state.editMode && this.state.commentId === com._id ) || ( this.state.ticketStatus === 'Closed' )
+                                        ?   null
+                                        :
+                                        (
+                                            <Button content='Reply' labelPosition='left' icon='reply' size='mini' onClick={this.handleReplyComment.bind(this, com._id)} primary />
+                                        )
                                     }
                                     {
                                         com.userId._id === this.state.userId
-                                            ?
-                                            this.state.editMode && this.state.commentId === com._id
-                                                ?
-                                                (
-                                                    <Button.Group size="mini">
-                                                        <Button
-                                                            onClick={this.handleEditCancel}
-                                                        >
-                                                            Don't Edit
-                                                        </Button>
-                                                        <Button.Or />
-                                                        <Button
-                                                            positive
-                                                            onClick={this.handleCommentSubmit.bind(this, com._id)}
-                                                        >
-                                                            Submit Comment
-                                                        </Button>
-                                                    </Button.Group>
-                                                )
-                                                :
-                                                null
-                                            :
-                                            null
-                                    }
-                                    {
-                                        this.state.replyMode && this.state.commentId === com._id
+                                        ?
+                                        this.state.editMode && this.state.commentId === com._id
                                             ?
                                             (
                                                 <Button.Group size="mini">
                                                     <Button
-                                                        onClick={this.handleReplyCancel}
+                                                        onClick={this.handleEditCancel}
                                                     >
-                                                        Don't Reply
+                                                        Don't Edit
                                                     </Button>
                                                     <Button.Or />
                                                     <Button
                                                         positive
-                                                        onClick={this.handleReplySubmit.bind(this, com._id)}
+                                                        onClick={this.handleCommentSubmit.bind(this, com._id)}
                                                     >
-                                                        Submit Reply
+                                                        Submit Comment
                                                     </Button>
                                                 </Button.Group>
                                             )
                                             :
                                             null
+                                        :
+                                        null
+                                    }
+                                    {
+                                        this.state.replyMode && this.state.commentId === com._id
+                                        ?
+                                        (
+                                            <Button.Group size="mini">
+                                                <Button
+                                                    onClick={this.handleReplyCancel}
+                                                >
+                                                    Don't Reply
+                                                </Button>
+                                                <Button.Or />
+                                                <Button
+                                                    positive
+                                                    onClick={this.handleReplySubmit.bind(this, com._id)}
+                                                >
+                                                    Submit Reply
+                                                </Button>
+                                            </Button.Group>
+                                        )
+                                        :
+                                        null
                                     }
                                     {
                                         com.subComment.length > 0 ?
@@ -614,128 +624,128 @@ export default class SingleTicket extends Component {
                                                     >
                                                         {
                                                             this.state.editMode && this.state.commentId === sub._id
-                                                                ?
-                                                                (
-                                                                    <Comment.Group>
-                                                                        <Comment>
-                                                                            <Comment.Avatar as='a' src={steve} />
-                                                                            <Comment.Content>
-                                                                                <Comment.Author as='a'>{sub.userId.firstName[0].toUpperCase() + sub.userId.firstName.slice(1)}</Comment.Author>
-                                                                                <Comment.Text>
-                                                                                    <textarea
-                                                                                        type="text"
-                                                                                        className="form-control"
-                                                                                        maxLength={1000}
-                                                                                        value={this.state.edited}
-                                                                                        onChange={this.handleEdit}
-                                                                                    >
-                                                                                    </textarea>
-                                                                                </Comment.Text>
-                                                                            </Comment.Content>
-                                                                        </Comment>
-                                                                    </Comment.Group>
-                                                                )
-                                                                :
-                                                                (
-                                                                    // <Comment.Group collapsed={this.state.collapsed}>
-                                                                    <Comment.Group>
-                                                                        <Comment>
-                                                                            <Comment.Avatar as='a' src={steve} />
-                                                                            <Comment.Content>
-                                                                                <Comment.Author as='a'>{sub.userId.firstName[0].toUpperCase() + sub.userId.firstName.slice(1)}</Comment.Author>
-                                                                                <Comment.Text>{sub.subContent}</Comment.Text>
-                                                                            </Comment.Content>
-                                                                        </Comment>
-                                                                    </Comment.Group>
-                                                                    // </Comment.Group>
-                                                                )
+                                                            ?
+                                                            (
+                                                                <Comment.Group>
+                                                                    <Comment>
+                                                                        <Comment.Avatar as='a' src={steve} />
+                                                                        <Comment.Content>
+                                                                            <Comment.Author as='a'>{sub.userId.firstName[0].toUpperCase() + sub.userId.firstName.slice(1)}</Comment.Author>
+                                                                            <Comment.Text>
+                                                                                <textarea
+                                                                                    type="text"
+                                                                                    className="form-control"
+                                                                                    maxLength={1000}
+                                                                                    value={this.state.edited}
+                                                                                    onChange={this.handleEdit}
+                                                                                >
+                                                                                </textarea>
+                                                                            </Comment.Text>
+                                                                        </Comment.Content>
+                                                                    </Comment>
+                                                                </Comment.Group>
+                                                            )
+                                                            :
+                                                            (
+                                                                // <Comment.Group collapsed={this.state.collapsed}>
+                                                                <Comment.Group>
+                                                                    <Comment>
+                                                                        <Comment.Avatar as='a' src={steve} />
+                                                                        <Comment.Content>
+                                                                            <Comment.Author as='a'>{sub.userId.firstName[0].toUpperCase() + sub.userId.firstName.slice(1)}</Comment.Author>
+                                                                            <Comment.Text>{sub.subContent}</Comment.Text>
+                                                                        </Comment.Content>
+                                                                    </Comment>
+                                                                </Comment.Group>
+                                                                // </Comment.Group>
+                                                            )
                                                         }
                                                         {
                                                             this.state.replyMode && this.state.commentId === sub._id
-                                                                ?
-                                                                (
-                                                                    <textarea
-                                                                        type="text"
-                                                                        rows={2}
-                                                                        maxLength={1000}
-                                                                        className="form-control"
-                                                                        placeholder="reply here.."
-                                                                        value={this.state.reply}
-                                                                        onChange={this.handleReply}
-                                                                        style={{ marginBottom: 14 }}
-                                                                    >
-                                                                    </textarea>
-                                                                )
-                                                                : null
+                                                            ?
+                                                            (
+                                                                <textarea
+                                                                    type="text"
+                                                                    rows={2}
+                                                                    maxLength={1000}
+                                                                    className="form-control"
+                                                                    placeholder="reply here.."
+                                                                    value={this.state.reply}
+                                                                    onChange={this.handleReply}
+                                                                    style={{ marginBottom: 14 }}
+                                                                >
+                                                                </textarea>
+                                                            )
+                                                            :   null
                                                         }
                                                         {
-                                                            sub.userId._id === this.state.userId
-                                                                ?
+                                                            sub.userId._id === this.state.userId &&this.state.ticketStatus !== 'Closed'
+                                                            ?
                                                                 this.state.editMode && this.state.replyMode &&this.state.commentId === sub._id
-                                                                    ?
-                                                                    null
-                                                                    :
-                                                                    (
-                                                                        <Button content='Edit' labelPosition='left' icon='edit' size='mini' onClick={this.handleEditComment.bind(this, sub._id, sub.subContent)} primary />
-                                                                    )
-                                                                : null
-                                                        }
-                                                        {
-                                                            this.state.replyMode && this.state.editMode && this.state.commentId === sub._id
                                                                 ?
                                                                 null
                                                                 :
                                                                 (
-                                                                    <Button content='Reply' labelPosition='left' icon='reply' size='mini' onClick={this.handleReplyComment.bind(this, sub._id)} primary />
+                                                                    <Button content='Edit' labelPosition='left' icon='edit' size='mini' onClick={this.handleEditComment.bind(this, sub._id, sub.subContent)} primary />
                                                                 )
+                                                            :   null
+                                                        }
+                                                        {
+                                                            ( this.state.replyMode && this.state.editMode && this.state.commentId === sub._id ) || ( this.state.ticketStatus === 'Closed' )
+                                                            ?
+                                                                null
+                                                            :
+                                                            (
+                                                                <Button content='Reply' labelPosition='left' icon='reply' size='mini' onClick={this.handleReplyComment.bind(this, sub._id)} primary />
+                                                            )
                                                         }
                                                         {
                                                             sub.userId._id === this.state.userId
-                                                                ?
-                                                                this.state.editMode && this.state.commentId === sub._id
-                                                                    ?
-                                                                    (
-                                                                        <Button.Group size="mini">
-                                                                            <Button
-                                                                                onClick={this.handleEditCancel}
-                                                                            >
-                                                                                Don't Edit
-                                                                            </Button>
-                                                                            <Button.Or />
-                                                                            <Button
-                                                                                positive
-                                                                                onClick={this.handleSubCommentSubmit.bind(this, com._id, sub._id)}
-                                                                            >
-                                                                                Submit Comment
-                                                                            </Button>
-                                                                        </Button.Group>
-                                                                    )
-                                                                    :
-                                                                    null
-                                                                :
-                                                                null
-                                                        }
-                                                        {
-                                                            this.state.replyMode && this.state.commentId === sub._id
+                                                            ?
+                                                            this.state.editMode && this.state.commentId === sub._id
                                                                 ?
                                                                 (
                                                                     <Button.Group size="mini">
                                                                         <Button
-                                                                            onClick={this.handleReplyCancel}
+                                                                            onClick={this.handleEditCancel}
                                                                         >
-                                                                            Don't Reply
+                                                                            Don't Edit
                                                                         </Button>
                                                                         <Button.Or />
                                                                         <Button
                                                                             positive
-                                                                            onClick={this.handleReplySubmit.bind(this, sub.parentId)}
+                                                                            onClick={this.handleSubCommentSubmit.bind(this, com._id, sub._id)}
                                                                         >
-                                                                            Submit Reply
+                                                                            Submit Comment
                                                                         </Button>
                                                                     </Button.Group>
                                                                 )
                                                                 :
                                                                 null
+                                                            :
+                                                            null
+                                                        }
+                                                        {
+                                                            this.state.replyMode && this.state.commentId === sub._id
+                                                            ?
+                                                            (
+                                                                <Button.Group size="mini">
+                                                                    <Button
+                                                                        onClick={this.handleReplyCancel}
+                                                                    >
+                                                                        Don't Reply
+                                                                    </Button>
+                                                                    <Button.Or />
+                                                                    <Button
+                                                                        positive
+                                                                        onClick={this.handleReplySubmit.bind(this, sub.parentId)}
+                                                                    >
+                                                                        Submit Reply
+                                                                    </Button>
+                                                                </Button.Group>
+                                                            )
+                                                            :
+                                                            null
                                                         }
                                                     </Segment>
                                                 )
