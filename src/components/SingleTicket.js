@@ -187,7 +187,6 @@ export default class SingleTicket extends Component {
             imageIndex: imageIndex
         });
     }
-      
     handleCloseModal = () => {
         this.setState({ showModal: false });
     }
