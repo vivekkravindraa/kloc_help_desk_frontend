@@ -7,6 +7,7 @@ import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import steve from '../images/steve.jpg';
 import Navigation from './Navigation';
+import ReactModal from 'react-modal';
 import '../App.css';
 
 export default class SingleTicket extends Component {
@@ -28,10 +29,12 @@ export default class SingleTicket extends Component {
             edited: '',
             checkStatus: '',
             ticketStatus: '',
+            imageIndex: '',
             ticketPriority: null,
             editMode: false,
             replyMode: false,
             collapsed: false,
+            showModal: false,
             error: {
                 statusCode: '',
                 message: ''
@@ -178,13 +181,15 @@ export default class SingleTicket extends Component {
             })
     }
 
-    handleMouseOver = (e) => {
-        e.target.height = 300;
-        e.target.width = 300;
+    handleOpenModal = (imageIndex) => {
+        this.setState({
+            showModal: true,
+            imageIndex: imageIndex
+        });
     }
-    handleMouseLeave = (e) => {
-        e.target.height = 100;
-        e.target.width = 100;
+      
+    handleCloseModal = () => {
+        this.setState({ showModal: false });
     }
 
     handleEditComment = (id, content) => {
@@ -342,15 +347,23 @@ export default class SingleTicket extends Component {
                                                     <img
                                                         key={index}
                                                         src={index}
-                                                        onMouseOver={this.handleMouseOver}
-                                                        onMouseLeave={this.handleMouseLeave}
+                                                        onClick={this.handleOpenModal.bind(this, index)}
                                                         height={100}
                                                         width={100}
                                                         alt=""
                                                     />
                                                 )
-                                            })  
+                                            })
                                         }
+                                        <ReactModal 
+                                            isOpen={this.state.showModal}
+                                            contentLabel="Image Modal"
+                                            >
+                                                <button className="btn btn-danger" style={{ position: "fixed" }} onClick={this.handleCloseModal}>Close Modal</button>
+                                                <div style={{ marginTop: 40 }}>
+                                                    <img alt="" src={this.state.imageIndex} style={{ borderRadius: 4 }} />
+                                                </div>
+                                        </ReactModal>
                                     </Segment>
                                 :   null
                             }
