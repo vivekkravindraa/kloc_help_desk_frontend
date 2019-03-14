@@ -299,7 +299,7 @@ export default class ManageApplication extends Component {
                                 !this.state.isArchived ?
                                 <Button.Group style={{ marginTop: 10 }}>
                                     <Button
-                                        positive
+                                        color="blue"
                                         className="btn btn-secondary"
                                         onClick={this.handleEditApplication}
                                     >
