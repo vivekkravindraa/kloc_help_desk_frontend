@@ -179,12 +179,16 @@ export default class ModeratorTickets extends Component {
             },
             {
                 Header: "View Ticket",
-                Cell: props => <Link to={{ 
-                    pathname:`/tickets/${props.original._id}`,
-                    state: {
-                        userId: `${this.state.userId}`
-                    }
-                }}>View Ticket</Link>,
+                Cell: props => <Link
+                    to={{ 
+                        pathname:`/tickets/${props.original._id}`,
+                        state: {
+                            userId: `${this.state.userId}`
+                        }
+                    }}
+                >
+                    View Ticket
+                </Link>,
                 sortable: false,
                 resizable: false,
                 width: 100,
@@ -197,6 +201,7 @@ export default class ModeratorTickets extends Component {
                 Cell: props => {
                     return (
                         <button
+                            className="btn btn-sm"
                             style={{backgroundColor: "yellowgreen", color: "black"}}
                             onClick={() =>{
                                 this.handleAssign(props.original._id)
@@ -208,6 +213,9 @@ export default class ModeratorTickets extends Component {
                 },
                 sortable: false,
                 resizable: false,
+                width: 100,
+                maxWidth: 100,
+                minWidth: 100,
                 style: { textAlign: "center" }
             }
         ]

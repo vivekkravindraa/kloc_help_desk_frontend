@@ -332,22 +332,27 @@ export default class SingleTicket extends Component {
                                         : null
                                 }
                             </Segment>
+                            <Segment raised>
+                            <Label as='a' color='orange' ribbon>Images</Label>
+                            {
+                                this.state.images.length > 0 ?
+                                this.state.images.map((index) => {
+                                    return (
+                                        <img
+                                            key={index}
+                                            src={index}
+                                            onMouseOver={this.handleMouseOver}
+                                            onMouseLeave={this.handleMouseLeave}
+                                            height={100}
+                                            width={100}
+                                            alt=""
+                                        />
+                                    )
+                                })
+                                :   null
+                            }
+                            </Segment>
                         </Grid.Column>
-                        {
-                            this.state.images.map((index) => {
-                                return (
-                                    <img
-                                        key={index}
-                                        src={index}
-                                        onMouseOver={this.handleMouseOver}
-                                        onMouseLeave={this.handleMouseLeave}
-                                        height={100}
-                                        width={100}
-                                        alt=""
-                                    />
-                                )
-                            })
-                        }
                     </div>
                 </form>
                 {

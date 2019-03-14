@@ -379,6 +379,7 @@ export default class Tickets extends Component {
                 Cell: props => {
                     return (
                         <button
+                            className="btn btn-sm"
                             style={{ backgroundColor: "red", color: "#fefefe" }}
                             onClick={() => {
                                 this.handleDeleteTicket(props.original._id)
