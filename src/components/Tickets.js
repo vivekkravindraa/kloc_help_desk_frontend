@@ -198,7 +198,6 @@ export default class Tickets extends Component {
     }
 
     toggleRow = (id) => {
-
         const newSelected = Object.assign({}, this.state.selected);
         newSelected[id] = !this.state.selected[id];
         this.setState({

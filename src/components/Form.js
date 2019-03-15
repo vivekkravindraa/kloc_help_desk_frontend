@@ -91,8 +91,14 @@ export default class Form extends Component {
     }
     
     handleRecipients = (e) => { this.setState({ recipients: e.target.value }) }
-    recaptchaLoaded = () => { this.setState({ isLoaded: true }) }
-    verifyCallback = (token) => { if(token) { this.setState({ isVerified: true, isNotVerified: false }) }}
+    onloadRecaptcha = () => { this.setState({ isLoaded: true }) }
+    verifyCallback = (token) => {
+        if(token) {
+            this.setState({ isVerified: true, isNotVerified: false }) 
+        } else {
+            this.setState({ isVerified: false, isNotVerified: true })
+        }
+    }
 
     handleSelectedFile = (e) => {
         let files = e.target.files;
@@ -248,6 +254,22 @@ export default class Form extends Component {
             (
                 <div className="container">
                 <Navigation />
+                {
+                    !this.state.isLoaded ?
+                    (
+                        <div
+                            style={{
+                                textAlign: "center",
+                                visibility: !this.state.isLoaded ? 'visible' : 'hidden'
+                            }}
+                            className="alert alert-warning"
+                            role="alert"
+                        >
+                        Make sure you're connected to a good internet / wait until the captcha loads.
+                        </div>
+                    )
+                    :   null
+                }
                 {
                     this.state.error.message !== '' ?
                     (
@@ -483,8 +505,8 @@ export default class Form extends Component {
                     <div className="g-recaptcha" data-sitekey={siteKey}> 
                         <Recaptcha
                             sitekey={siteKey}
-                            render="explicit"
-                            onloadCallback={this.recaptchaLoaded}
+                            render='explicit'
+                            onloadCallback={this.onloadRecaptcha}
                             verifyCallback={this.verifyCallback}
                         />
                     </div>
