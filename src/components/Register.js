@@ -229,7 +229,7 @@ export default class Register extends Component {
                     (
                         <div>
                             <h6 style={{"textAlign":"center"}}>
-                                Successfully Updated Profile.
+                                Successfully Registered.
                                 <Link to={{ pathname: "/login" }}> Login</Link>
                             </h6>
                         </div>
