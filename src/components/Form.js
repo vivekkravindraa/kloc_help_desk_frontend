@@ -200,32 +200,36 @@ export default class Form extends Component {
 
             let recipientsMails = this.state.recipients.length > 0 ? this.state.recipients.split(',') : [];
 
-            let formData = {
-                applicationId: this.state.appId,
-                userId: this.state.userId,
-                subject: this.state.subject,
-                description: this.state.description,
-                recipients: recipientsMails,
-                attachImages: this.state.images
-            }
-            
-            axios.post(`${baseURL}/tickets`, formData, {headers: {'x-auth': localStorage.getItem('x-auth')}})
-            .then((response) => {
-                if(response) {
-                    this.setState({
-                        ticketData: response.data,
-                        isGenerated: true
-                    })
+            if(this.state.files.length === 0) {
+                let formData = {
+                    applicationId: this.state.appId,
+                    userId: this.state.userId,
+                    subject: this.state.subject,
+                    description: this.state.description,
+                    recipients: recipientsMails,
+                    attachImages: this.state.images
                 }
-            })
-            .catch((error) => {
-                this.setState(() => ({
-                    error: { ...this.state.error,
-                        statusCode: error.response.status,
-                        message: `Unable to generate ticket! Please try again.`
+                
+                axios.post(`${baseURL}/tickets`, formData, {headers: {'x-auth': localStorage.getItem('x-auth')}})
+                .then((response) => {
+                    if(response) {
+                        this.setState({
+                            ticketData: response.data,
+                            isGenerated: true
+                        })
                     }
-                }))
-            })
+                })
+                .catch((error) => {
+                    this.setState(() => ({
+                        error: { ...this.state.error,
+                            statusCode: error.response.status,
+                            message: `Unable to generate ticket! Please try again.`
+                        }
+                    }))
+                })
+            } else {
+                alert('Please upload the selected images and then click submit.');
+            }        
         }
     }
 

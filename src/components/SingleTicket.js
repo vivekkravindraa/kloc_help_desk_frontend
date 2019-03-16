@@ -370,7 +370,9 @@ export default class SingleTicket extends Component {
                     </div>
                 </form>
                 {
-                    (this.state.role === 'admin' || this.state.role === 'moderator' || this.state.role === 'customer') && (this.state.ticketsAssigned.length !== 0)
+                    (this.state.role === 'admin') ||
+                    ((this.state.role === 'moderator') && (this.state.ticketsAssigned.length !== 0)) ||
+                    ((this.state.role === 'customer'))
                     ?
                     (
                         <Segment>
@@ -383,37 +385,37 @@ export default class SingleTicket extends Component {
                                         disabled={this.state.role === 'customer' ? true : false}
                                     >
                                         Open
-                                </option>
+                                    </option>
                                     <option
                                         value="assigned"
                                         disabled={this.state.role === 'customer' ? true : false}
                                     >
                                         Processing
-                                </option>
+                                    </option>
                                     <option
                                         value="pending"
                                         disabled={this.state.role === 'customer' ? true : false}
                                     >
                                         Pending
-                                </option>
+                                    </option>
                                     <option
                                         value="resolved"
                                         disabled={this.state.role === 'customer' ? true : false}
                                     >
-                                        Resolved
-                                </option>
+                                        Resolve
+                                    </option>
                                     <option
                                         value="closed"
                                         disabled={this.state.role === 'moderator' ? true : false}
                                     >
-                                        Closed
-                                </option>
+                                        Close
+                                    </option>
                                     <option
                                         value="open"
                                         disabled={this.state.role === 'moderator' ? true : false}
                                     >
                                         Re-Open
-                                </option>
+                                    </option>
                                 </select>
                             </div>
                             {
@@ -447,7 +449,9 @@ export default class SingleTicket extends Component {
                     null
                     :
                     (
-                        this.state.ticketsAssigned.length !== 0
+                        (this.state.role === 'admin') ||
+                        ((this.state.role === 'moderator') && (this.state.ticketsAssigned.length !== 0)) ||
+                        ((this.state.role === 'customer'))
                         ?
                         (
                             <div>
@@ -487,19 +491,6 @@ export default class SingleTicket extends Component {
                         : null
                     )
                 }
-                {
-                    this.state.ticketsAssigned.length > 0 ?
-                    (
-                        <h4
-                            style={{
-                                visibility: this.state.ticketsAssigned.length !== 0 ? 'visible' : 'hidden'
-                            }}
-                        >
-                            {this.state.commentsData.length > 1 ? 'Comments' : 'Comment'}: {this.state.commentsData.length}
-                        </h4>
-                    )
-                    : null
-                }
                 {/* {
                     this.state.commentsData.length > 0 ?
                     (
@@ -509,6 +500,18 @@ export default class SingleTicket extends Component {
                     )
                     :   null
                 } */}
+                {
+                    (this.state.role === 'admin') ||
+                    ((this.state.role === 'moderator') && (this.state.ticketsAssigned.length !== 0)) ||
+                    ((this.state.role === 'customer'))
+                    ?
+                        this.state.commentsData.length > 1
+                        ?
+                            `Comments : ${this.state.commentsData.length}`
+                        :
+                            `Comment : ${this.state.commentsData.length}`
+                    :   null
+                }
                 {
                     this.state.commentsData.length > 0 ?
                         this.state.commentsData.map((com, index) => {
