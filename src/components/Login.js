@@ -6,6 +6,8 @@ import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import '../App.css';
 
+const validator = require('validator');
+
 export default class Login extends Component {
     constructor(props) {
         super(props);
@@ -27,6 +29,12 @@ export default class Login extends Component {
     }
     
     handleLoginEmail = (e) => {
+        if(validator.isEmail(e.target.value)) {
+            e.target.className = "form-control is-valid"
+        } else {
+            e.target.className = "form-control is-invalid"
+        }
+
         this.setState({
             checkEmail: '',
             loginEmail: e.target.value,

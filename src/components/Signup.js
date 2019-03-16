@@ -5,6 +5,8 @@ import axios from 'axios';
 import { baseURL } from '../base_url';
 import '../App.css';
 
+const validator = require('validator');
+
 export default class Signup extends Component {
     constructor(props) {
         super(props);
@@ -54,7 +56,13 @@ export default class Signup extends Component {
         })
     }
 
-    handleSignupEmail = (e) => { 
+    handleSignupEmail = (e) => {
+        if(validator.isEmail(e.target.value)) {
+            e.target.className = "form-control is-valid"
+        } else {
+            e.target.className = "form-control is-invalid"
+        }
+
         this.setState({
             checkEmail: '',
             signupEmail: e.target.value,
