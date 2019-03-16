@@ -370,7 +370,7 @@ export default class SingleTicket extends Component {
                     </div>
                 </form>
                 {
-                    this.state.role === 'admin' || this.state.role === 'moderator' || this.state.role === 'customer'
+                    (this.state.role === 'admin' || this.state.role === 'moderator' || this.state.role === 'customer') && (this.state.ticketsAssigned.length !== 0)
                     ?
                     (
                         <Segment>

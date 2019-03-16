@@ -11,8 +11,8 @@ export default class Search extends Component {
         super(props);
         this.state = {
             search: '',
-            userId: decodeToken()._id,
-            email: decodeToken().email,
+            userId: decodeToken() ? decodeToken()._id : null,
+            email: decodeToken() ? decodeToken().email : null,
             errorMsg: '',
             searchData: [],
             filterData: [],
@@ -49,7 +49,7 @@ export default class Search extends Component {
     }
 
     render() {
-        if(!decodeToken()) {
+        if(!decodeToken() || (decodeToken()._id === null) || (decodeToken().email === null)) {
             return <Redirect to="/login" />
         }
         

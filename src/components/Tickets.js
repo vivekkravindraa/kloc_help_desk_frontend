@@ -14,7 +14,7 @@ export default class Tickets extends Component {
             assignTo: '',
             filterBy: '',
             search: '',
-            userId: decodeToken()._id,
+            userId: decodeToken() ? decodeToken()._id : null,
             ticketsData: [],
             filterData: [],
             moderators: [],
@@ -271,7 +271,7 @@ export default class Tickets extends Component {
     }
 
     render() {
-        if (!decodeToken() || (decodeToken().role !== 'admin')) {
+        if (!decodeToken() || (decodeToken().role !== 'admin') || (decodeToken()._id === null)) {
             return <Redirect to="/login" />
         }
 

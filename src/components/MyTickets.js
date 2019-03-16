@@ -13,7 +13,7 @@ export default class MyTickets extends Component {
         this.state = {
             ticketsData: [],
             filterData: [],
-            userId: decodeToken()._id,
+            userId: decodeToken() ? decodeToken()._id : null,
             filterBy: '',
             search: '',
             error: {
@@ -111,7 +111,7 @@ export default class MyTickets extends Component {
     }
 
     render() {
-        if(!decodeToken() || decodeToken().role !== 'customer') {
+        if(!decodeToken() || decodeToken().role !== 'customer' || (decodeToken()._id === null)) {
             return <Redirect to="/login" />
         }
         

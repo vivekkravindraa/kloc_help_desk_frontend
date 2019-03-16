@@ -13,9 +13,9 @@ export default class Form extends Component {
         super(props);
         this.state = {
             appId: this.props.location.state.appId,
-            userId: decodeToken()._id,
+            userId: decodeToken() ? decodeToken()._id : null,
             appName: this.props.location.state.appName,
-            ticketEmail: decodeToken().email,
+            ticketEmail: decodeToken() ? decodeToken().email : null,
             store: '',
             subject: '',
             description: '',
@@ -230,7 +230,7 @@ export default class Form extends Component {
     }
 
     render() {
-        if(!decodeToken()) {
+        if(!decodeToken() || (decodeToken()._id === null) || (decodeToken().email === null)) {
             return <Redirect to="/login" />
         }
         

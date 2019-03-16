@@ -13,7 +13,7 @@ export default class ModeratorTickets extends Component {
         this.state = {
             ticketsData: [],
             filterData: [],
-            userId: decodeToken()._id,
+            userId: decodeToken() ? decodeToken()._id : null,
             filterBy: '',
             search: '',
             isAssignedToMe: false,
@@ -128,7 +128,7 @@ export default class ModeratorTickets extends Component {
     }
 
     render() {
-        if(!decodeToken() || (decodeToken().role !== 'moderator')) {
+        if(!decodeToken() || (decodeToken().role !== 'moderator') || (decodeToken()._id === null)) {
             return <Redirect to="/login" />
         }
         

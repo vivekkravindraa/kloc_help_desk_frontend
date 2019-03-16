@@ -16,7 +16,7 @@ export default class Profile extends Component {
             firstName: '',
             lastName: '',
             mobileNumber: '',
-            userId: decodeToken()._id,
+            userId: decodeToken() ? decodeToken()._id : null,
             email: '',
             role: '',
             store: '',
@@ -318,7 +318,7 @@ export default class Profile extends Component {
     }
 
     render() {
-        if(!decodeToken()) {
+        if(!decodeToken() || (decodeToken()._id === null)) {
             return <Redirect to="/login" />
         } 
         return (
