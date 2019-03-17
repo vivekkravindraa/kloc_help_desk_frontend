@@ -42,6 +42,9 @@ export default class Profile extends Component {
             isChanging: false,
             isChanged: false,
             visible: false,
+            nowCancel: false,
+            nowUpdate: false,
+            nowChange: false,
             error: {
                 statusCode: '',
                 message: ''
@@ -79,13 +82,46 @@ export default class Profile extends Component {
             isEmpty: false,
             isIncorrect: false,
             isSuccess: false,
+            visible: false,
+            nowCancel: false,
+            nowChange: false,
+            nowUpdate: false,
             minMobileNumber: ''
         })
         this.getUser()
     }
 
-    show = () => { this.setState({ visible: true }); }
-    hide = () => { this.setState({ visible: false }); }
+    show = (e) => {
+        if(e.target.innerText === 'Update Details') {
+            this.setState({
+                nowCancel: false,
+                nowChange: false,
+                nowUpdate: true,
+                visible: true
+            });
+        } else if(e.target.innerText === 'Save Changes') {
+            this.setState({
+                nowCancel: false,
+                nowUpdate: false,
+                nowChange: true,
+                visible: true
+            });
+        } else {
+            this.setState({
+                nowUpdate: false,
+                nowChange: false,
+                nowCancel: true,
+                visible: true
+            });
+        }
+    }
+    hide = () => {
+        this.setState({
+            visible: false,
+            nowUpdate: false,
+            nowChange: false
+        });
+    }
 
     handleCancel = () => {
         this.setState({
@@ -95,6 +131,9 @@ export default class Profile extends Component {
             isEmpty: false,
             isIncorrect: false,
             isSuccess: false,
+            nowCancel: false,
+            nowUpdate: false,
+            nowChange: false,
             errorMsg: '',
             oldPassword: '',
             newPassword: '',
@@ -148,21 +187,22 @@ export default class Profile extends Component {
         })
     }
 
-    storeHandle = (e) => {
-        this.setState({
-            store: e.target.value,
-            isEmpty: false,
-            error: {
-                statusCode: '',
-                message: ''
-            }
-        })
-    }
+    // storeHandle = (e) => {
+    //     this.setState({
+    //         store: e.target.value,
+    //         isEmpty: false,
+    //         error: {
+    //             statusCode: '',
+    //             message: ''
+    //         }
+    //     })
+    // }
 
     handleChangePassword = () => {
         this.setState({
             editMode: true,
-            isChanging: true
+            isChanging: true,
+            visible: false
         })
     }
 
@@ -265,6 +305,7 @@ export default class Profile extends Component {
                             isChanged: true,
                             isChanging: false,
                             editMode: false,
+                            visible: false,
                             profileData: response.data
                         })
                     }
@@ -308,6 +349,7 @@ export default class Profile extends Component {
                         this.setState({
                             isSuccess: true,
                             editMode: false,
+                            visible: false,
                             profileData: response.data
                         })
                     }
@@ -333,18 +375,61 @@ export default class Profile extends Component {
             <div className="container">
                 <Navigation />
                 <Rodal visible={this.state.visible} onClose={this.hide.bind(this)}>
-                    <p>Your changes will be discarded. Are you sure ?</p>
-                    <Button
-                        style={{
-                            backgroundColor:"yellowgreen",
-                            color:"black",
-                            border: 0
-                        }}
-                        onClick={this.handleCancel}
-                    >
-                    <Icon name='check' />
-                    OK
-                    </Button>
+                {
+                    this.state.visible && this.state.nowCancel ?
+                        <div>
+                            <p>Your changes will be discarded. Are you sure ?</p>
+                            <Button
+                                style={{
+                                    backgroundColor:"yellowgreen",
+                                    color:"black",
+                                    border: 0
+                                }}
+                                onClick={this.handleCancel}
+                            >
+                            <Icon name='check' />
+                            OK
+                            </Button>
+                        </div>
+                    :
+                    null
+                }
+                {
+                    this.state.visible && this.state.nowUpdate ?
+                        <div>
+                            <p>Your profile will be updated permanently. Are you sure ?</p>
+                            <Button
+                                style={{
+                                    backgroundColor:"yellowgreen",
+                                    color:"black",
+                                    border: 0
+                                }}
+                                onClick={this.handleUpdateProfile}
+                            >
+                            <Icon name='check' />
+                            OK
+                            </Button>
+                        </div>
+                    :   null
+                }
+                {
+                    this.state.visible && this.state.nowChange ?
+                        <div>
+                            <p>Password will be changed permanently. Are you sure ?</p>
+                            <Button
+                                style={{
+                                    backgroundColor:"yellowgreen",
+                                    color:"black",
+                                    border: 0
+                                }}
+                                onClick={this.handleSubmitPassword}
+                            >
+                            <Icon name='check' />
+                            OK
+                            </Button>
+                        </div>
+                    :   null
+                }
                 </Rodal>
                 {
                     this.state.error.message !== '' ?
@@ -481,7 +566,7 @@ export default class Profile extends Component {
                                         </span>
                                     </div>
                                     <div className="form-group">
-                                        <label>Confirm password <sup>* </sup>
+                                        <label>Confirm new password <sup>* </sup>
                                             <span className="badge badge-danger">
                                                 {this.state.checkConfirmPassword}
                                             </span>
@@ -498,18 +583,6 @@ export default class Profile extends Component {
                                         </span>
                                     </div>
                                     <Button
-                                        type="submit"
-                                        style={{
-                                            backgroundColor:"yellowgreen",
-                                            color:"black",
-                                            border:0
-                                        }}
-                                        onClick={this.handleSubmitPassword}
-                                    >
-                                        <Icon name='save' />
-                                        Save
-                                    </Button>
-                                    <Button
                                         style={{
                                             backgroundColor:"lightblue",
                                             color:"black",
@@ -519,6 +592,18 @@ export default class Profile extends Component {
                                     >
                                         <Icon name='cancel' />
                                         Cancel
+                                    </Button>
+                                    <Button
+                                        type="submit"
+                                        style={{
+                                            backgroundColor:"yellowgreen",
+                                            color:"black",
+                                            border:0
+                                        }}
+                                        onClick={this.show}
+                                    >
+                                        <Icon name='save' />
+                                        Save Changes
                                     </Button>
                                     <Button
                                         style={{
@@ -569,7 +654,7 @@ export default class Profile extends Component {
                                             onChange={this.lastNameHandle}
                                         />
                                     </div>
-                                    {
+                                    {/* {
                                         this.state.role === 'customer' ?
                                             <div className="form-group">
                                             <label>Store <small>(Optional)</small></label>
@@ -581,7 +666,7 @@ export default class Profile extends Component {
                                             />
                                         </div>
                                         :   null
-                                    }
+                                    } */}
                                     <div className="form-group">
                                         <label>Mobile number</label>
                                         <input 
@@ -596,18 +681,6 @@ export default class Profile extends Component {
                                         </span>
                                     </div>
                                     <Button
-                                        type="submit"
-                                        style={{
-                                            backgroundColor:"yellowgreen",
-                                            color:"black",
-                                            border:0
-                                        }}
-                                        onClick={this.handleUpdateProfile}
-                                    >
-                                        <Icon name='save' />
-                                        Save
-                                    </Button>
-                                    <Button
                                         style={{
                                             backgroundColor:"lightblue",
                                             color:"black",
@@ -617,6 +690,18 @@ export default class Profile extends Component {
                                     >
                                         <Icon name='cancel' />
                                         Cancel
+                                    </Button>
+                                    <Button
+                                        type="submit"
+                                        style={{
+                                            backgroundColor:"yellowgreen",
+                                            color:"black",
+                                            border:0
+                                        }}
+                                        onClick={this.show}
+                                    >
+                                        <Icon name='save' />
+                                        Update Details
                                     </Button>
                                     <Button
                                         style={{

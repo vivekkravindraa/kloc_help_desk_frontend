@@ -25,6 +25,8 @@ export default class ManageApplication extends Component {
             isSuccess: false,
             isNotMinimum: false,
             visible: false,
+            nowDelete: false,
+            nowSave: false,
             appNameChars: 0,
             appDescriptionChars: 0,
             error: {
@@ -128,7 +130,7 @@ export default class ManageApplication extends Component {
 
         if (this.state.appName === '' || this.state.appDescription === '') {
             this.setState({ isEmpty: true })
-        } else if (this.state.appName.length < 10 || this.state.appDescription.length < 50) {
+        } else if (this.state.appName.length < 3 || this.state.appDescription.length < 10) {
             this.setState({ isNotMinimum: true })
         } else if (this.state.appName !== '' && this.state.appDescription !== '') {
             let formData = {
@@ -146,7 +148,9 @@ export default class ManageApplication extends Component {
                         appDescriptionChars: response.data.description.length,
                         moderators: response.data.user,
                         isSuccess: true,
-                        editMode: false
+                        editMode: false,
+                        visible: false,
+                        nowSave: false
                     })
                 })
                 .catch((error) => {
@@ -161,15 +165,37 @@ export default class ManageApplication extends Component {
         }
     }
 
-    show = () => { this.setState({ visible: true }) }
-    hide = () => { this.setState({ visible: false }) }
+    show = (e) => {
+        if(e.target.innerText === 'Delete') {
+            this.setState({
+                isSuccess: false,
+                visible: true,
+                nowDelete: true
+            })
+        } else {
+            this.setState({
+                isSuccess: false,
+                visible: true,
+                nowSave: true
+            })
+        }
+    }
+    hide = () => {
+        this.setState({
+            visible: false,
+            nowDelete: false,
+            nowSave: false
+        })
+    }
 
     handleDeleteApplication = () => {
         let id = this.props.location.state.appId;
         axios.delete(`${baseURL}/applications/${id}/archive`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
             .then((response) => {
                 this.setState({
-                    isArchived: true
+                    isArchived: true,
+                    visible: false,
+                    nowDelete: false
                 })
             })
             .catch((error) => {
@@ -271,11 +297,12 @@ export default class ManageApplication extends Component {
                     : null
                 }
                 {
-                    !this.state.editMode ?
-                    !this.state.isArchived ?
-                    (
-                        <div>
-                            <Rodal visible={this.state.visible} onClose={this.hide}>
+                    this.state.visible ?
+                    <Rodal visible={this.state.visible} onClose={this.hide}>
+                    {
+                        this.state.nowDelete ?
+                        (
+                            <div>
                                 <p>Are you sure you want to delete the application ?</p>
                                 <Button
                                     negative
@@ -284,7 +311,34 @@ export default class ManageApplication extends Component {
                                     <Icon name='archive' />
                                     Yes
                                 </Button>
-                            </Rodal>
+                            </div>
+                        )
+                        :   null
+                    }
+                    {
+                        this.state.nowSave ?
+                        (
+                            <div>
+                                <p>Your changes will be saved permanently. Are you sure ?</p>
+                                <Button
+                                    positive
+                                    onClick={this.handleUpdateApplication}
+                                >
+                                    <Icon name='check' />
+                                    Yes
+                                </Button>
+                            </div>
+                        )
+                        :   null
+                    }
+                    </Rodal>
+                    :   null
+                }
+                {
+                    !this.state.editMode ?
+                    !this.state.isArchived ?
+                    (
+                        <div>
                             <h2 style={{ textAlign: "center" }}>Application</h2>
                             <Grid.Column>
                                 <Segment raised>
@@ -319,6 +373,7 @@ export default class ManageApplication extends Component {
                                         className="btn btn-secondary"
                                         onClick={this.handleEditApplication}
                                     >
+                                        <Icon name='edit' />
                                         Edit
                                     </Button>
                                     <Button.Or />
@@ -327,6 +382,7 @@ export default class ManageApplication extends Component {
                                         className="btn btn-secondary"
                                         onClick={this.show}
                                     >
+                                        <Icon name="archive" />
                                         Delete
                                     </Button>
                                 </Button.Group>
@@ -377,8 +433,9 @@ export default class ManageApplication extends Component {
                                 <Button
                                     positive
                                     className="btn btn-secondary"
-                                    onClick={this.handleUpdateApplication}
+                                    onClick={this.show}
                                 >
+                                    <Icon name='save' />
                                     Save
                                 </Button>
                                 <Button.Or />
@@ -387,6 +444,7 @@ export default class ManageApplication extends Component {
                                     className="btn btn-secondary"
                                     onClick={this.handleCancel}
                                 >
+                                    <Icon name='cancel' />
                                     Cancel
                                 </Button>
                             </Button.Group>

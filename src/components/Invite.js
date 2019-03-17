@@ -221,7 +221,7 @@ export default class Invite extends Component {
                             className="alert alert-warning"
                             role="alert"
                         >
-                        Moderator(s) Required!
+                        Moderator(s) Required! Please click on 'Add Moderator' below.
                         </div>
                     )   :   null
                 }
