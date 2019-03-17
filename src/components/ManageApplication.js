@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Button, Segment, Label, Grid } from 'semantic-ui-react';
+import { Button, Segment, Label, Grid, Icon } from 'semantic-ui-react';
+import Rodal from 'rodal';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import Navigation from './Navigation';
 import '../App.css';
+import 'rodal/lib/rodal.css';
 
 export default class ManageApplication extends Component {
     constructor(props) {
@@ -22,6 +24,7 @@ export default class ManageApplication extends Component {
             isEmpty: false,
             isSuccess: false,
             isNotMinimum: false,
+            visible: false,
             appNameChars: 0,
             appDescriptionChars: 0,
             error: {
@@ -158,6 +161,9 @@ export default class ManageApplication extends Component {
         }
     }
 
+    show = () => { this.setState({ visible: true }) }
+    hide = () => { this.setState({ visible: false }) }
+
     handleDeleteApplication = () => {
         let id = this.props.location.state.appId;
         axios.delete(`${baseURL}/applications/${id}/archive`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
@@ -227,7 +233,7 @@ export default class ManageApplication extends Component {
                             className="alert alert-success"
                             role="alert"
                         >
-                            Successfully removed the application!
+                            Successfully removed the application! <Link to="/application">Click to add Applications.</Link>
                     </div>
                     )
                     : null
@@ -269,6 +275,16 @@ export default class ManageApplication extends Component {
                     !this.state.isArchived ?
                     (
                         <div>
+                            <Rodal visible={this.state.visible} onClose={this.hide}>
+                                <p>Are you sure you want to delete the application ?</p>
+                                <Button
+                                    negative
+                                    onClick={this.handleDeleteApplication}
+                                >
+                                    <Icon name='archive' />
+                                    Yes
+                                </Button>
+                            </Rodal>
                             <h2 style={{ textAlign: "center" }}>Application</h2>
                             <Grid.Column>
                                 <Segment raised>
@@ -309,7 +325,7 @@ export default class ManageApplication extends Component {
                                     <Button
                                         negative
                                         className="btn btn-secondary"
-                                        onClick={this.handleDeleteApplication}
+                                        onClick={this.show}
                                     >
                                         Delete
                                     </Button>

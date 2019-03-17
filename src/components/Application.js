@@ -197,7 +197,7 @@ export default class Application extends Component {
                                                 appId: `${props.original._id}`
                                             }
                                         }}>
-                                            view more >>
+                                        <u>view more</u>
                             </Link>
                                     </button>
                                 )

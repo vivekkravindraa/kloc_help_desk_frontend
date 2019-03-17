@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { Button, Icon } from 'semantic-ui-react';
+import Rodal from 'rodal';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import ReactTable from 'react-table';
 import Navigation from './Navigation';
 import '../App.css';
+import 'rodal/lib/rodal.css';
 
 export default class Tickets extends Component {
     constructor(props) {
@@ -14,6 +17,7 @@ export default class Tickets extends Component {
             assignTo: '',
             filterBy: '',
             search: '',
+            ticketId: '',
             userId: decodeToken() ? decodeToken()._id : null,
             ticketsData: [],
             filterData: [],
@@ -22,6 +26,7 @@ export default class Tickets extends Component {
             selectAll: 0,
             isArchived: false,
             isVisible: false,
+            visible: false,
             error: {
                 statusCode: '',
                 message: ''
@@ -181,11 +186,16 @@ export default class Tickets extends Component {
             })
     }
 
+    show = (id) => { this.setState({ visible: true, ticketId: id }); }
+    hide = () => { this.setState({ visible: false, ticketId: '' }); }
+
     handleDeleteTicket = (id) => {
-        axios.delete(`${baseURL}/tickets/${id}/archive`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
+        axios.delete(`${baseURL}/tickets/${id}/archive`,{headers: { 'x-auth': localStorage.getItem('x-auth')}})
             .then((response) => {
                 this.setState({
-                    isArchived: true
+                    isArchived: true,
+                    visible: false,
+                    ticketId: ''
                 })
                 this.getAll()
             })
@@ -381,7 +391,7 @@ export default class Tickets extends Component {
                             className="btn btn-sm"
                             style={{ backgroundColor: "red", color: "#fefefe" }}
                             onClick={() => {
-                                this.handleDeleteTicket(props.original._id)
+                                this.show(props.original._id)
                             }}
                         >
                         Delete
@@ -400,6 +410,16 @@ export default class Tickets extends Component {
         return (
             <div className="container">
                 <Navigation />
+                <Rodal visible={this.state.visible} onClose={this.hide}>
+                    <p>Are you sure you want to delete this ticket ?</p>
+                    <Button
+                        negative
+                        onClick={ this.handleDeleteTicket.bind(this, this.state.ticketId) }
+                    >
+                        <Icon name='archive' />
+                        Yes
+                    </Button>
+                </Rodal>
                 <form>
                     <h2 style={{ textAlign: "center" }}>All tickets</h2>
                     {
