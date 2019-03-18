@@ -10,6 +10,8 @@ import Navigation from './Navigation';
 import '../App.css';
 import 'rodal/lib/rodal.css';
 
+var Loader = require('react-loader');
+
 export default class Profile extends Component {
     constructor(props) {
         super(props);
@@ -42,6 +44,7 @@ export default class Profile extends Component {
             isChanging: false,
             isChanged: false,
             visible: false,
+            loaded: false,
             nowCancel: false,
             nowUpdate: false,
             nowChange: false,
@@ -65,7 +68,8 @@ export default class Profile extends Component {
                 lastName: response.data.lastName ? response.data.lastName[0].toUpperCase() + response.data.lastName.slice(1) : '',
                 email: response.data.email,
                 mobileNumber: response.data.mobileNumber,
-                role: response.data.role[0].toUpperCase() + response.data.role.slice(1)
+                role: response.data.role[0].toUpperCase() + response.data.role.slice(1),
+                loaded: true
             })
         })
         .catch((error) => {
@@ -374,63 +378,67 @@ export default class Profile extends Component {
         return (
             <div className="container">
                 <Navigation />
-                <Rodal visible={this.state.visible} onClose={this.hide.bind(this)}>
                 {
-                    this.state.visible && this.state.nowCancel ?
-                        <div>
-                            <p>Your changes will be discarded. Are you sure ?</p>
-                            <Button
-                                style={{
-                                    backgroundColor:"yellowgreen",
-                                    color:"black",
-                                    border: 0
-                                }}
-                                onClick={this.handleCancel}
-                            >
-                            <Icon name='check' />
-                            OK
-                            </Button>
-                        </div>
-                    :
-                    null
-                }
-                {
-                    this.state.visible && this.state.nowUpdate ?
-                        <div>
-                            <p>Your profile will be updated permanently. Are you sure ?</p>
-                            <Button
-                                style={{
-                                    backgroundColor:"yellowgreen",
-                                    color:"black",
-                                    border: 0
-                                }}
-                                onClick={this.handleUpdateProfile}
-                            >
-                            <Icon name='check' />
-                            OK
-                            </Button>
-                        </div>
+                    this.state.visible ?
+                        <Rodal visible={this.state.visible} onClose={this.hide.bind(this)}>
+                        {
+                            this.state.visible && this.state.nowCancel ?
+                                <div>
+                                    <p>Your changes will be discarded. Are you sure ?</p>
+                                    <Button
+                                        style={{
+                                            backgroundColor:"yellowgreen",
+                                            color:"black",
+                                            border: 0
+                                        }}
+                                        onClick={this.handleCancel}
+                                    >
+                                    <Icon name='check' />
+                                    OK
+                                    </Button>
+                                </div>
+                            :
+                            null
+                        }
+                        {
+                            this.state.visible && this.state.nowUpdate ?
+                                <div>
+                                    <p>Your profile will be updated permanently. Are you sure ?</p>
+                                    <Button
+                                        style={{
+                                            backgroundColor:"yellowgreen",
+                                            color:"black",
+                                            border: 0
+                                        }}
+                                        onClick={this.handleUpdateProfile}
+                                    >
+                                    <Icon name='check' />
+                                    OK
+                                    </Button>
+                                </div>
+                            :   null
+                        }
+                        {
+                            this.state.visible && this.state.nowChange ?
+                                <div>
+                                    <p>Password will be changed permanently. Are you sure ?</p>
+                                    <Button
+                                        style={{
+                                            backgroundColor:"yellowgreen",
+                                            color:"black",
+                                            border: 0
+                                        }}
+                                        onClick={this.handleSubmitPassword}
+                                    >
+                                    <Icon name='check' />
+                                    OK
+                                    </Button>
+                                </div>
+                            :   null
+                        }
+                        </Rodal>
                     :   null
                 }
-                {
-                    this.state.visible && this.state.nowChange ?
-                        <div>
-                            <p>Password will be changed permanently. Are you sure ?</p>
-                            <Button
-                                style={{
-                                    backgroundColor:"yellowgreen",
-                                    color:"black",
-                                    border: 0
-                                }}
-                                onClick={this.handleSubmitPassword}
-                            >
-                            <Icon name='check' />
-                            OK
-                            </Button>
-                        </div>
-                    :   null
-                }
-                </Rodal>
                 {
                     this.state.error.message !== '' ?
                     (
@@ -720,32 +728,40 @@ export default class Profile extends Component {
                     :   
                     (
                         <div style={{ textAlign: "center" }}>
-                            <h2>User profile</h2>
-                            <button
-                                style={{ backgroundColor:"darkblue" }}
-                                className="btn btn-secondary"
-                                onClick={this.handleEditProfile}
-                            >
-                            Edit
-                            </button>
-                            <Card className="segment centered">
-                                <Image src={logo} />
-                                <Card.Content>
-                                    <Card.Header>
-                                    {this.state.profileData.firstName ? this.state.profileData.firstName.toUpperCase()[0] + this.state.profileData.firstName.slice(1) : ''} {this.state.profileData.lastName ? this.state.profileData.lastName.toUpperCase()[0] + this.state.profileData.lastName.slice(1) : ''}
-                                    </Card.Header>
-                                    <Card.Meta>
-                                    <span className='date'>{this.state.profileData.mobileNumber}</span>
-                                    </Card.Meta>
-                                    <Card.Description>{this.state.profileData.email}</Card.Description>
-                                </Card.Content>
-                                <Card.Content extra>
-                                    <button>
-                                    <Icon name='user' />
-                                    {this.state.role}
+                        {
+                            this.state.loaded ?
+                            (
+                                <div>
+                                    <h2>User profile</h2>
+                                    <button
+                                        style={{ backgroundColor:"darkblue" }}
+                                        className="btn btn-secondary"
+                                        onClick={this.handleEditProfile}
+                                    >
+                                    Edit
                                     </button>
-                                </Card.Content>
-                            </Card>
+                                    <Card className="segment centered">
+                                        <Image src={logo} />
+                                        <Card.Content>
+                                            <Card.Header>
+                                            {this.state.profileData.firstName ? this.state.profileData.firstName.toUpperCase()[0] + this.state.profileData.firstName.slice(1) : ''} {this.state.profileData.lastName ? this.state.profileData.lastName.toUpperCase()[0] + this.state.profileData.lastName.slice(1) : ''}
+                                            </Card.Header>
+                                            <Card.Meta>
+                                            <span className='date'>{this.state.profileData.mobileNumber}</span>
+                                            </Card.Meta>
+                                            <Card.Description>{this.state.profileData.email}</Card.Description>
+                                        </Card.Content>
+                                        <Card.Content extra>
+                                            <button>
+                                            <Icon name='user' />
+                                            {this.state.role}
+                                            </button>
+                                        </Card.Content>
+                                    </Card>
+                                </div>
+                            )
+                            :   <Loader loaded={this.state.loaded} />
+                        }
                         </div>
                     )
                 }

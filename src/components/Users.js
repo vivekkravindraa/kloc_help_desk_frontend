@@ -7,6 +7,8 @@ import ReactTable from 'react-table';
 import Navigation from './Navigation';
 import '../App.css';
 
+var Loader = require('react-loader');
+
 export default class Users extends Component {
     constructor(props) {
         super(props);
@@ -14,6 +16,7 @@ export default class Users extends Component {
             allUsers: [],
             filterUsers: [],
             search: '',
+            loaded: false,
             error: {
                 statusCode: '',
                 message: ''
@@ -27,7 +30,8 @@ export default class Users extends Component {
             if(response) {
                 this.setState({
                     allUsers: response.data,
-                    filterUsers: response.data
+                    filterUsers: response.data,
+                    loaded: true
                 })
             }
         })
@@ -161,14 +165,18 @@ export default class Users extends Component {
                         </div>
                     </div>
                 </form>
-                <ReactTable
-                    className="all-users-table"
-                    columns={columns}
-                    data={this.state.filterUsers}
-                    defaultPageSize={5}
-                    noDataText={"No data found!"}
-                >
-                </ReactTable>
+                {
+                    this.state.loaded ?
+                        <ReactTable
+                            className="all-users-table"
+                            columns={columns}
+                            data={this.state.filterUsers}
+                            defaultPageSize={5}
+                            noDataText={"No data found!"}
+                        >
+                        </ReactTable>
+                    :   <Loader loaded={this.state.loaded} />
+                }
             </div>
         )
     }

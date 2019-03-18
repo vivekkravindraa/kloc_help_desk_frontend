@@ -6,14 +6,16 @@ import decodeToken from '../helpers/token';
 import Navigation from './Navigation';
 import '../App.css';
 
+var Loader = require('react-loader');
+
 export default class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
             search: '',
+            loaded: false,
             userId: decodeToken() ? decodeToken()._id : null,
             email: decodeToken() ? decodeToken().email : null,
-            errorMsg: '',
             searchData: [],
             filterData: [],
             error: {
@@ -30,6 +32,7 @@ export default class Search extends Component {
                 this.setState({
                     searchData: response.data,
                     filterData: response.data,
+                    loaded: true
                 })
             }
         })
@@ -89,19 +92,22 @@ export default class Search extends Component {
                         </ul>
                     </div>
                     {   
-                        this.state.searchData.length === 0 ?
-                        (
-                            <div
-                                style={{ 
-                                    textAlign: "center",
-                                    visibility: this.state.searchData.length === 0 ? 'visible' : 'hidden'}}
-                                className="alert alert-info"
-                                role="alert"
-                            >
-                            No applications found!
-                            </div>
-                        )
-                        :   null
+                        this.state.loaded ?
+                            this.state.searchData.length === 0 ?
+                            (
+                                <div
+                                    style={{ 
+                                        textAlign: "center",
+                                        visibility: this.state.searchData.length === 0 ? 'visible' : 'hidden'}}
+                                    className="alert alert-info"
+                                    role="alert"
+                                >
+                                No applications found!
+                                </div>
+                            )
+                            :   null
+                        :
+                            <Loader loaded={this.state.loaded} />
                     }
                 </form>
             </div>

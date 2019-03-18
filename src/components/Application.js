@@ -8,6 +8,8 @@ import Select from 'react-select';
 import Navigation from './Navigation';
 import '../App.css';
 
+var Loader = require('react-loader');
+
 export default class Application extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +24,7 @@ export default class Application extends Component {
             newObj: {},
             isEmpty: false,
             isSuccess: false,
+            loaded: false,
             selectedOption: null,
             appNameChars: 0,
             appDescriptionChars: 0,
@@ -57,7 +60,8 @@ export default class Application extends Component {
             .then((response) => {
                 this.setState({
                     appData: response.data,
-                    filterData: response.data
+                    filterData: response.data,
+                    loaded: true
                 })
             })
             .catch((error) => {
@@ -135,7 +139,6 @@ export default class Application extends Component {
 
             axios.post(`${baseURL}/applications`, formData, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
                 .then((response) => {
-                    this.getApplications();
                     this.setState({
                         newObj: response.data
                     })
@@ -148,6 +151,7 @@ export default class Application extends Component {
                         appDescription: '',
                         selectedOption: null
                     })
+                    this.getApplications();
                 })
                 .catch((error) => {
                     this.setState(() => ({
@@ -357,19 +361,21 @@ export default class Application extends Component {
                     )   :   null
                 }
                 {
-                    this.state.appData.length > 0 ?
-                    (
-                        <div style={{ marginTop: 10, textAlign: "center" }}>
-                            <ReactTable
-                                columns={columns}
-                                data={this.state.filterData}
-                                defaultPageSize={5}
-                                noDataText={"No data found!"}
-                            >
-                            </ReactTable>
-                        </div>
-                    )
-                    :   null
+                    this.state.loaded ?
+                        this.state.appData.length > 0 ?
+                        (
+                            <div style={{ marginTop: 10, textAlign: "center" }}>
+                                <ReactTable
+                                    columns={columns}
+                                    data={this.state.filterData}
+                                    defaultPageSize={5}
+                                    noDataText={"No data found!"}
+                                >
+                                </ReactTable>
+                            </div>
+                        )
+                        :   null
+                    :   <Loader loaded={this.state.loaded} />
                 }
             </div>
         )

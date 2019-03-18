@@ -10,6 +10,8 @@ import Navigation from './Navigation';
 import '../App.css';
 import 'rodal/lib/rodal.css';
 
+var Loader = require('react-loader');
+
 export default class Tickets extends Component {
     constructor(props) {
         super(props);
@@ -27,6 +29,7 @@ export default class Tickets extends Component {
             isArchived: false,
             isVisible: false,
             visible: false,
+            loaded: false,
             error: {
                 statusCode: '',
                 message: ''
@@ -44,7 +47,8 @@ export default class Tickets extends Component {
             .then((response) => {
                 this.setState({
                     ticketsData: response.data,
-                    filterData: response.data
+                    filterData: response.data,
+                    loaded: true
                 })
             })
             .catch((error) => {
@@ -533,14 +537,19 @@ export default class Tickets extends Component {
                         }
                     </div>
                 </form>
-                <ReactTable
-                    className="all-tickets-table"
-                    columns={columns}
-                    data={this.state.filterData}
-                    defaultPageSize={5}
-                    noDataText="No data found!"
-                >
-                </ReactTable>
+                {
+                    this.state.loaded ?
+                        <ReactTable
+                            className="all-tickets-table"
+                            columns={columns}
+                            data={this.state.filterData}
+                            defaultPageSize={5}
+                            noDataText="No data found!"
+                        >
+                        </ReactTable>
+                    :
+                        <Loader loaded={this.state.loaded} />
+                }                
             </div>
         )
     }
