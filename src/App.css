@@ -184,7 +184,8 @@
 .rt-thead.-header {
     font-weight:900;
     background-color:darkblue;
-    color:white
+    color:white;
+    border-radius:4px;
 }
 
 .ReactTable .rt-thead .rt-th.-sort-asc {
@@ -193,6 +194,10 @@
 
 .ReactTable .rt-thead .rt-th.-sort-desc {
     box-shadow:inset 0 -3px 0 0 white
+}
+
+.ReactTable .pagination-bottom {
+    border-radius:4px;
 }
 
 /* .rt-tr-group:nth-child(even) {
@@ -220,4 +225,10 @@
 
 .pagination-bottom .-pagination .-next .-btn {
     color:white;
+}
+
+/* Form CSS */
+
+.fileContainer {
+    border:1px solid black;
 }

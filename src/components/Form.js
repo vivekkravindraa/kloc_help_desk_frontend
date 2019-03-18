@@ -1,8 +1,11 @@
 // import * as React from 'react';
 // import { ReactMultiEmail } from "react-multi-email";
 // import "react-multi-email/style.css";
+// import ImageUploader from 'react-images-upload';
+
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
@@ -33,6 +36,7 @@ export default class Form extends Component {
             recipients: [],
             // emails: [],
             images: [],
+            // pictures: [],
             imageNames: [],
             files: [],
             filesList: [],
@@ -145,6 +149,63 @@ export default class Form extends Component {
         this.state.files.splice(index,1);
         this.state.filesList.splice(index,1);
     }
+
+    // onDrop = (picture) => {
+    //     let pictures = picture.map(obj => obj.name)
+    //     this.setState({
+    //         pictures: this.state.pictures.concat(pictures)
+    //     });
+
+    //     let fd = new FormData();
+
+    //     if(picture.length === 0) {
+    //         this.setState({ isUploading: false })
+    //     } else if(picture.length > 0) {
+    //         this.setState({
+    //             imageNames: this.state.imageNames.concat(this.state.pictures),
+    //             isUploading: true,
+    //             errorMsg: ''
+    //         })
+
+    //         for(let i = 0; i < picture.length; i++) {
+    //             fd.append('image', picture[i]);
+    //         }
+
+    //         axios.post(`${baseURL}/tickets/image_upload`, fd, {
+    //             onUploadProgress: progressEvent => {
+    //                 this.setState({
+    //                     loaded: (Math.round((progressEvent.loaded * 100) / progressEvent.total))
+    //                 })
+    //             }
+    //         }, {
+    //             headers: {
+    //                 'accept': 'application/json',
+    //                 'Accept-Language': 'en-US,en;q=0.8',
+    //                 'Content-Type': 'multipart/form-data'
+    //             }
+    //         })
+    //         .then((response) => {
+    //             fd = {}
+    //             this.setState({
+    //                 images: this.state.images.concat(response.data.locationArray),
+    //                 isSuccess: true,
+    //                 isUploaded: true,
+    //                 isUploading: false,
+    //                 isVisible: false,
+    //                 pictures: []
+    //             })
+    //         })
+    //         .catch((error) => {
+    //             this.setState(() => ({
+    //                 error: { ...this.state.error,
+    //                     statusCode: error.response.status,
+    //                     message: `* Unable to upload the file(s)! * Select only valid file formats.`
+    //                 },
+    //                 isUploading: false
+    //             }))
+    //         })
+    //     }
+    // }
 
     handleFileUpload = () => {
         let fd = new FormData();
@@ -408,6 +469,18 @@ export default class Form extends Component {
                         />
                         <small>Ex: john@abc.com,stephen@xyz.co.in</small>
                     </div>
+                    <div className="input-group mb-2">
+                        <label className="custom-file-label">Choose file</label>
+                        <input
+                            type="file"
+                            className="custom-file-input"
+                            onChange={this.handleSelectedFile}
+                            disabled={this.state.isUploading ? true : false}
+                            accept=".png,.jpg,.jpeg,.gif,.pdf"
+                            multiple
+                        />
+                        <small>Allowed file formats: *.jpg, *.jpeg, *.gif, *.png, *.pdf</small>
+                    </div>
                     {/* <div className="form-group">
                         <ReactMultiEmail
                             placeholder="Input your Email Address"
@@ -431,18 +504,14 @@ export default class Form extends Component {
                             }}
                         />
                     </div> */}
-                    <div className="input-group mb-2">
-                        <label className="custom-file-label">Choose file</label>
-                        <input
-                            type="file"
-                            className="custom-file-input"
-                            onChange={this.handleSelectedFile}
-                            disabled={this.state.isUploading ? true : false}
-                            accept=".png,.jpg,.jpeg,.gif,.pdf"
-                            multiple
-                        />
-                        <small>Allowed file formats: *.jpg, *.jpeg, *.gif, *.png, *.pdf</small>
-                    </div>
+                    {/* <ImageUploader
+                        accept=".png,.jpg,.jpeg,.gif,.pdf"
+                        withIcon={false}
+                        buttonText='Choose images'
+                        onChange={this.onDrop}
+                        imgExtension={['.jpg', '.gif', '.png', '.pdf']}
+                        maxFileSize={5242880}
+                    /> */}
                     {
                         this.state.isVisible
                         ?
@@ -461,7 +530,10 @@ export default class Form extends Component {
                                                 }}
                                                 onClick={this.handleRemoveFile.bind(this, index, file)}
                                             >
-                                            {this.state.isUploading || this.state.isUploaded ? null : 'Remove'}
+                                            {
+                                                this.state.isUploading || this.state.isUploaded
+                                                ? null : (<Icon color='red' name='delete' />)
+                                            }
                                             </Link>
                                         </li>
                                     )

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { Icon } from 'semantic-ui-react';
 import logo from './images/logo.jpg';
 
 import Admin from './components/Admin';
@@ -28,7 +29,12 @@ import Users from './components/Users';
 const Home = () => (
     <div className="container" style={{ textAlign: "center" }}>
         <h2>Welcome to KLoc Helpdesk!</h2>
-        <u><Link style={{ fontSize: 20, color:"darkblue" }} to="/login">Login</Link></u>
+        <Icon name='sign-in' />
+        <u>
+            <Link style={{ fontSize: 20, color:"darkblue" }}  to="/login">
+                Login
+            </Link>
+        </u>
     </div>
 )
 
