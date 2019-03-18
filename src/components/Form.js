@@ -1,7 +1,8 @@
 // import * as React from 'react';
+// import { ReactMultiEmail } from "react-multi-email";
+// import "react-multi-email/style.css";
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-// import { ReactMultiEmail } from "react-multi-email";
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
@@ -9,7 +10,6 @@ import Recaptcha from 'react-recaptcha';
 import { siteKey } from '../site_key';
 import Navigation from './Navigation';
 import '../App.css';
-import "react-multi-email/style.css";
 
 // interface IProps {}
 // interface IState {
