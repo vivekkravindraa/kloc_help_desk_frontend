@@ -26,7 +26,7 @@ export default class Search extends Component {
     }
 
     componentDidMount() {
-        axios.get(`${baseURL}/applications`,{headers: {'x-auth': decodeToken().token}})
+        axios.get(`${baseURL}/applications`,{headers: {'x-auth': localStorage.getItem('x-auth')}})
         .then((response) => {
             if(response.data) {
                 this.setState({
@@ -106,8 +106,7 @@ export default class Search extends Component {
                                 </div>
                             )
                             :   null
-                        :
-                            <Loader loaded={this.state.loaded} />
+                        :   <Loader loaded={this.state.loaded} />
                     }
                 </form>
             </div>

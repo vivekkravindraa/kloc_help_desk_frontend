@@ -1,5 +1,7 @@
+// import * as React from 'react';
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+// import { ReactMultiEmail } from "react-multi-email";
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
@@ -7,7 +9,14 @@ import Recaptcha from 'react-recaptcha';
 import { siteKey } from '../site_key';
 import Navigation from './Navigation';
 import '../App.css';
+import "react-multi-email/style.css";
 
+// interface IProps {}
+// interface IState {
+//     emails: string[];
+// }
+
+// export default class Form extends React.Component<IProps, IState> {
 export default class Form extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +31,7 @@ export default class Form extends Component {
             minSubject: '',
             minDescription: '',
             recipients: [],
+            // emails: [],
             images: [],
             imageNames: [],
             files: [],
@@ -207,6 +217,7 @@ export default class Form extends Component {
                     subject: this.state.subject,
                     description: this.state.description,
                     recipients: recipientsMails,
+                    // recipients: this.state.emails,
                     attachImages: this.state.images
                 }
                 
@@ -239,6 +250,7 @@ export default class Form extends Component {
         }
         
         let loaded = Math.round(this.state.loaded,2) + '%';
+        // const { emails } = this.state;
 
         return this.state.isGenerated
             ?
@@ -251,6 +263,7 @@ export default class Form extends Component {
                         style={{ textAlign: "center" }}
                     >
                     Ticket has been raised. Please check your mailbox. If not found, check the spam folder.
+                    <Link to="/search"> Go To Issue Ticket. </Link>
                     </div>
                 </div>
             ) 
@@ -322,7 +335,7 @@ export default class Form extends Component {
                     )
                     :   null
                 }
-                <form>
+                <div>
                     <h2 style={{"textAlign":"center"}}>Issue ticket</h2>
                     <div className="row">
                         <div className="form-group col">
@@ -393,8 +406,31 @@ export default class Form extends Component {
                             onChange={this.handleRecipients}
                             multiple
                         />
-                        <small>Ex: john@abc.com,stephen@xyz.com</small>
+                        <small>Ex: john@abc.com,stephen@xyz.co.in</small>
                     </div>
+                    {/* <div className="form-group">
+                        <ReactMultiEmail
+                            placeholder="Input your Email Address"
+                            emails={emails}
+                            onChange={(_emails: string[]) => {
+                                this.setState({ emails: _emails });
+                            }}
+                            getLabel={(
+                                email: string,
+                                index: number,
+                                removeEmail: (index: number) => void
+                            ) => {
+                                return (
+                                <div data-tag key={index}>
+                                    {email}
+                                    <span data-tag-handle onClick={() => removeEmail(index)}>
+                                    ×
+                                    </span>
+                                </div>
+                                );
+                            }}
+                        />
+                    </div> */}
                     <div className="input-group mb-2">
                         <label className="custom-file-label">Choose file</label>
                         <input
@@ -523,7 +559,7 @@ export default class Form extends Component {
                         Generate
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
         )
     }

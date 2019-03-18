@@ -733,13 +733,13 @@ export default class Profile extends Component {
                             (
                                 <div>
                                     <h2>User profile</h2>
-                                    <button
-                                        style={{ backgroundColor:"darkblue" }}
-                                        className="btn btn-secondary"
+                                    <Button
+                                        style={{ backgroundColor:"darkblue", color:"white" }}
                                         onClick={this.handleEditProfile}
                                     >
-                                    Edit
-                                    </button>
+                                        <Icon name='edit' />
+                                        Edit
+                                    </Button>
                                     <Card className="segment centered">
                                         <Image src={logo} />
                                         <Card.Content>

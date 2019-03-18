@@ -14,6 +14,7 @@ export default class Invite extends Component {
         this.state = {
             email: '',
             moderators: [{ email: '' }],
+            notice: [],
             isSuccess: false,
             isAdded: true,
             isInvalid: true,
@@ -36,7 +37,7 @@ export default class Invite extends Component {
         })
     }
 
-    //TODO:
+    //FIXME:
     handleRemoveModerator = (index) => (evt) => {
         // evt.target.parentNode.remove(e.target);
         // evt.target.previousSibling.remove(e.target);
@@ -145,8 +146,9 @@ export default class Invite extends Component {
                         error: { 
                             ...this.state.error,
                             statusCode: error.response.status,
-                            message: `User already exists!`
-                        }
+                            message: `User(s) already exists! Please remove the following email(s) in the list:`,
+                        },
+                        notice: error.response.data.notice ? error.response.data.notice: []
                     }))
                 });
             } else {
@@ -180,11 +182,25 @@ export default class Invite extends Component {
                         >
                         {
                             this.state.error.statusCode === 409
-                            ?   this.state.error.message
+                            ?
+                                <ul>
+                                    {this.state.error.message}
+                                    {this.state.notice.map((obj, index) => {
+                                        return (
+                                            <li
+                                                key={index}
+                                                style={{ fontWeight: "bold", listStyleType: "none" }}
+                                            >
+                                            {obj.email}
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
                             :   `Avoid invalid / duplicate emails.`
                         }
                         </div>
-                    )   :   null                
+                    )
+                    :   null 
                 }
                 {
                     this.state.isSuccess ?
