@@ -62,7 +62,11 @@ export default class SingleTicket extends Component {
             })
             .catch((error) => {
                 this.setState(() => ({
-                    error: { ...this.state.error, statusCode: error.response.status, message: error.message }
+                    error: {
+                        ...this.state.error,
+                        statusCode: error.response.status ? error.response.status : '',
+                        message: error.message ? error.message : ''
+                    }
                 }))
             })
         this.getComments(id);
@@ -129,7 +133,7 @@ export default class SingleTicket extends Component {
                     this.setState(() => ({
                         error: {
                             ...this.state.error,
-                            statusCode: error.response.status,
+                            statusCode: error.response.status ? error.response.status : '',
                             message: `Unable to add comment! Please try again.`
                         }
                     }))
@@ -153,8 +157,8 @@ export default class SingleTicket extends Component {
                 this.setState(() => ({
                     error: {
                         ...this.state.error,
-                        statusCode: error.response.status,
-                        message: error.message,
+                        statusCode: error.response.status ? error.response.status : '',
+                        message: error.message ? error.message : ''
                     }
                 }))
             })
@@ -174,8 +178,8 @@ export default class SingleTicket extends Component {
                 this.setState(() => ({
                     error: {
                         ...this.state.error,
-                        statusCode: error.response.status,
-                        message: error.message,
+                        statusCode: error.response.status ? error.response.status : '',
+                        message: error.message ? error.message : '',
                     }
                 }))
             })
@@ -228,7 +232,11 @@ export default class SingleTicket extends Component {
             })
             .catch((error) => {
                 this.setState(() => ({
-                    error: { ...this.state.error, statusCode: error.response.status, message: error.message }
+                    error: {
+                        ...this.state.error,
+                        statusCode: error.response.status ? error.response.status : '',
+                        message: error.message ? error.message : ''
+                    }
                 }))
             })
     }
@@ -251,7 +259,11 @@ export default class SingleTicket extends Component {
             })
             .catch((error) => {
                 this.setState(() => ({
-                    error: { ...this.state.error, statusCode: error.response.status, message: error.message }
+                    error: {
+                        ...this.state.error,
+                        statusCode: error.response.status ? error.response.status : '',
+                        message: error.message ? error.message : ''
+                    }
                 }))
             })
     }
@@ -294,7 +306,11 @@ export default class SingleTicket extends Component {
                 })
                 .catch((error) => {
                     this.setState(() => ({
-                        error: { ...this.state.error, statusCode: error.response.status, message: error.message }
+                        error: {
+                            ...this.state.error,
+                            statusCode: error.response.status ? error.response.status : '',
+                            message: error.message ? error.message : ''
+                        }
                     }))
                 })
         }

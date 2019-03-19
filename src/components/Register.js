@@ -49,7 +49,7 @@ export default class Register extends Component {
             this.setState(() => ({
                 error: {
                     ...this.state.error,
-                    statusCode: error.response.status,
+                    statusCode: error.response.status ? error.response.status : '',
                     message: `We're sorry. The link has been expired.`
                 }
             }))
@@ -163,7 +163,7 @@ export default class Register extends Component {
                 this.setState(() => ({
                     error: {
                         ...this.state.error,
-                        statusCode: error.response.status,
+                        statusCode: error.response.status ? error.response.status : '',
                         message: `Unable to register! Make sure you've entered the correct details.`
                     }
                 }))

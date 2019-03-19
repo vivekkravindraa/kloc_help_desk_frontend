@@ -250,8 +250,9 @@ export default class Form extends Component {
             })
             .catch((error) => {
                 this.setState(() => ({
-                    error: { ...this.state.error,
-                        statusCode: error.response.status,
+                    error: {
+                        ...this.state.error,
+                        statusCode: error.response.status ? error.response.status : '',
                         message: `* Unable to upload the file(s)! * Select only valid file formats.`
                     },
                     isUploading: false
@@ -293,8 +294,9 @@ export default class Form extends Component {
                 })
                 .catch((error) => {
                     this.setState(() => ({
-                        error: { ...this.state.error,
-                            statusCode: error.response.status,
+                        error: {
+                            ...this.state.error,
+                            statusCode: error.response.status ? error.response.status : '',
                             message: `Unable to generate ticket! Please try again.`
                         }
                     }))

@@ -57,7 +57,7 @@ export default class ManageApplication extends Component {
                 this.setState(() => ({
                     error: {
                         ...this.state.error,
-                        statusCode: error.response.status,
+                        statusCode: error.response.status ? error.response.status : '',
                         message: error.message
                     }
                 }))
@@ -157,7 +157,7 @@ export default class ManageApplication extends Component {
                     this.setState(() => ({
                         error: {
                             ...this.state.error,
-                            statusCode: error.response.status,
+                            statusCode: error.response.status ? error.response.status : '',
                             message: error.message
                         }
                     }))
@@ -202,7 +202,7 @@ export default class ManageApplication extends Component {
                 this.setState(() => ({
                     error: {
                         ...this.state.error,
-                        statusCode: error.response.status,
+                        statusCode: error.response.status ? error.response.status : '',
                         message: error.message
                     }
                 }))

@@ -104,8 +104,8 @@ export default class Tickets extends Component {
                 this.setState(() => ({
                     error: {
                         ...this.state.error,
-                        statusCode: error.response.status,
-                        message: error.message
+                        statusCode: error.response.status ? error.response.status : '',
+                        message: error.message ? error.message : ''
                     }
                 }))
             })
@@ -278,8 +278,8 @@ export default class Tickets extends Component {
                     this.setState(() => ({
                         error: {
                             ...this.state.error,
-                            statusCode: error.response.status,
-                            message: error.message
+                            statusCode: error.response.status ? error.response.status : '',
+                            message: error.message ? error.message : ''
                         }
                     }))
                 })

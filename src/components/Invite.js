@@ -145,7 +145,7 @@ export default class Invite extends Component {
                     this.setState(() => ({
                         error: { 
                             ...this.state.error,
-                            statusCode: error.response.status,
+                            statusCode: error.response.status ? error.response.status : '',
                             message: `User(s) already exists! Please remove the following email(s) in the list:`,
                         },
                         notice: error.response.data.notice ? error.response.data.notice: []
