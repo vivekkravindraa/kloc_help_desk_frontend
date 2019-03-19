@@ -38,6 +38,9 @@ export default class Tickets extends Component {
     }
 
     componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true })
+        }, 2000)
         this.getAll()
         this.getModerators()
     }
@@ -47,8 +50,7 @@ export default class Tickets extends Component {
             .then((response) => {
                 this.setState({
                     ticketsData: response.data,
-                    filterData: response.data,
-                    loaded: true
+                    filterData: response.data
                 })
             })
             .catch((error) => {
@@ -537,18 +539,18 @@ export default class Tickets extends Component {
                         }
                     </div>
                 </form>
+                <ReactTable
+                    className="all-tickets-table"
+                    columns={columns}
+                    data={this.state.filterData}
+                    defaultPageSize={5}
+                    noDataText="No data found!"
+                >
+                </ReactTable>
                 {
-                    this.state.loaded ?
-                        <ReactTable
-                            className="all-tickets-table"
-                            columns={columns}
-                            data={this.state.filterData}
-                            defaultPageSize={5}
-                            noDataText="No data found!"
-                        >
-                        </ReactTable>
-                    :
-                        <Loader loaded={this.state.loaded} />
+                    this.state.loaded
+                    ?   null  
+                    :   <Loader loaded={this.state.loaded} />
                 }                
             </div>
         )

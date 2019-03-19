@@ -56,6 +56,9 @@ export default class Profile extends Component {
     }
 
     componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true })
+        }, 2000)
         this.getUser()
     }
 
@@ -728,42 +731,39 @@ export default class Profile extends Component {
                     :   
                     (
                         <div style={{ textAlign: "center" }}>
-                        {
-                            this.state.loaded ?
-                            (
-                                <div>
-                                    <h2>User profile</h2>
-                                    <Button
-                                        style={{ backgroundColor:"darkblue", color:"white" }}
-                                        onClick={this.handleEditProfile}
-                                    >
-                                        <Icon name='edit' />
-                                        Edit
-                                    </Button>
-                                    <Card className="segment centered">
-                                        <Image src={logo} />
-                                        <Card.Content>
-                                            <Card.Header>
-                                            {this.state.profileData.firstName ? this.state.profileData.firstName.toUpperCase()[0] + this.state.profileData.firstName.slice(1) : ''} {this.state.profileData.lastName ? this.state.profileData.lastName.toUpperCase()[0] + this.state.profileData.lastName.slice(1) : ''}
-                                            </Card.Header>
-                                            <Card.Meta>
-                                            <span className='date'>{this.state.profileData.mobileNumber}</span>
-                                            </Card.Meta>
-                                            <Card.Description>{this.state.profileData.email}</Card.Description>
-                                        </Card.Content>
-                                        <Card.Content extra>
-                                            <button>
-                                            <Icon name='user' />
-                                            {this.state.role}
-                                            </button>
-                                        </Card.Content>
-                                    </Card>
-                                </div>
-                            )
-                            :   <Loader loaded={this.state.loaded} />
-                        }
+                            <h2>User profile</h2>
+                            <Button
+                                style={{ backgroundColor:"darkblue", color:"white" }}
+                                onClick={this.handleEditProfile}
+                            >
+                                <Icon name='edit' />
+                                Edit
+                            </Button>
+                            <Card className="segment centered">
+                                <Image src={logo} />
+                                <Card.Content>
+                                    <Card.Header>
+                                    {this.state.profileData.firstName ? this.state.profileData.firstName.toUpperCase()[0] + this.state.profileData.firstName.slice(1) : ''} {this.state.profileData.lastName ? this.state.profileData.lastName.toUpperCase()[0] + this.state.profileData.lastName.slice(1) : ''}
+                                    </Card.Header>
+                                    <Card.Meta>
+                                    <span className='date'>{this.state.profileData.mobileNumber}</span>
+                                    </Card.Meta>
+                                    <Card.Description>{this.state.profileData.email}</Card.Description>
+                                </Card.Content>
+                                <Card.Content extra>
+                                    <button>
+                                    <Icon name='user' />
+                                    {this.state.role}
+                                    </button>
+                                </Card.Content>
+                            </Card>
                         </div>
                     )
+                }
+                {
+                    this.state.loaded
+                    ?   null
+                    :   <Loader loaded={this.state.loaded} />
                 }
             </div>
         )

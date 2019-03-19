@@ -26,13 +26,15 @@ export default class Search extends Component {
     }
 
     componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true })
+        }, 2000)
         axios.get(`${baseURL}/applications`,{headers: {'x-auth': localStorage.getItem('x-auth')}})
         .then((response) => {
             if(response.data) {
                 this.setState({
                     searchData: response.data,
-                    filterData: response.data,
-                    loaded: true
+                    filterData: response.data
                 })
             }
         })
@@ -92,21 +94,28 @@ export default class Search extends Component {
                         </ul>
                     </div>
                     {   
-                        this.state.loaded ?
-                            this.state.searchData.length === 0 ?
-                            (
-                                <div
-                                    style={{ 
-                                        textAlign: "center",
-                                        visibility: this.state.searchData.length === 0 ? 'visible' : 'hidden'}}
-                                    className="alert alert-info"
-                                    role="alert"
-                                >
-                                No applications found!
-                                </div>
-                            )
-                            :   null
-                        :   <Loader loaded={this.state.loaded} />
+                        this.state.searchData.length === 0 ?
+                        (
+                            <div
+                                style={{ 
+                                    textAlign: "center",
+                                    visibility: this.state.searchData.length === 0 ? 'visible' : 'hidden'}}
+                                className="alert alert-info"
+                                role="alert"
+                            >
+                            No applications found!
+                            </div>
+                        )
+                        :   null
+                    }
+                    {
+                        this.state.loaded
+                        ?
+                            null
+                        :
+                            <Loader
+                                loaded={this.state.loaded}
+                            />
                     }
                 </form>
             </div>

@@ -25,13 +25,15 @@ export default class Users extends Component {
     }
 
     componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true })
+        }, 2000)
         axios.get(`${baseURL}/users?user=all`,{headers: {'x-auth': localStorage.getItem('x-auth')}})
         .then((response) => {
             if(response) {
                 this.setState({
                     allUsers: response.data,
-                    filterUsers: response.data,
-                    loaded: true
+                    filterUsers: response.data
                 })
             }
         })
@@ -165,16 +167,17 @@ export default class Users extends Component {
                         </div>
                     </div>
                 </form>
+                <ReactTable
+                    className="all-users-table"
+                    columns={columns}
+                    data={this.state.filterUsers}
+                    defaultPageSize={5}
+                    noDataText={"No data found!"}
+                >
+                </ReactTable>
                 {
-                    this.state.loaded ?
-                        <ReactTable
-                            className="all-users-table"
-                            columns={columns}
-                            data={this.state.filterUsers}
-                            defaultPageSize={5}
-                            noDataText={"No data found!"}
-                        >
-                        </ReactTable>
+                    this.state.loaded
+                    ?   null  
                     :   <Loader loaded={this.state.loaded} />
                 }
             </div>

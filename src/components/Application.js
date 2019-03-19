@@ -36,6 +36,10 @@ export default class Application extends Component {
     }
 
     componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true })
+        }, 2000)
+        
         this.getApplications();
 
         axios.get(`${baseURL}/users?user=moderator`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
@@ -60,8 +64,7 @@ export default class Application extends Component {
             .then((response) => {
                 this.setState({
                     appData: response.data,
-                    filterData: response.data,
-                    loaded: true
+                    filterData: response.data
                 })
             })
             .catch((error) => {
@@ -345,37 +348,23 @@ export default class Application extends Component {
                         Submit
                     </button>
                 </form>
+                <div style={{ marginTop: 10, textAlign: "center" }}>
+                    <ReactTable
+                        columns={columns}
+                        data={this.state.filterData}
+                        defaultPageSize={5}
+                        noDataText={"No data found!"}
+                    >
+                    </ReactTable>
+                </div>
                 {
-                    this.state.appData.length === 0 ?
-                    (
-                        <div
-                            style={{
-                                textAlign: "center",
-                                visibility: this.state.appData.length === 0 ? 'visible' : 'hidden'
-                            }}
-                            className="alert alert-info"
-                            role="alert"
-                        >
-                            No applications found!
-                        </div>
-                    )   :   null
-                }
-                {
-                    this.state.loaded ?
-                        this.state.appData.length > 0 ?
-                        (
-                            <div style={{ marginTop: 10, textAlign: "center" }}>
-                                <ReactTable
-                                    columns={columns}
-                                    data={this.state.filterData}
-                                    defaultPageSize={5}
-                                    noDataText={"No data found!"}
-                                >
-                                </ReactTable>
-                            </div>
-                        )
-                        :   null
-                    :   <Loader loaded={this.state.loaded} />
+                    this.state.loaded
+                    ?
+                        null
+                    :
+                        <Loader
+                            loaded={this.state.loaded}
+                        />
                 }
             </div>
         )
