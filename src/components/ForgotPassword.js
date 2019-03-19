@@ -47,7 +47,7 @@ export default class ForgotPassword extends Component {
 
         if(this.state.confirmEmail === '') {
             this.setState({
-                checkConfirmEmail: `field can't be blank!`,
+                checkConfirmEmail: `field can't be blank`,
                 isEmpty: true
             })
         } else {
