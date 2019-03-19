@@ -7,6 +7,8 @@ import ReactTable from 'react-table';
 import Navigation from './Navigation';
 import '../App.css';
 
+var Loader = require('react-loader');
+
 export default class MyTickets extends Component {
     constructor(props) {
         super(props);
@@ -16,6 +18,7 @@ export default class MyTickets extends Component {
             userId: decodeToken() ? decodeToken()._id : null,
             filterBy: '',
             search: '',
+            loaded: false,
             error: {
                 statusCode: '',
                 message: ''
@@ -24,6 +27,10 @@ export default class MyTickets extends Component {
     }
 
     componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true })
+        }, 2000)
+
         this.getAll()
     }
 
@@ -180,69 +187,69 @@ export default class MyTickets extends Component {
         return (
             <div className="container">
                 <Navigation />
-                    <form>
-                        <h2 style={{textAlign:"center"}}>My tickets</h2>
-                        <div className="form-inline">
-                            <div>
-                                <label>Search by Subject:</label>
-                                <input
-                                    type="text"
-                                    className="form-control form-control-sm"
-                                    value={this.state.search}
-                                    placeholder="Search.."
-                                    onChange={this.handleSearch}
-                                />
-                            </div>
-                            <div>
-                                <label>Select Filters:</label>
-                                <select
-                                    className="custom-select custom-select-sm"
-                                    onChange={this.handleSelectFilters}
-                                >
-                                    <option value="all">All Tickets</option>
-                                    <option value="status">Filter By Status</option>
-                                    <option value="priority">Filter By Priority</option>
-                                </select>
-                            </div>
-                            {
-                                this.state.filterBy === 'status'
-                                ?
-                                    <div>
-                                        <label>Filter by Status:</label>
-                                        <select
-                                            className="custom-select custom-select-sm"
-                                            onChange={this.handleFilterByStatus}
-                                        >
-                                            <option selected disabled={true}>Select Status</option>
-                                            <option value="open">Open</option>
-                                            <option value="processing">Processing</option>
-                                            <option value="pending">Pending</option>
-                                            <option value="resolved">Resolve</option>
-                                            <option value="closed">Close</option>
-                                        </select>
-                                    </div>
-                                :   null
-                            }
-                            {
-                                this.state.filterBy === 'priority'
-                                ?
-                                    <div>
-                                        <label>Filter by Priority:</label>
-                                        <select
-                                            className="custom-select custom-select-sm"
-                                            onChange={this.handleFilterByPriority}
-                                        >
-                                            <option selected disabled={true}>Select Priority</option>
-                                            <option value={1}>Low</option>
-                                            <option value={2}>Medium</option>
-                                            <option value={3}>High</option>
-                                            <option value={4}>Urgent</option>
-                                        </select>
-                                    </div>
-                                :   null
-                            }
+                <form>
+                    <h2 style={{textAlign:"center"}}>My tickets</h2>
+                    <div className="form-inline">
+                        <div>
+                            <label>Search by Subject:</label>
+                            <input
+                                type="text"
+                                className="form-control form-control-sm"
+                                value={this.state.search}
+                                placeholder="Search.."
+                                onChange={this.handleSearch}
+                            />
                         </div>
-                    </form>
+                        <div>
+                            <label>Select Filters:</label>
+                            <select
+                                className="custom-select custom-select-sm"
+                                onChange={this.handleSelectFilters}
+                            >
+                                <option value="all">All Tickets</option>
+                                <option value="status">Filter By Status</option>
+                                <option value="priority">Filter By Priority</option>
+                            </select>
+                        </div>
+                        {
+                            this.state.filterBy === 'status'
+                            ?
+                                <div>
+                                    <label>Filter by Status:</label>
+                                    <select
+                                        className="custom-select custom-select-sm"
+                                        onChange={this.handleFilterByStatus}
+                                    >
+                                        <option selected disabled={true}>Select Status</option>
+                                        <option value="open">Open</option>
+                                        <option value="processing">Processing</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="resolved">Resolve</option>
+                                        <option value="closed">Close</option>
+                                    </select>
+                                </div>
+                            :   null
+                        }
+                        {
+                            this.state.filterBy === 'priority'
+                            ?
+                                <div>
+                                    <label>Filter by Priority:</label>
+                                    <select
+                                        className="custom-select custom-select-sm"
+                                        onChange={this.handleFilterByPriority}
+                                    >
+                                        <option selected disabled={true}>Select Priority</option>
+                                        <option value={1}>Low</option>
+                                        <option value={2}>Medium</option>
+                                        <option value={3}>High</option>
+                                        <option value={4}>Urgent</option>
+                                    </select>
+                                </div>
+                            :   null
+                        }
+                    </div>
+                </form>
                 <ReactTable
                     columns={columns}
                     data={this.state.filterData}
@@ -250,6 +257,11 @@ export default class MyTickets extends Component {
                     noDataText={"No data found!"}
                 >
                 </ReactTable>
+                {
+                    this.state.loaded
+                    ?   null
+                    :   <Loader loaded={this.state.loaded} />
+                }
             </div>
         )             
     }

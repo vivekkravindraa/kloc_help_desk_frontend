@@ -359,12 +359,8 @@ export default class Application extends Component {
                 </div>
                 {
                     this.state.loaded
-                    ?
-                        null
-                    :
-                        <Loader
-                            loaded={this.state.loaded}
-                        />
+                    ?   null
+                    :   <Loader loaded={this.state.loaded} />
                 }
             </div>
         )

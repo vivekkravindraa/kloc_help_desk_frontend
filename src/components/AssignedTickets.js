@@ -7,6 +7,8 @@ import Navigation from './Navigation';
 import decodeToken from '../helpers/token';
 import '../App.css';
 
+var Loader = require('react-loader');
+
 export default class AsssignedTickets extends Component {
     constructor(props) {
         super(props);
@@ -16,6 +18,7 @@ export default class AsssignedTickets extends Component {
             userId: decodeToken() ? decodeToken()._id : null,
             filterBy: '',
             search: '',
+            loaded: false,
             error: {
                 statusCode: '',
                 message: ''
@@ -24,6 +27,10 @@ export default class AsssignedTickets extends Component {
     }
 
     componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true })
+        }, 2000)
+
         this.getAll()
     }
 
@@ -249,6 +256,11 @@ export default class AsssignedTickets extends Component {
                     noDataText={"No data found!"}
                 >
                 </ReactTable>
+                {
+                    this.state.loaded
+                    ?   null
+                    :   <Loader loaded={this.state.loaded} />
+                }
             </div>
         )
     }

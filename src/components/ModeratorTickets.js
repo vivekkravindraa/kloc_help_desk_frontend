@@ -7,6 +7,8 @@ import ReactTable from 'react-table';
 import Navigation from './Navigation';
 import '../App.css';
 
+var Loader = require('react-loader');
+
 export default class ModeratorTickets extends Component {
     constructor(props) {
         super(props);
@@ -17,6 +19,7 @@ export default class ModeratorTickets extends Component {
             filterBy: '',
             search: '',
             isAssignedToMe: false,
+            loaded: false,
             error: {
                 statusCode: '',
                 message: ''
@@ -25,6 +28,10 @@ export default class ModeratorTickets extends Component {
     }
 
     componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true })
+        }, 2000)
+
         this.getAll()
     }
 
@@ -294,6 +301,11 @@ export default class ModeratorTickets extends Component {
                     noDataText={"No data found!"}
                 >
                 </ReactTable>
+                {
+                    this.state.loaded
+                    ?   null
+                    :   <Loader loaded={this.state.loaded} />
+                }
             </div>
         )
     }
