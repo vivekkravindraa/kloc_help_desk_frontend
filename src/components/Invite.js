@@ -15,6 +15,7 @@ export default class Invite extends Component {
             email: '',
             moderators: [{ email: '' }],
             notice: [],
+            duplicates: [],
             isSuccess: false,
             isAdded: true,
             isInvalid: true,
@@ -126,11 +127,20 @@ export default class Invite extends Component {
             }
             
             let result = [];
+            let duplicates = [];
             for (let j = 0; j < array.length; j++) {
                 if (array.indexOf(array[j]) === array.lastIndexOf(array[j])) {
                     result.push(array);
+                } else {
+                    duplicates = array.reduce(function(acc, el, i, arr) {
+                        if (arr.indexOf(el) !== i && acc.indexOf(el) < 0) acc.push(el); return acc;
+                    }, []);
                 }
             }
+
+            this.setState({
+                duplicates: this.state.duplicates.concat(duplicates)
+            })
 
             if (array.length === result.length && emailValid) {
                 axios.post(`${baseURL}/users/invitation`, formData, {headers: { 'x-auth': localStorage.getItem('x-auth') }})
@@ -196,7 +206,18 @@ export default class Invite extends Component {
                                         )
                                     })}
                                 </ul>
-                            :   `Avoid invalid / duplicate emails.`
+                            :   <div>
+                                    Avoid duplicate email(s) from the following:
+                                    {
+                                        this.state.duplicates.length > 0 ?
+                                        this.state.duplicates.map((email,index) => {
+                                            return (
+                                                <li key={index}>{email}</li>
+                                            )
+                                        })
+                                        :   null
+                                    }
+                                </div>
                         }
                         </div>
                     )
