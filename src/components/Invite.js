@@ -207,12 +207,12 @@ export default class Invite extends Component {
                                     })}
                                 </ul>
                             :   <div>
-                                    Avoid duplicate email(s) from the following:
+                                    Avoid duplicate email(s) listed below:
                                     {
                                         this.state.duplicates.length > 0 ?
                                         this.state.duplicates.map((email,index) => {
                                             return (
-                                                <li key={index}>{email}</li>
+                                                <li style={{ listStyleType: "none" }} key={index}>{email}</li>
                                             )
                                         })
                                         :   null
