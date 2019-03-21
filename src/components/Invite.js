@@ -139,7 +139,7 @@ export default class Invite extends Component {
             }
 
             this.setState({
-                duplicates: this.state.duplicates.concat(duplicates)
+                duplicates: duplicates
             })
 
             if (array.length === result.length && emailValid) {
