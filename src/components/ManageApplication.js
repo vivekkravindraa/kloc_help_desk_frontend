@@ -426,7 +426,7 @@ export default class ManageApplication extends Component {
                                 <label>Application Description *</label>
                                 <textarea
                                     type="text"
-                                    rows="3"
+                                    rows="10"
                                     className="form-control"
                                     value={this.state.appDescription}
                                     onChange={this.appDescriptionHandle.bind(this)}
