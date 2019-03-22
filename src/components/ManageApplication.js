@@ -49,13 +49,13 @@ export default class ManageApplication extends Component {
             .then((response) => {
                 setTimeout(() => {
                     this.setState({
-                        loaded: true,
                         appData: response.data,
                         appName: response.data.name,
                         appDescription: response.data.description,
                         appNameChars: response.data.name.length,
                         appDescriptionChars: response.data.description.length,
-                        moderators: response.data.user
+                        moderators: response.data.user,
+                        loaded: true
                     })
                 }, 2000)
             })
@@ -106,6 +106,7 @@ export default class ManageApplication extends Component {
     }
     handleCancel = () => {
         this.setState({
+            loaded: false,
             editMode: false,
             isSuccess: false,
             isNotMinimum: false,
@@ -164,7 +165,7 @@ export default class ManageApplication extends Component {
                         error: {
                             ...this.state.error,
                             statusCode: error.response.status ? error.response.status : '',
-                            message: error.message
+                            message: error.message ? error.message : ''
                         }
                     }))
                 })

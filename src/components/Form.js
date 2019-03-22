@@ -326,7 +326,7 @@ export default class Form extends Component {
                         style={{ textAlign: "center" }}
                     >
                     Ticket has been raised. Please check your mailbox. If not found, check the spam folder.
-                    <Link to="/search"> Go To Issue Ticket. </Link>
+                    <Link to="/search"> Go To Issue Ticket </Link>
                     </div>
                 </div>
             ) 

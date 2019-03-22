@@ -141,13 +141,15 @@ export default class Tickets extends Component {
         if (e.target.value === 'all') {
             this.setState({
                 filterBy: e.target.value,
-                isVisible: false
+                isUnassigned: false,
+                isVisible: false,
             })
             return this.getAll();
         } else if (e.target.value === 'assigned') {
             this.setState({
                 filterBy: e.target.value,
-                isVisible: false
+                isUnassigned: false,
+                isVisible: false,
             })
             return this.getAssigned();
         } else if (e.target.value === 'unassigned') {
@@ -158,6 +160,7 @@ export default class Tickets extends Component {
         } else {
             this.setState({
                 filterBy: e.target.value,
+                isUnassigned: false,
                 isVisible: false
             })
         }
