@@ -26,16 +26,17 @@ export default class Search extends Component {
     }
 
     componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true })
+        }, 2000)
+
         axios.get(`${baseURL}/applications`,{headers: {'x-auth': localStorage.getItem('x-auth')}})
         .then((response) => {
             if(response.data) {
-                setTimeout(() => {
-                    this.setState({
-                        loaded: true,
-                        searchData: response.data,
-                        filterData: response.data
-                    })
-                }, 2000)
+                this.setState({
+                    searchData: response.data,
+                    filterData: response.data
+                })
             }
         })
         .catch((error) => {
@@ -79,7 +80,7 @@ export default class Search extends Component {
                     <div>
                         <ul style={{"listStyleType": "none", "paddingLeft": "0px"}}>
                         {
-                            this.state.loaded
+                            this.state.filterData.length > 0
                             ?
                                 this.state.filterData.map((app, index) => {
                                     return (
@@ -96,10 +97,7 @@ export default class Search extends Component {
                                         </li>
                                     )
                                 })
-                            :
-                                <Loader
-                                    loaded={this.state.loaded}
-                                />
+                            :   null
                         }
                         </ul>
                     </div>
@@ -117,6 +115,11 @@ export default class Search extends Component {
                             </div>
                         )
                         :   null
+                    }
+                    {
+                        this.state.loaded
+                        ?   null
+                        :   <Loader loaded={this.state.loaded} />
                     }
                 </form>
             </div>

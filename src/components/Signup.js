@@ -177,7 +177,7 @@ export default class Signup extends Component {
                                 className="alert alert-danger"
                                 role="alert"
                             >
-                            Unable to signup, make sure you've entered the correct details!
+                                User might already exists / Make sure you've entered the correct details!
                             </div>
                         )   :   null
                     }
@@ -191,13 +191,14 @@ export default class Signup extends Component {
                                 className="alert alert-success"
                                 role="alert"
                             >
-                            <h6>
-                                Account has been created and the verification link has been sent to your email.
-                                Please visit your email to verify. If not found in the inbox, check the spam folder. 
-                                <Link to="/"> Go to home >></Link>
-                            </h6>
+                                <h6>
+                                    Account has been created and the verification link has been sent to your email.
+                                    Please visit your email to verify. If not found in the inbox, check the spam folder. 
+                                    <Link to="/"> Go to home >></Link>
+                                </h6>
                             </div>
-                        )   :   null
+                        )
+                        :   null
                     }
                     {
                         this.state.isIncorrect ?
@@ -210,7 +211,7 @@ export default class Signup extends Component {
                                 className="alert alert-warning"
                                 role="alert"
                             >
-                            Passwords does not match!
+                                Passwords does not match!
                             </div>
                         )   :   null
                     }
@@ -224,7 +225,7 @@ export default class Signup extends Component {
                                 className="alert alert-warning"
                                 role="alert"
                             >
-                            Please enter the required credentials!
+                                Please enter the required credentials!
                             </div>
                         )   :   null
                     }
