@@ -421,16 +421,6 @@ export default class Form extends Component {
                             />
                         </div>
                     </div>
-                    {/* <div className="form-group">
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={this.state.store}
-                            placeholder="Store *"
-                            onChange={this.handleStore}
-                            disabled
-                        />
-                    </div> */}
                     <div className="form-group">
                         <input
                             type="text"
@@ -460,29 +450,16 @@ export default class Form extends Component {
                         <small>1000 / {1000 - this.state.descriptionChars} characters remaining. </small>
                         <span className="badge badge-danger">{this.state.minDescription}</span>
                     </div>
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <input
                             type="text"
                             className="form-control"
-                            value={this.state.recipients}
-                            placeholder="Recipients - Optional"
-                            onChange={this.handleRecipients}
-                            multiple
+                            value={this.state.store}
+                            placeholder="Store *"
+                            onChange={this.handleStore}
+                            disabled
                         />
-                        <small>Ex: john@abc.com,stephen@xyz.co.in</small>
-                    </div>
-                    <div className="input-group mb-2">
-                        <label className="custom-file-label">Choose file</label>
-                        <input
-                            type="file"
-                            className="custom-file-input"
-                            onChange={this.handleSelectedFile}
-                            disabled={this.state.isUploading ? true : false}
-                            accept=".png,.jpg,.jpeg,.gif,.pdf"
-                            multiple
-                        />
-                        <small>Allowed file formats: *.jpg, *.jpeg, *.gif, *.png, *.pdf</small>
-                    </div>
+                    </div> */}
                     {/* <div className="form-group">
                         <ReactMultiEmail
                             placeholder="Input your Email Address"
@@ -514,6 +491,29 @@ export default class Form extends Component {
                         imgExtension={['.jpg', '.gif', '.png', '.pdf']}
                         maxFileSize={5242880}
                     /> */}
+                    <div className="form-group">
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={this.state.recipients}
+                            placeholder="Recipients - Optional"
+                            onChange={this.handleRecipients}
+                            multiple
+                        />
+                        <small>Ex: john@abc.com,stephen@xyz.co.in</small>
+                    </div>
+                    <div className="input-group mb-2">
+                        <label className="custom-file-label">Choose file</label>
+                        <input
+                            type="file"
+                            className="custom-file-input"
+                            onChange={this.handleSelectedFile}
+                            disabled={this.state.isUploading ? true : false}
+                            accept=".png,.jpg,.jpeg,.gif,.pdf"
+                            multiple
+                        />
+                        <small>Allowed file formats: *.jpg, *.jpeg, *.gif, *.png, *.pdf</small>
+                    </div>
                     {
                         this.state.isVisible
                         ?
