@@ -26,16 +26,16 @@ export default class Search extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => {
-            this.setState({ loaded: true })
-        }, 2000)
         axios.get(`${baseURL}/applications`,{headers: {'x-auth': localStorage.getItem('x-auth')}})
         .then((response) => {
             if(response.data) {
-                this.setState({
-                    searchData: response.data,
-                    filterData: response.data
-                })
+                setTimeout(() => {
+                    this.setState({
+                        loaded: true,
+                        searchData: response.data,
+                        filterData: response.data
+                    })
+                }, 2000)
             }
         })
         .catch((error) => {
@@ -79,21 +79,27 @@ export default class Search extends Component {
                     <div>
                         <ul style={{"listStyleType": "none", "paddingLeft": "0px"}}>
                         {
-                            this.state.filterData.map((app, index) => {
-                                return (
-                                    <li key={index}>
-                                        <Link to={{
-                                            pathname: "/form",
-                                            state: {
-                                                appId: `${app._id}`,
-                                                appName: `${app.name}`
-                                            }
-                                        }}>
-                                        {app.name}
-                                        </Link>
-                                    </li>
-                                )
-                            })
+                            this.state.loaded
+                            ?
+                                this.state.filterData.map((app, index) => {
+                                    return (
+                                        <li key={index}>
+                                            <Link to={{
+                                                pathname: "/form",
+                                                state: {
+                                                    appId: `${app._id}`,
+                                                    appName: `${app.name}`
+                                                }
+                                            }}>
+                                            {app.name}
+                                            </Link>
+                                        </li>
+                                    )
+                                })
+                            :
+                                <Loader
+                                    loaded={this.state.loaded}
+                                />
                         }
                         </ul>
                     </div>
@@ -111,15 +117,6 @@ export default class Search extends Component {
                             </div>
                         )
                         :   null
-                    }
-                    {
-                        this.state.loaded
-                        ?
-                            null
-                        :
-                            <Loader
-                                loaded={this.state.loaded}
-                            />
                     }
                 </form>
             </div>

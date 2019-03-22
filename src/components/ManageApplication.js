@@ -9,6 +9,8 @@ import Navigation from './Navigation';
 import '../App.css';
 import 'rodal/lib/rodal.css';
 
+var Loader = require('react-loader');
+
 export default class ManageApplication extends Component {
     constructor(props) {
         super(props);
@@ -27,6 +29,7 @@ export default class ManageApplication extends Component {
             visible: false,
             nowDelete: false,
             nowSave: false,
+            loaded: false,
             appNameChars: 0,
             appDescriptionChars: 0,
             error: {
@@ -44,14 +47,17 @@ export default class ManageApplication extends Component {
         let id = this.props.location.state.appId;
         axios.get(`${baseURL}/applications/${id}`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
             .then((response) => {
-                this.setState({
-                    appData: response.data,
-                    appName: response.data.name,
-                    appDescription: response.data.description,
-                    appNameChars: response.data.name.length,
-                    appDescriptionChars: response.data.description.length,
-                    moderators: response.data.user
-                })
+                setTimeout(() => {
+                    this.setState({
+                        loaded: true,
+                        appData: response.data,
+                        appName: response.data.name,
+                        appDescription: response.data.description,
+                        appNameChars: response.data.name.length,
+                        appDescriptionChars: response.data.description.length,
+                        moderators: response.data.user
+                    })
+                }, 2000)
             })
             .catch((error) => {
                 this.setState(() => ({
@@ -230,7 +236,7 @@ export default class ManageApplication extends Component {
                             Unable to update the application!
                     </div>
                     )
-                    : null
+                    :   null
                 }
                 {
                     this.state.isSuccess ?
@@ -246,7 +252,7 @@ export default class ManageApplication extends Component {
                             Successfully updated!
                     </div>
                     )
-                    : null
+                    :   null
                 }
                 {
                     this.state.isArchived ?
@@ -262,7 +268,7 @@ export default class ManageApplication extends Component {
                             Successfully removed the application! <Link to="/application">Click to add Applications.</Link>
                     </div>
                     )
-                    : null
+                    :   null
                 }
                 {
                     this.state.isNotMinimum ?
@@ -278,7 +284,7 @@ export default class ManageApplication extends Component {
                             Please fill all mandatory * fields!
                     </div>
                     )
-                    : null
+                    :   null
                 }
                 {
                     this.state.isEmpty ?
@@ -294,7 +300,7 @@ export default class ManageApplication extends Component {
                             Please enter the required details!
                     </div>
                     )
-                    : null
+                    :   null
                 }
                 {
                     this.state.visible ?
@@ -335,6 +341,7 @@ export default class ManageApplication extends Component {
                     :   null
                 }
                 {
+                    this.state.loaded ?
                     !this.state.editMode ?
                     !this.state.isArchived ?
                     (
@@ -391,6 +398,7 @@ export default class ManageApplication extends Component {
                             <Link style={{ paddingLeft: 10 }} to="/application">{`<< Back to applications`}</Link>
                         </div>
                     )
+                    :   null
                     :   null
                     :   null
                 }
@@ -452,6 +460,11 @@ export default class ManageApplication extends Component {
                     )
                     :   null
                     :   null
+                }
+                {
+                    this.state.loaded
+                    ?   null
+                    :   <Loader loaded={this.state.loaded} />
                 }
             </div>
         )

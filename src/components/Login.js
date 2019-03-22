@@ -103,9 +103,6 @@ export default class Login extends Component {
     }
   
     render() {
-        // if(this.state.error.statusCode == 401) {
-        //     return <Redirect to="/404-not-found" />
-        // }
         if (decodeToken() && decodeToken().role === 'admin') {
             return <Redirect to="/tickets" />
         } else if(decodeToken() && decodeToken().role === 'customer') {

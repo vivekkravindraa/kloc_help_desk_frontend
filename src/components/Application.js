@@ -37,9 +37,11 @@ export default class Application extends Component {
 
     componentDidMount() {
         setTimeout(() => {
-            this.setState({ loaded: true })
-        }, 2000)
-        
+            this.setState({
+                loaded: true
+            })
+        }, 2000);
+
         this.getApplications();
 
         axios.get(`${baseURL}/users?user=moderator`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
