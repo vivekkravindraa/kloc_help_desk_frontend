@@ -38,26 +38,7 @@ export default class Invite extends Component {
         })
     }
 
-    //FIXME:
-    handleRemoveModerator = (index) => (evt) => {
-        // evt.target.parentNode.remove(e.target);
-        // evt.target.previousSibling.remove(e.target);
-        // evt.target.remove(e.target);
-        // this.setState((prevState) => ({}))
-
-        // let array = this.state.moderators;
-        // array.splice(index,1)
-
-        // this.setState({
-        //     moderators: array,
-        //     isSuccess: false,
-        //     isAdded: true,
-        //     error: {
-        //         statusCode: '',
-        //         message: ''
-        //     }
-        // })
-
+    handleRemoveModerator = (index) => () => {
         this.setState({
             moderators: this.state.moderators.filter((s, sindex) => index !== sindex),
             isSuccess: false,
@@ -75,18 +56,6 @@ export default class Invite extends Component {
             return { ...moderator, email: evt.target.value };
         });
 
-        // if(!evt.target.validity.valid) {
-        //     evt.target.className = "form-control is-invalid"
-        // } else {
-        //     evt.target.className = "form-control is-valid"
-        // }
-
-        // if (!validator.isEmail(evt.target.value)) {
-        //     evt.target.className = "form-control is-invalid"
-        // } else {
-        //     evt.target.className = "form-control is-valid"
-        // }
-
         this.setState({
             moderators: newModerators,
             isSuccess: false,
@@ -102,15 +71,6 @@ export default class Invite extends Component {
         evt.preventDefault();
 
         let moderators = this.state.moderators;
-
-        // let newArray = [];
-        // moderators.forEach((value) => newArray.push(value.email));
-        // let resultArray = newArray.filter((value,index,arr) => arr.indexOf(value) === index && validator.isEmail(value));
-        // let finalArray = resultArray.map((mode) => {
-        //     return { email: mode }
-        // });
-        // console.log(finalArray);
-
         let formData = { email: this.state.moderators };
     
         if (this.state.moderators.length === 0) {
@@ -138,9 +98,7 @@ export default class Invite extends Component {
                 }
             }
 
-            this.setState({
-                duplicates: duplicates
-            })
+            this.setState({ duplicates: duplicates })
 
             if (array.length === result.length && emailValid) {
                 axios.post(`${baseURL}/users/invitation`, formData, {headers: { 'x-auth': localStorage.getItem('x-auth') }})
@@ -193,26 +151,32 @@ export default class Invite extends Component {
                         {
                             this.state.error.statusCode === 409
                             ?
-                                <ul>
+                                <div>
                                     {this.state.error.message}
                                     {this.state.notice.map((obj, index) => {
                                         return (
                                             <li
                                                 key={index}
-                                                style={{ fontWeight: "bold", listStyleType: "none" }}
+                                                style={{ fontWeight: "bold" }}
                                             >
                                             {obj.email}
                                             </li>
                                         )
                                     })}
-                                </ul>
-                            :   <div>
+                                </div>
+                            :   
+                                <div>
                                     Avoid duplicate email(s) listed below:
                                     {
                                         this.state.duplicates.length > 0 ?
                                         this.state.duplicates.map((email,index) => {
                                             return (
-                                                <li style={{ listStyleType: "none" }} key={index}>{email}</li>
+                                                <li
+                                                    key={index}
+                                                    style={{ fontWeight: "bold" }}
+                                                >
+                                                {email}
+                                                </li>
                                             )
                                         })
                                         :   null
