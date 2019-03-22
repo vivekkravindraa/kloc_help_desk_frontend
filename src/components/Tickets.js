@@ -28,6 +28,7 @@ export default class Tickets extends Component {
             selectAll: 0,
             isArchived: false,
             isVisible: false,
+            isUnassigned: false,
             visible: false,
             loaded: false,
             error: {
@@ -64,15 +65,20 @@ export default class Tickets extends Component {
     getUnassigned = () => {
         axios.get(`${baseURL}/tickets/filter_unassigned_tickets`, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
             .then((response) => {
-                this.setState({
-                    ticketsData: response.data,
-                    filterData: response.data
-                })
+                if(response.data.length > 0) {
+                    this.setState({
+                        ticketsData: response.data,
+                        filterData: response.data,
+                        isUnassigned: true,
+                        isVisible: true
+                    })
+                }
             })
             .catch((error) => {
                 this.setState({
                     ticketsData: [],
-                    filterData: []
+                    filterData: [],
+                    isUnassigned: false
                 })
             })
     }
@@ -138,18 +144,17 @@ export default class Tickets extends Component {
                 isVisible: false
             })
             return this.getAll();
-        } else if (e.target.value === 'unassigned') {
-            this.setState({
-                filterBy: e.target.value,
-                isVisible: true
-            })
-            return this.getUnassigned();
         } else if (e.target.value === 'assigned') {
             this.setState({
                 filterBy: e.target.value,
                 isVisible: false
             })
             return this.getAssigned();
+        } else if (e.target.value === 'unassigned') {
+            this.setState({
+                isVisible: false
+            })
+            return this.getUnassigned();
         } else {
             this.setState({
                 filterBy: e.target.value,
@@ -464,8 +469,8 @@ export default class Tickets extends Component {
                                 <option value="all">All Tickets</option>
                                 <option value="status">Filter By Status</option>
                                 <option value="priority">Filter By Priority</option>
-                                <option value="unassigned">Unassigned Tickets</option>
                                 <option value="assigned">Assigned Tickets</option>
+                                <option value="unassigned">Unassigned Tickets</option>
                             </select>
                         </div>
                         {
@@ -506,7 +511,7 @@ export default class Tickets extends Component {
                             :   null
                         }
                         {
-                            this.state.filterData.length > 0 && this.state.filterBy === 'unassigned'
+                            this.state.filterData.length > 0 && this.state.isUnassigned
                             ?
                                 <div className="assign-to">
                                     <label>Assign To:</label>
@@ -517,14 +522,19 @@ export default class Tickets extends Component {
                                         <option selected disabled>Select Asignee</option>
                                         {
                                             this.state.moderators.length > 0 ?
-                                                (
-                                                    this.state.moderators.map((mode, index) => {
-                                                        return (
-                                                            <option key={index} value={mode._id}>{mode.email}</option>
-                                                        )
-                                                    })
-                                                )
-                                                : null
+                                            (
+                                                this.state.moderators.map((mode, index) => {
+                                                    return (
+                                                        <option
+                                                            key={index}
+                                                            value={mode._id}
+                                                        >
+                                                        {mode.email}
+                                                        </option>
+                                                    )
+                                                })
+                                            )
+                                            :   null
                                         }
                                     </select>
                                     <button
