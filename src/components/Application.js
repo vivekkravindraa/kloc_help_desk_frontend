@@ -207,7 +207,7 @@ export default class Application extends Component {
                                             }
                                         }}>
                                         <u>view more</u>
-                            </Link>
+                                        </Link>
                                     </button>
                                 )
                                 : null
@@ -225,7 +225,7 @@ export default class Application extends Component {
                         ?
                         props.original.user.map((mode, index) => {
                             return (
-                                <p key={index}>{mode.email}</p>
+                                <li key={index}>{mode.email}</li>
                             )
                         })
                         : <b>Linked to all moderators.</b>

@@ -365,11 +365,11 @@ export default class ManageApplication extends Component {
                                             this.state.moderators.length > 0 ?
                                             this.state.moderators.map((mode, index) => {
                                                 return (
-                                                    <span
+                                                    <li
                                                         key={index}
                                                     >
                                                         {mode.email}
-                                                    </span>
+                                                    </li>
                                                 )
                                             })
                                             :
