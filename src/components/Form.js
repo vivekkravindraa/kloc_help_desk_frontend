@@ -10,7 +10,7 @@ import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import Recaptcha from 'react-recaptcha';
-// import ReactModal from 'react-modal';
+import ReactModal from 'react-modal';
 import Navigation from './Navigation';
 import { siteKey } from '../site_key';
 import '../App.css';
@@ -25,19 +25,19 @@ export default class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            appId: this.props.location.state.appId,
+            // appId: this.props.location.state.appId,
+            // appName: this.props.location.state.appName,
             userId: decodeToken() ? decodeToken()._id : null,
-            appName: this.props.location.state.appName,
             ticketEmail: decodeToken() ? decodeToken().email : null,
             store: '',
             subject: '',
             description: '',
             minSubject: '',
             minDescription: '',
+            imageLink: '',
             recipients: [],
             // emails: [],
             // pictures: [],
-            // image: [],
             images: [],
             imageNames: [],
             files: [],
@@ -54,7 +54,7 @@ export default class Form extends Component {
             isVisible: false,
             isSuccess: false,
             isEmpty: false,
-            // showModal: false,
+            showModal: false,
             error: {
                 statusCode: '',
                 message: ''
@@ -148,21 +148,20 @@ export default class Form extends Component {
         }
     }
 
-    // handleOpenModal = (file) => {
-    //     this.setState({ showModal: true });
-    //     let result = this.state.filesList.find((f) => {
-    //         return file === f.name
-    //     })
-    //     this.state.image.push(result)
-    //     this.setState({ image: this.state.image })
-    //     console.log(this.state.image[0]);
-    // }
-    // handleCloseModal = () => {
-    //     this.setState({
-    //         showModal: false,
-    //         image: []
-    //     });
-    // }
+    handleOpenModal = (file) => {
+        this.setState({ showModal: true });
+        let result = this.state.filesList.find((f) => {
+            return file === f.name;
+        })
+        let imageLink = window.URL.createObjectURL(result);
+        this.setState({ imageLink: imageLink })
+    }
+    handleCloseModal = () => {
+        this.setState({
+            showModal: false,
+            imageLink: ''
+        });
+    }
 
     handleRemoveFile = (index) => {
         this.state.files.splice(index,1);
@@ -544,7 +543,7 @@ export default class Form extends Component {
                                     return (
                                         <li key={index} style={{listStyleType: "none"}}>
                                             {`${file} `}
-                                            {/* <Link to="#"
+                                            <Link to="#"
                                                 style={{
                                                     visibility: `${
                                                         this.state.isUploading
@@ -580,12 +579,12 @@ export default class Form extends Component {
                                                     <div style={{ marginTop: 40 }}>
                                                         <img
                                                             alt=""
-                                                            src={this.state.image[0]}
+                                                            src={this.state.imageLink}
                                                             style={{ borderRadius: 4 }}
                                                         />
                                                     </div>
                                                 </ReactModal>
-                                            </Link> */}
+                                            </Link>
                                             <Link to="#"
                                                 style={{
                                                     visibility: `${
