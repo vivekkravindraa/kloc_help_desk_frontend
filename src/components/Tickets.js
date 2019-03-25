@@ -337,15 +337,15 @@ export default class Tickets extends Component {
                 style: { textAlign: "center" },
                 show: this.state.isVisible ? true : false
             },
-            {
-                Header: "Ticket ID",
-                accessor: "_id",
-                sortable: false,
-                resizable: false,
-                width: 250,
-                style: { textAlign: "center" }
+            // {
+            //     Header: "Ticket ID",
+            //     accessor: "_id",
+            //     sortable: false,
+            //     resizable: false,
+            //     width: 250,
+            //     style: { textAlign: "center" }
 
-            },
+            // },
             {
                 Header: "Subject",
                 accessor: "subject",
@@ -378,6 +378,17 @@ export default class Tickets extends Component {
                 sortable: true,
                 resizable: false,
                 width: 100,
+                maxWidth: 100,
+                minWidth: 100,
+                style: { textAlign: "center" }
+            },
+            {
+                Header: "Date & Time",
+                accessor: "updatedAt",
+                Cell: props => props.original.updatedAt.slice(0,10) + ' at ' + props.original.updatedAt.slice(11,16),
+                sortable: true,
+                resizable: false,
+                width: 200,
                 maxWidth: 100,
                 minWidth: 100,
                 style: { textAlign: "center" }

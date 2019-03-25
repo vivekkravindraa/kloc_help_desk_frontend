@@ -364,33 +364,43 @@ export default class SingleTicket extends Component {
 										</Segment>
 										{
 											this.state.images.length > 0 ?
-											<Segment raised>
-												<Label as='a' color='orange' ribbon>Images</Label>
-												{
-													this.state.images.map((index) => {
-														return (
+												<Segment raised>
+													<Label as='a' color='orange' ribbon>Images</Label>
+													{
+														this.state.images.map((index) => {
+															return (
+																<img
+																	key={index}
+																	src={index}
+																	onClick={this.handleOpenModal.bind(this, index)}
+																	height={100}
+																	width={100}
+																	alt=""
+																/>
+															)
+														})
+													}
+													<ReactModal
+														isOpen={this.state.showModal}
+														contentLabel="Image Modal"
+														ariaHideApp={false}
+													>
+														<button
+															className="btn btn-danger"
+															style={{ position: "fixed" }}
+															onClick={this.handleCloseModal}
+														>
+															Close Modal
+														</button>
+														<div style={{ marginTop: 40 }}>
 															<img
-																key={index}
-																src={index}
-																onClick={this.handleOpenModal.bind(this, index)}
-																height={100}
-																width={100}
 																alt=""
+																src={this.state.imageIndex}
+																style={{ borderRadius: 4 }}
 															/>
-														)
-													})
-												}
-												<ReactModal
-													isOpen={this.state.showModal}
-													contentLabel="Image Modal"
-													ariaHideApp={false}
-												>
-													<button className="btn btn-danger" style={{ position: "fixed" }} onClick={this.handleCloseModal}>Close Modal</button>
-													<div style={{ marginTop: 40 }}>
-														<img alt="" src={this.state.imageIndex} style={{ borderRadius: 4 }} />
-													</div>
-												</ReactModal>
-											</Segment>
+														</div>
+													</ReactModal>
+												</Segment>
 											:	null
 										}
 									</Grid.Column>

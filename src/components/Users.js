@@ -76,15 +76,17 @@ export default class Users extends Component {
         }
 
         const columns = [
-            {
-                Header: "User ID",
-                accessor: "_id",
-                filterable: false,
-                resizable: false,
-                sortable: false,
-                width: 250,
-                style: { textAlign: "center" }
-            },
+            // {
+            //     Header: "User ID",
+            //     accessor: "_id",
+            //     filterable: false,
+            //     resizable: false,
+            //     sortable: false,
+            //     width: 100,
+            //     maxWidth: 100,
+            //     minWidth: 100,
+            //     style: { textAlign: "center" }
+            // },
             {
                 Header: "First Name",
                 accessor: "firstName",
@@ -96,6 +98,9 @@ export default class Users extends Component {
                 filterable: false,
                 resizable: false,
                 sortable: true,
+                width: 250,
+                maxWidth: 100,
+                minWidth: 100,
                 style: { textAlign: "center" }
             },
             {
@@ -109,6 +114,9 @@ export default class Users extends Component {
                 filterable: false,
                 resizable: false,
                 sortable: true,
+                width: 250,
+                maxWidth: 100,
+                minWidth: 100,
                 style: { textAlign: "center" }
             },
             {
@@ -117,7 +125,9 @@ export default class Users extends Component {
                 filterable: false,
                 resizable: false,
                 sortable: true,
-                width: 300,
+                width: 400,
+                maxWidth: 100,
+                minWidth: 100,
                 style: { textAlign: "center" }
             },
             {
@@ -131,7 +141,9 @@ export default class Users extends Component {
                 filterable: false,
                 resizable: false,
                 sortable: true,
-                width: 100,
+                width: 210,
+                maxWidth: 100,
+                minWidth: 100,
                 style: { textAlign: "center" }
             }
         ]

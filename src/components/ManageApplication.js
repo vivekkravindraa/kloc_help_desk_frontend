@@ -135,6 +135,8 @@ export default class ManageApplication extends Component {
     handleUpdateApplication = (e) => {
         e.preventDefault();
 
+        this.setState({ loaded: false })
+
         if (this.state.appName === '' || this.state.appDescription === '') {
             this.setState({ isEmpty: true })
         } else if (this.state.appName.length < 3 || this.state.appDescription.length < 10) {
@@ -147,18 +149,21 @@ export default class ManageApplication extends Component {
 
             axios.put(`${baseURL}/applications/${this.state.appData._id}`, formData, { headers: { 'x-auth': localStorage.getItem('x-auth') } })
                 .then((response) => {
-                    this.setState({
-                        appData: response.data,
-                        appName: response.data.name,
-                        appDescription: response.data.description,
-                        appNameChars: response.data.name.length,
-                        appDescriptionChars: response.data.description.length,
-                        moderators: response.data.user,
-                        isSuccess: true,
-                        editMode: false,
-                        visible: false,
-                        nowSave: false
-                    })
+                    setTimeout(() => {
+                        this.setState({
+                            appData: response.data,
+                            appName: response.data.name,
+                            appDescription: response.data.description,
+                            appNameChars: response.data.name.length,
+                            appDescriptionChars: response.data.description.length,
+                            moderators: response.data.user,
+                            isSuccess: true,
+                            editMode: false,
+                            visible: false,
+                            nowSave: false,
+                            loaded: true
+                        })
+                    }, 2000)
                 })
                 .catch((error) => {
                     this.setState(() => ({
