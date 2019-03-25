@@ -127,10 +127,19 @@ export default class ModeratorTickets extends Component {
             this.getAll()
         })
         .catch((error) => {
-            this.setState({
-                ticketsData: [],
-                filterData: []
-            })
+            if(error.response.status === 409) {
+                let confirmValue = window.confirm('This ticket is already assigned!');
+                if(confirmValue) {
+                    window.location.reload();
+                } else {
+                    window.location.reload();
+                }
+            } else {
+                this.setState({
+                    ticketsData: [],
+                    filterData: []
+                })
+            }
         })
     }
 
