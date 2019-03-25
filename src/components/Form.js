@@ -52,6 +52,7 @@ export default class Form extends Component {
             isUploaded: false,
             isVerified: false,
             isNotVerified: false,
+            isNotUploaded: false,
             isGenerated: false,
             isVisible: false,
             isSuccess: false,
@@ -236,6 +237,7 @@ export default class Form extends Component {
         } else if(files.length > 0) {
             this.setState({
                 imageNames: this.state.imageNames.concat(this.state.files),
+                isNotUploaded: false,
                 isUploading: true,
                 errorMsg: ''
             })
@@ -322,7 +324,9 @@ export default class Form extends Component {
                     }))
                 })
             } else {
-                alert('Please upload the selected images and then click submit.');
+                this.setState({
+                    isNotUploaded: true
+                })
             }        
         }
     }
@@ -346,7 +350,7 @@ export default class Form extends Component {
                         style={{ textAlign: "center" }}
                     >
                     Ticket has been raised. Please check your mailbox. If not found, check the spam folder.
-                    <Link to="/search"> Go To Issue Ticket </Link>
+                    <Link to="/search"> Go to Issue Ticket >> </Link>
                     </div>
                 </div>
             ) 
@@ -366,6 +370,22 @@ export default class Form extends Component {
                             role="alert"
                         >
                         Make sure you're connected to a good internet / wait until the captcha loads.
+                        </div>
+                    )
+                    :   null
+                }
+                {
+                    this.state.isNotUploaded ?
+                    (
+                        <div
+                            style={{
+                                textAlign: "center",
+                                visibility: this.state.isNotUploaded ? 'visible' : 'hidden'
+                            }}
+                            className="alert alert-warning"
+                            role="alert"
+                        >
+                        Please upload the selected images and then click submit.
                         </div>
                     )
                     :   null
