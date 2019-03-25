@@ -10,8 +10,9 @@ import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import Recaptcha from 'react-recaptcha';
-import { siteKey } from '../site_key';
+// import ReactModal from 'react-modal';
 import Navigation from './Navigation';
+import { siteKey } from '../site_key';
 import '../App.css';
 
 // interface IProps {}
@@ -35,8 +36,9 @@ export default class Form extends Component {
             minDescription: '',
             recipients: [],
             // emails: [],
-            images: [],
             // pictures: [],
+            // image: [],
+            images: [],
             imageNames: [],
             files: [],
             filesList: [],
@@ -52,6 +54,7 @@ export default class Form extends Component {
             isVisible: false,
             isSuccess: false,
             isEmpty: false,
+            // showModal: false,
             error: {
                 statusCode: '',
                 message: ''
@@ -144,6 +147,22 @@ export default class Form extends Component {
             })
         }
     }
+
+    // handleOpenModal = (file) => {
+    //     this.setState({ showModal: true });
+    //     let result = this.state.filesList.find((f) => {
+    //         return file === f.name
+    //     })
+    //     this.state.image.push(result)
+    //     this.setState({ image: this.state.image })
+    //     console.log(this.state.image[0]);
+    // }
+    // handleCloseModal = () => {
+    //     this.setState({
+    //         showModal: false,
+    //         image: []
+    //     });
+    // }
 
     handleRemoveFile = (index) => {
         this.state.files.splice(index,1);
@@ -502,7 +521,10 @@ export default class Form extends Component {
                         />
                         <small>Ex: john@abc.com,stephen@xyz.co.in</small>
                     </div>
-                    <div className="input-group mb-2">
+                    <div
+                        className="input-group mb-2"
+                        style={{ visibility: this.state.showModal ? 'hidden' : 'visible' }}
+                    >
                         <label className="custom-file-label">Choose file</label>
                         <input
                             type="file"
@@ -522,6 +544,48 @@ export default class Form extends Component {
                                     return (
                                         <li key={index} style={{listStyleType: "none"}}>
                                             {`${file} `}
+                                            {/* <Link to="#"
+                                                style={{
+                                                    visibility: `${
+                                                        this.state.isUploading
+                                                        ?   'hidden'
+                                                        :   'visible'
+                                                    }`
+                                                }}
+                                            >
+                                                {
+                                                    this.state.isUploading || this.state.isUploaded
+                                                    ?
+                                                    null
+                                                    :
+                                                    (
+                                                        <Icon
+                                                            onClick={this.handleOpenModal.bind(this, file)} color='green'
+                                                            name='picture'
+                                                        />
+                                                    )
+                                                }
+                                                <ReactModal
+                                                    isOpen={this.state.showModal}
+                                                    contentLabel="Image Modal"
+                                                    ariaHideApp={false}
+                                                >
+                                                    <button
+                                                        className="btn btn-danger"
+                                                        style={{ position: "fixed" }}
+                                                        onClick={this.handleCloseModal}
+                                                    >
+                                                        Close Modal
+                                                    </button>
+                                                    <div style={{ marginTop: 40 }}>
+                                                        <img
+                                                            alt=""
+                                                            src={this.state.image[0]}
+                                                            style={{ borderRadius: 4 }}
+                                                        />
+                                                    </div>
+                                                </ReactModal>
+                                            </Link> */}
                                             <Link to="#"
                                                 style={{
                                                     visibility: `${
@@ -530,11 +594,19 @@ export default class Form extends Component {
                                                         :   'visible'
                                                     }`
                                                 }}
-                                                onClick={this.handleRemoveFile.bind(this, index, file)}
                                             >
                                             {
                                                 this.state.isUploading || this.state.isUploaded
-                                                ? null : (<Icon color='red' name='delete' />)
+                                                ?
+                                                null
+                                                :
+                                                (
+                                                    <Icon
+                                                        onClick={this.handleRemoveFile.bind(this, index, file)}
+                                                        color='red'
+                                                        name='delete'
+                                                    />
+                                                )
                                             }
                                             </Link>
                                         </li>
