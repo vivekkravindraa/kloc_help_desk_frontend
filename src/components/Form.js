@@ -25,8 +25,8 @@ export default class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // appId: this.props.location.state.appId,
-            // appName: this.props.location.state.appName,
+            appId: this.props.location.state.appId,
+            appName: this.props.location.state.appName,
             userId: decodeToken() ? decodeToken()._id : null,
             ticketEmail: decodeToken() ? decodeToken().email : null,
             store: '',
