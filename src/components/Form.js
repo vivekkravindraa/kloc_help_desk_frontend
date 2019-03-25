@@ -25,8 +25,10 @@ export default class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            appId: this.props.location.state.appId,
-            appName: this.props.location.state.appName,
+            // appId: this.props.location.state.appId,
+            // appName: this.props.location.state.appName,
+            appId: localStorage.getItem('appId') ? localStorage.getItem('appId') : null,
+            appName: localStorage.getItem('appName') ? localStorage.getItem('appName') : null,
             userId: decodeToken() ? decodeToken()._id : null,
             ticketEmail: decodeToken() ? decodeToken().email : null,
             store: '',
@@ -577,11 +579,19 @@ export default class Form extends Component {
                                                         Close Modal
                                                     </button>
                                                     <div style={{ marginTop: 40 }}>
+                                                    {
+                                                        file.slice(-4) === '.pdf'
+                                                        ?
+                                                        <img
+                                                            alt="Preview not available for this file type!"
+                                                        />
+                                                        :   
                                                         <img
                                                             alt=""
                                                             src={this.state.imageLink}
                                                             style={{ borderRadius: 4 }}
                                                         />
+                                                    }
                                                     </div>
                                                 </ReactModal>
                                             </Link>

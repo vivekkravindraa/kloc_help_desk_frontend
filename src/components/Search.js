@@ -87,11 +87,16 @@ export default class Search extends Component {
                                         <li key={index}>
                                             <Link to={{
                                                 pathname: "/form",
-                                                state: {
-                                                    appId: `${app._id}`,
-                                                    appName: `${app.name}`
-                                                }
-                                            }}>
+                                                // state: {
+                                                //     appId: `${app._id}`,
+                                                //     appName: `${app.name}`
+                                                // }
+                                                }}
+                                                onClick={() => {
+                                                    localStorage.setItem('appId', app._id);
+                                                    localStorage.setItem('appName',app.name);
+                                                }}
+                                            >
                                             {app.name}
                                             </Link>
                                         </li>
