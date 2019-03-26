@@ -1,8 +1,3 @@
-// import * as React from 'react';
-// import { ReactMultiEmail } from "react-multi-email";
-// import "react-multi-email/style.css";
-// import ImageUploader from 'react-images-upload';
-
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
@@ -15,18 +10,10 @@ import Navigation from './Navigation';
 import { siteKey } from '../site_key';
 import '../App.css';
 
-// interface IProps {}
-// interface IState {
-//     emails: string[];
-// }
-
-// export default class Form extends React.Component<IProps, IState> {
 export default class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // appId: this.props.location.state.appId,
-            // appName: this.props.location.state.appName,
             appId: localStorage.getItem('appId') ? localStorage.getItem('appId') : null,
             appName: localStorage.getItem('appName') ? localStorage.getItem('appName') : null,
             userId: decodeToken() ? decodeToken()._id : null,
@@ -38,8 +25,6 @@ export default class Form extends Component {
             minDescription: '',
             imageLink: '',
             recipients: [],
-            // emails: [],
-            // pictures: [],
             images: [],
             imageNames: [],
             files: [],
@@ -66,7 +51,6 @@ export default class Form extends Component {
     }
 
     handleTicketEmail = (e) => { this.setState({ ticketEmail: e.target.value }) }
-    // handleStore = (e) => { this.setState({ store: e.target.value }) }
     
     handleSubject = (e) => {
         this.setState({ 
@@ -171,63 +155,6 @@ export default class Form extends Component {
         this.state.filesList.splice(index,1);
     }
 
-    // onDrop = (picture) => {
-    //     let pictures = picture.map(obj => obj.name)
-    //     this.setState({
-    //         pictures: this.state.pictures.concat(pictures)
-    //     });
-
-    //     let fd = new FormData();
-
-    //     if(picture.length === 0) {
-    //         this.setState({ isUploading: false })
-    //     } else if(picture.length > 0) {
-    //         this.setState({
-    //             imageNames: this.state.imageNames.concat(this.state.pictures),
-    //             isUploading: true,
-    //             errorMsg: ''
-    //         })
-
-    //         for(let i = 0; i < picture.length; i++) {
-    //             fd.append('image', picture[i]);
-    //         }
-
-    //         axios.post(`${baseURL}/tickets/image_upload`, fd, {
-    //             onUploadProgress: progressEvent => {
-    //                 this.setState({
-    //                     loaded: (Math.round((progressEvent.loaded * 100) / progressEvent.total))
-    //                 })
-    //             }
-    //         }, {
-    //             headers: {
-    //                 'accept': 'application/json',
-    //                 'Accept-Language': 'en-US,en;q=0.8',
-    //                 'Content-Type': 'multipart/form-data'
-    //             }
-    //         })
-    //         .then((response) => {
-    //             fd = {}
-    //             this.setState({
-    //                 images: this.state.images.concat(response.data.locationArray),
-    //                 isSuccess: true,
-    //                 isUploaded: true,
-    //                 isUploading: false,
-    //                 isVisible: false,
-    //                 pictures: []
-    //             })
-    //         })
-    //         .catch((error) => {
-    //             this.setState(() => ({
-    //                 error: { ...this.state.error,
-    //                     statusCode: error.response.status,
-    //                     message: `* Unable to upload the file(s)! * Select only valid file formats.`
-    //                 },
-    //                 isUploading: false
-    //             }))
-    //         })
-    //     }
-    // }
-
     handleFileUpload = () => {
         let fd = new FormData();
         let files = this.state.filesList;
@@ -301,7 +228,6 @@ export default class Form extends Component {
                     subject: this.state.subject,
                     description: this.state.description,
                     recipients: recipientsMails,
-                    // recipients: this.state.emails,
                     attachImages: this.state.images
                 }
                 
@@ -337,7 +263,6 @@ export default class Form extends Component {
         }
         
         let loaded = Math.round(this.state.loaded,2) + '%';
-        // const { emails } = this.state;
 
         return this.state.isGenerated
             ?
@@ -490,47 +415,6 @@ export default class Form extends Component {
                         <small>1000 / {1000 - this.state.descriptionChars} characters remaining. </small>
                         <span className="badge badge-danger">{this.state.minDescription}</span>
                     </div>
-                    {/* <div className="form-group">
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={this.state.store}
-                            placeholder="Store *"
-                            onChange={this.handleStore}
-                            disabled
-                        />
-                    </div> */}
-                    {/* <div className="form-group">
-                        <ReactMultiEmail
-                            placeholder="Input your Email Address"
-                            emails={emails}
-                            onChange={(_emails: string[]) => {
-                                this.setState({ emails: _emails });
-                            }}
-                            getLabel={(
-                                email: string,
-                                index: number,
-                                removeEmail: (index: number) => void
-                            ) => {
-                                return (
-                                <div data-tag key={index}>
-                                    {email}
-                                    <span data-tag-handle onClick={() => removeEmail(index)}>
-                                    ×
-                                    </span>
-                                </div>
-                                );
-                            }}
-                        />
-                    </div> */}
-                    {/* <ImageUploader
-                        accept=".png,.jpg,.jpeg,.gif,.pdf"
-                        withIcon={false}
-                        buttonText='Choose images'
-                        onChange={this.onDrop}
-                        imgExtension={['.jpg', '.gif', '.png', '.pdf']}
-                        maxFileSize={5242880}
-                    /> */}
                     <div className="form-group">
                         <input
                             type="text"
