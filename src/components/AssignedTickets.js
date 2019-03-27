@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { baseURL } from '../base_url';
-import ReactTable from 'react-table';
-import Navigation from './Navigation';
 import decodeToken from '../helpers/token';
+import Navigation from './Navigation';
+import ReactTable from 'react-table';
 import '../App.css';
 
-var Loader = require('react-loader');
+const Loader = require('react-loader');
 
 export default class AsssignedTickets extends Component {
     constructor(props) {

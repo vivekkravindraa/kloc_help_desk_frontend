@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import kloc from '../images/kloc.jpeg';
 import axios from 'axios';
 import { baseURL } from '../base_url';
+import kloc from '../images/kloc.jpeg';
 import '../App.css';
 
 export default class ResetPassword extends Component {

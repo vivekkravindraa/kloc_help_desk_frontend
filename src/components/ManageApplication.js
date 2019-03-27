@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Button, Segment, Label, Grid, Icon } from 'semantic-ui-react';
-import Rodal from 'rodal';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import Navigation from './Navigation';
+import Rodal from 'rodal';
 import '../App.css';
 import 'rodal/lib/rodal.css';
 
-var Loader = require('react-loader');
+const Loader = require('react-loader');
 
 export default class ManageApplication extends Component {
     constructor(props) {

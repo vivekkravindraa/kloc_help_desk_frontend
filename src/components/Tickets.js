@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Button, Icon } from 'semantic-ui-react';
-import Rodal from 'rodal';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
-import ReactTable from 'react-table';
 import Navigation from './Navigation';
+import ReactTable from 'react-table';
+import Rodal from 'rodal';
 import '../App.css';
 import 'rodal/lib/rodal.css';
 
-var Loader = require('react-loader');
+const Loader = require('react-loader');
 
 export default class Tickets extends Component {
     constructor(props) {

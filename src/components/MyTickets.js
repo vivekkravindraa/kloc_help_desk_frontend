@@ -7,7 +7,7 @@ import ReactTable from 'react-table';
 import Navigation from './Navigation';
 import '../App.css';
 
-var Loader = require('react-loader');
+const Loader = require('react-loader');
 
 export default class MyTickets extends Component {
     constructor(props) {

@@ -6,7 +6,7 @@ import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import '../App.css';
 
-// var Loader = require('react-loader');
+// const Loader = require('react-loader');
 
 export default class Navigation extends Component {
     constructor(props) {

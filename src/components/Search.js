@@ -6,7 +6,7 @@ import decodeToken from '../helpers/token';
 import Navigation from './Navigation';
 import '../App.css';
 
-var Loader = require('react-loader');
+const Loader = require('react-loader');
 
 export default class Search extends Component {
     constructor(props) {

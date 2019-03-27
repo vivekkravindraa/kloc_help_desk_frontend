@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Card, Icon, Image, Button } from 'semantic-ui-react';
-import Rodal from 'rodal';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import logo from '../images/logo.jpg';
 import Navigation from './Navigation';
+import Rodal from 'rodal';
 import '../App.css';
 import 'rodal/lib/rodal.css';
 
-var Loader = require('react-loader');
+const Loader = require('react-loader');
 
 export default class Profile extends Component {
     constructor(props) {

@@ -3,11 +3,11 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
-import ReactTable from 'react-table';
 import Navigation from './Navigation';
+import ReactTable from 'react-table';
 import '../App.css';
 
-var Loader = require('react-loader');
+const Loader = require('react-loader');
 
 export default class Users extends Component {
     constructor(props) {

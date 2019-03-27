@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import kloc from '../images/kloc.jpeg';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
+import kloc from '../images/kloc.jpeg';
 import '../App.css';
 
 const validator = require('validator');

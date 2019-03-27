@@ -3,12 +3,12 @@ import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
+import Navigation from './Navigation';
 import ReactTable from 'react-table';
 import Select from 'react-select';
-import Navigation from './Navigation';
 import '../App.css';
 
-var Loader = require('react-loader');
+const Loader = require('react-loader');
 
 export default class Application extends Component {
     constructor(props) {

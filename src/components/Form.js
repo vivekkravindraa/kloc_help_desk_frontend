@@ -4,9 +4,9 @@ import { Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
+import Navigation from './Navigation';
 import Recaptcha from 'react-recaptcha';
 import ReactModal from 'react-modal';
-import Navigation from './Navigation';
 import { siteKey } from '../site_key';
 import '../App.css';
 

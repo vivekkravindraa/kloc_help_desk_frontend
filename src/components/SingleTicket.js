@@ -5,12 +5,12 @@ import { Button, Comment, Segment, Grid, Label } from 'semantic-ui-react';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
-import steve from '../images/steve.jpg';
 import Navigation from './Navigation';
 import ReactModal from 'react-modal';
+import steve from '../images/steve.jpg';
 import '../App.css';
 
-var Loader = require('react-loader');
+const Loader = require('react-loader');
 
 export default class SingleTicket extends Component {
 	constructor(props) {
