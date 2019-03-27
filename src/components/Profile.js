@@ -279,7 +279,7 @@ export default class Profile extends Component {
         }
     }
     handleMinMobileNumber = () => {
-        if(this.state.mobileNumber.length !== 10) {
+        if((this.state.mobileNumber.length < 10) || (this.state.mobileNumber.length > 10)) {
             this.setState({
                 minMobileNumber: 'Should be equal to 10 digits!'
             })
