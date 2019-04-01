@@ -21,7 +21,7 @@ module.exports = {
   deploy : {
     production : {},
     staging: {
-      key: '~/Downloads/feb142019.pem'
+      key: '~/Downloads/feb142019.pem',
       user: 'ubuntu',
       host: ["13.233.99.82"],
       ref: 'origin/master',
