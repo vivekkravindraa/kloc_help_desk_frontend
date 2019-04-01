@@ -27,7 +27,6 @@ module.exports = {
       ref: 'origin/master',
       repo: 'git@bitbucket.org:klocapps2/kloc_help_desk_frontend.git',
       path: '/var/www/my_react_app',
-      key: '/absolute/path/to/key',
       ssh_options: ['ForwardAgent=yes'],
       'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production'
     },
