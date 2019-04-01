@@ -5,7 +5,7 @@ module.exports = {
    */
   apps : [
     {
-      name      : 'my_react_app',
+      name      : 'kloc_help_desk_front_client',
       script    : 'index.html',
       args      : 'run start:production',
       env_production : {
@@ -26,7 +26,7 @@ module.exports = {
       host: ["13.233.99.82"],
       ref: 'origin/master',
       repo: 'git@bitbucket.org:klocapps2/kloc_help_desk_frontend.git',
-      path: '/var/www/my_react_app',
+      path: '/home/ubuntu/kloc_help_desk_front_client',
       ssh_options: ['ForwardAgent=yes'],
       'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production'
     },
