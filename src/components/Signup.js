@@ -149,6 +149,7 @@ export default class Signup extends Component {
                 }
             })
             .catch((error) => {
+                console.log(error.response.data)
                 this.setState(() => ({
                     error: {
                         ...this.state.error,
