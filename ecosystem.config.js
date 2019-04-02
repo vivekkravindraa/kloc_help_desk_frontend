@@ -28,7 +28,7 @@ module.exports = {
       repo: 'git@bitbucket.org:klocapps2/kloc_help_desk_frontend.git',
       path: '/home/ubuntu/kloc_help_desk_front_client',
       ssh_options: ['ForwardAgent=yes'],
-      'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production'
+      'post-deploy': 'npm install && pm2 startOrRestart ecosystem.json --env production'
     },
     dev : {}
   }
