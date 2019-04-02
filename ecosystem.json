@@ -1,15 +1,6 @@
 {
     "apps" : [{
-        "name" : "kloc_help_desk_front_client",
-        "instances": 1,
-        "exec_mode": "cluster_mode",
-        "env": {
-            "PORT": 3001
-        },
-        "env_production": {
-            "NODE_ENV": "production",
-            "PORT": 3001
-        }
+        "name" : "kloc_help_desk_front_client"
      }],
     "deploy": {
       "production": {
@@ -19,7 +10,7 @@
         "ref": "origin/master",
         "repo": "git@bitbucket.org:klocapps2/kloc_help_desk_frontend.git",
         "path": "/home/ubuntu/kloc_help_desk_front_client",
-        "post-deploy": "npm install && pm2 startOrRestart ecosystem.json --env production"
+        "post-deploy": "npm install && pm2 start npm -- starts"
       }
     }
   }
