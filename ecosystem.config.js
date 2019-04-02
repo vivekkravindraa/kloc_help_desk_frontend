@@ -23,7 +23,7 @@ module.exports = {
     staging: {
       key: '~/Downloads/feb142019.pem',
       user: 'ubuntu',
-      host: ["13.233.99.82"],
+      host: ["13.234.34.58"],
       ref: 'origin/master',
       repo: 'git@bitbucket.org:klocapps2/kloc_help_desk_frontend.git',
       path: '/home/ubuntu/kloc_help_desk_front_client',
