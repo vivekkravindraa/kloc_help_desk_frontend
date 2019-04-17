@@ -1,0 +1,17 @@
+{
+    "apps" : [{
+        "name" : "kloc_help_desk_front_client"
+     }],
+    "deploy": {
+      "production": {
+        "key": "~/Downloads/feb142019.pem",
+        "user": "ubuntu",
+        "host": ["13.234.34.58"],
+        "ref": "origin/master",
+        "repo": "git@bitbucket.org:klocapps2/kloc_help_desk_frontend.git",
+        "path": "/home/ubuntu/kloc_help_desk_front_client",
+        "post-deploy": "npm install && pm2 start npm -- start"
+      }
+    }
+  }
+  
