@@ -91,6 +91,9 @@ export default class Login extends Component {
                 }
             })
             .catch((error) => {
+                if(error.statusCode === undefined) {
+                    return null;
+                }
                 this.setState(() => ({
                     error: {
                         ...this.state.error,

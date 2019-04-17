@@ -8,7 +8,7 @@ export default class Admin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: !!decodeToken(),
+            isLoggedIn: !!decodeToken()
         }
     }
     
@@ -19,7 +19,6 @@ export default class Admin extends Component {
             <div className="container">
                 <Navigation />
             </div>
-            
         )
         :   <Redirect to="/login" />
     }

@@ -18,8 +18,7 @@ export default class Customer extends Component {
         (
             <div className="container">
                 <Navigation />
-            </div>
-            
+            </div>   
         )
         :   <Redirect to="/login" />
     }

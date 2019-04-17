@@ -64,7 +64,7 @@ export default class ForgotPassword extends Component {
                     error: {
                         ...this.state.error,
                         statusCode: error.response.status ? error.response.status : '',
-                        message: error.message ? error.message: ''
+                        message: error.message ? error.message : ''
                     }
                 }))
             })

@@ -89,6 +89,13 @@ export default class Navigation extends Component {
                         </li>
                     )
                 }
+                {
+                    ((decodeToken().role === 'admin') || (decodeToken().role === 'moderator') || (decodeToken().role === 'customer')) && (
+                        <li className="nav-item">
+                            <Link className="nav-link" to={`/help`}>Help</Link>
+                        </li>
+                    )
+                }
                 <li className="nav-item">
                     {/* <Loader loaded={this.state.loaded} /> */}
                     <Link className="nav-link" to="/" onClick={() => {

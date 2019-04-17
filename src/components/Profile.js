@@ -4,7 +4,7 @@ import { Card, Icon, Image, Button } from 'semantic-ui-react';
 import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
-import logo from '../images/logo.jpg';
+import profile from '../images/profile.png';
 import Navigation from './Navigation';
 import Rodal from 'rodal';
 import '../App.css';
@@ -744,7 +744,7 @@ export default class Profile extends Component {
                                     Edit
                                 </Button>
                                 <Card className="segment centered">
-                                    <Image src={logo} />
+                                    <Image src={profile} />
                                     <Card.Content>
                                         <Card.Header>
                                         {this.state.profileData.firstName ? this.state.profileData.firstName.toUpperCase()[0] + this.state.profileData.firstName.slice(1) : ''} {this.state.profileData.lastName ? this.state.profileData.lastName.toUpperCase()[0] + this.state.profileData.lastName.slice(1) : ''}
