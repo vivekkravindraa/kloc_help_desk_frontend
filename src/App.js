@@ -48,6 +48,38 @@ const NotFound = () => (
     </div>
 )
 
+const GettingStarted = () => {
+    return (
+        <div>
+            <h6>Getting Started</h6>
+            <ul>
+                <li><Link to="#">What is KLoc Helpdesk ?</Link></li>
+                <li><Link to="#">Creating a first account</Link></li>
+                <li><Link to="#">Displaying content on the storefront</Link></li>
+                <li><Link to="#">Development</Link></li>
+                <li><Link to="#">Troubleshooting</Link></li>
+                <li><Link to="#">Developer Documentation</Link></li>
+            </ul>
+        </div>
+    )
+}
+
+const TicketGeneration = () => {
+    return (
+        <div>
+            <h6>Ticket Generation</h6>
+        </div>
+    )
+}
+
+const ReportIssues = () => {
+    return (
+        <div>
+            <h6>Report Issues</h6>
+        </div>
+    )
+}
+
 const Help = ({ match }) => {
     return (
         <div className="container">
@@ -59,23 +91,20 @@ const Help = ({ match }) => {
                         <Link className="nav-link" to={`${match.url}/getting_started`}>Getting Started</Link>
                     </Tab>
                     <Tab>
-                        <Link className="nav-link" to={`${match.url}/manage_profile`}>Manage Profile</Link>
+                        <Link className="nav-link" to={`${match.url}/ticket_generation`}>Ticket Generation</Link>
                     </Tab>
                     <Tab>
                         <Link className="nav-link" to={`${match.url}/report_issues`}>Report Issues</Link>
                     </Tab>
                 </TabList>
                 <TabPanel>
-                    <p>A kleptomaniacal, lazy, cigar-smoking, heavy-drinking robot who is Fry's best friend. Built in Tijuana, Mexico, he is the Planet Express Ship's cook.</p>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a6/Bender_Rodriguez.png/220px-Bender_Rodriguez.png" alt="Bender Bending Rodriguez" />
+                    <GettingStarted />
                 </TabPanel>
                 <TabPanel>
-                    <p>Many times great-nephew of Fry. CEO and owner of Planet Express delivery company. Tenured professor of Mars University.</p>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0f/FuturamaProfessorFarnsworth.png/175px-FuturamaProfessorFarnsworth.png" alt="Professor Hubert J. Farnsworth" />
+                    <TicketGeneration />
                 </TabPanel>
                 <TabPanel>
-                    <p>Alien from Decapod 10. Planet Express' staff doctor and steward. Has a medical degree and Ph.D in art history.</p>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4a/Dr_John_Zoidberg.png/200px-Dr_John_Zoidberg.png" alt="Doctor John Zoidberg" />
+                    <ReportIssues />
                 </TabPanel>
             </Tabs>
 
