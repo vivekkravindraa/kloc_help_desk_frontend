@@ -5,7 +5,6 @@ import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import kloc from '../images/kloc.jpeg';
 import '../App.css';
-// import styled, { keyframes } from 'styled-components';
 
 const validator = require('validator');
 export default class Login extends Component {
@@ -107,23 +106,6 @@ export default class Login extends Component {
   
     render() {
 
-        // const rotate = keyframes`
-        //     from {
-        //         transform: rotate(0deg);
-        //     }
-
-        //     to {
-        //         transform: rotate(360deg);
-        //     }
-        // `;
-
-        // const Rotate = styled.div`
-        //     display: flex;
-        //     animation: ${rotate} 2s linear infinite;
-        //     padding: 2rem 1rem;
-        //     font-size: 1.2rem;
-        // `;
-
         if (decodeToken() && decodeToken().role === 'admin') {
             return <Redirect to="/tickets" />
         } else if(decodeToken() && decodeToken().role === 'customer') {
@@ -134,9 +116,7 @@ export default class Login extends Component {
             return (
                 <div className="container login-form col-md-12">
                     <div className="container login-form-left col-md-6">
-                        {/* <Rotate> */}
-                            <img src={kloc} alt="#" />
-                        {/* </Rotate> */}
+                        <img src={kloc} alt="#" />
                     </div>
                     <div className="container login-form-right col-md-6">
                         {   
