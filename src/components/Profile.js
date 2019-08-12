@@ -7,6 +7,7 @@ import decodeToken from '../helpers/token';
 import profile from '../images/profile.png';
 import Navigation from './Navigation';
 import Rodal from 'rodal';
+import Validator from 'validator';
 import '../App.css';
 import 'rodal/lib/rodal.css';
 
@@ -24,7 +25,6 @@ export default class Profile extends Component {
             email: '',
             role: '',
             store: '',
-            contact: '',
             oldPassword: '',
             newPassword: '',
             confirmPassword: '',
@@ -104,19 +104,36 @@ export default class Profile extends Component {
 
     show = (e) => {
         if(e.target.innerText === 'Update Details') {
-            this.setState({
-                nowCancel: false,
-                nowChange: false,
-                nowUpdate: true,
-                visible: true
-            });
+            if(Validator.isEmpty(this.state.firstName)) {
+                this.setState({ checkFirstname: `field can't be blank`})
+            }
+            if(Validator.isEmpty(this.state.lastName)) {
+                this.setState({ checkLastname: `field can't be blank`})
+            } else {
+                this.setState({
+                    nowCancel: false,
+                    nowChange: false,
+                    nowUpdate: true,
+                    visible: true
+                });
+            }
         } else if(e.target.innerText === 'Save Changes') {
-            this.setState({
-                nowCancel: false,
-                nowUpdate: false,
-                nowChange: true,
-                visible: true
-            });
+            if(Validator.isEmpty(this.state.oldPassword)) {
+                this.setState({ checkOldPassword: `field can't be blank!` })
+            }
+            if(Validator.isEmpty(this.state.newPassword)) {
+                this.setState({ checkNewPassword: `field can't be blank!` })
+            }
+            if(Validator.isEmpty(this.state.confirmPassword)) {
+                this.setState({ checkConfirmPassword: `field can't be blank` })
+            } else {
+                this.setState({
+                    nowCancel: false,
+                    nowUpdate: false,
+                    nowChange: true,
+                    visible: true
+                });
+            }
         } else {
             this.setState({
                 nowUpdate: false,
@@ -278,8 +295,8 @@ export default class Profile extends Component {
             })
         }
     }
-    handleMinMobileNumber = () => {
-        if((this.state.mobileNumber.length < 10) || (this.state.mobileNumber.length > 10)) {
+    handleMinMobileNumber = (e) => {
+        if(e.target.value.length < 10 || e.target.value.length > 10) {
             this.setState({
                 minMobileNumber: 'Should be equal to 10 digits!'
             })
@@ -337,7 +354,7 @@ export default class Profile extends Component {
     handleUpdateProfile = (e) => {
         e.preventDefault();
 
-        if(this.state.firstName === '' && this.state.lastName === '' && this.state.mobileNumber === '') {
+        if(this.state.firstName === '' && this.state.lastName === '') {
             this.setState({ isEmpty: true })
         } else {
 
@@ -350,7 +367,10 @@ export default class Profile extends Component {
                     this.state.lastName
                     ?   this.state.lastName.toLowerCase()
                     :   this.setState({ checkLastname: `field can't be blank`}),
-                mobileNumber: this.state.mobileNumber
+                mobileNumber:
+                    this.state.mobileNumber
+                    ?   this.state.mobileNumber
+                    :   ''
             }
 
             if(this.state.firstName !== '' && this.state.lastName !== '') {
