@@ -109,7 +109,11 @@ export default class Profile extends Component {
             }
             if(Validator.isEmpty(this.state.lastName)) {
                 this.setState({ checkLastname: `field can't be blank`})
-            } else {
+            }
+            if((!Validator.isLength(this.state.mobileNumber, { min: 10, max: 10})) && this.state.mobileNumber.length > 0) {
+                this.setState({ minMobileNumber: `Should be equal to 10 digits!`})
+            }
+            else if(this.state.firstName !== '' && this.state.lastName !== '') {
                 this.setState({
                     nowCancel: false,
                     nowChange: false,
@@ -126,7 +130,7 @@ export default class Profile extends Component {
             }
             if(Validator.isEmpty(this.state.confirmPassword)) {
                 this.setState({ checkConfirmPassword: `field can't be blank` })
-            } else {
+            } else if(this.state.oldPassword !== '' && this.state.newPassword !== '' && this.state.confirmPassword !== '') {
                 this.setState({
                     nowCancel: false,
                     nowUpdate: false,
@@ -134,7 +138,7 @@ export default class Profile extends Component {
                     visible: true
                 });
             }
-        } else {
+        } else if(e.target.innerText === 'Cancel') {
             this.setState({
                 nowUpdate: false,
                 nowChange: false,
@@ -186,6 +190,7 @@ export default class Profile extends Component {
     firstNameHandle = (e) => {
         this.setState({
             firstName: e.target.value,
+            checkFirstname: '',
             isEmpty: false,
             error: {
                 statusCode: '',
@@ -196,6 +201,7 @@ export default class Profile extends Component {
     lastNameHandle = (e) => {
         this.setState({
             lastName: e.target.value,
+            checkLastname: '',
             isEmpty: false,
             error: {
                 statusCode: '',
@@ -292,13 +298,6 @@ export default class Profile extends Component {
         if(this.state.confirmPassword.length < 8) {
             this.setState({
                 minConfirmPassword: 'Should be at least 8 characters!'
-            })
-        }
-    }
-    handleMinMobileNumber = (e) => {
-        if(e.target.value.length < 10 || e.target.value.length > 10) {
-            this.setState({
-                minMobileNumber: 'Should be equal to 10 digits!'
             })
         }
     }
@@ -430,6 +429,7 @@ export default class Profile extends Component {
                             this.state.visible && this.state.nowUpdate ?
                                 <div>
                                     <p>Your profile will be updated permanently. Are you sure ?</p>
+                                    {/* {console.log(th)} */}
                                     <Button
                                         style={{
                                             backgroundColor:"yellowgreen",
@@ -708,7 +708,6 @@ export default class Profile extends Component {
                                             className="form-control" 
                                             value={this.state.mobileNumber}
                                             onChange={this.mobileNumberHandle}
-                                            onBlur={this.handleMinMobileNumber}
                                         />
                                         <span className="badge badge-danger">
                                             {this.state.minMobileNumber}
