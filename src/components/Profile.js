@@ -110,10 +110,13 @@ export default class Profile extends Component {
             if(Validator.isEmpty(this.state.lastName)) {
                 this.setState({ checkLastname: `field can't be blank`})
             }
-            if((!Validator.isLength(this.state.mobileNumber, { min: 10, max: 10})) && this.state.mobileNumber.length > 0) {
-                this.setState({ minMobileNumber: `Should be equal to 10 digits!`})
+            if(
+                (!Validator.isLength(this.state.mobileNumber, { min: 10, max: 10}) && this.state.mobileNumber.length > 0) ||
+                (this.state.mobileNumber.length > 0 && !Validator.isNumeric(this.state.mobileNumber)))
+            {
+                this.setState({ minMobileNumber: `Should be a valid 10 digits!`})
             }
-            else if(this.state.firstName !== '' && this.state.lastName !== '') {
+            else if(this.state.firstName !== '' && this.state.lastName !== '' && this.state.minMobileNumber === '') {
                 this.setState({
                     nowCancel: false,
                     nowChange: false,
