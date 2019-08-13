@@ -140,24 +140,6 @@ const steps = [
 	}
 ];
 
-const cannedSteps = [
-	{
-		id: '1',
-		message: 'What is your name?',
-		trigger: '2',
-	},
-	{
-		id: '2',
-		user: true,
-		trigger: '3',
-	},
-	{
-		id: '3',
-		message: 'Hi {previousValue}, nice to meet you!',
-		end: true
-	}
-];
-
 export default class Chatbot extends Component {
 	constructor(props) {
 		super(props);
@@ -171,7 +153,7 @@ export default class Chatbot extends Component {
 			<ChatBot
 				recognitionEnable={true}
 				// speechSynthesis={{ enable: true, lang: "en" }}
-				steps={this.state.isLoggedIn === null ? steps : cannedSteps}
+				steps={this.state.isLoggedIn === null ? steps : steps}
 				style={{ marginTop: "10px" }}
 			/>
 		);
