@@ -130,7 +130,15 @@ export default class Profile extends Component {
             }
             if(Validator.isEmpty(this.state.confirmPassword)) {
                 this.setState({ checkConfirmPassword: `field can't be blank` })
-            } else if(this.state.oldPassword !== '' && this.state.newPassword !== '' && this.state.confirmPassword !== '') {
+            }
+            else if(
+                this.state.checkOldPassword === '' &&
+                this.state.checkOldPassword === '' &&
+                this.state.checkOldPassword === '' &&
+                this.state.minOldPassword === '' &&
+                this.state.minNewPassword === '' &&
+                this.state.minConfirmPassword === ''
+            ) {
                 this.setState({
                     nowCancel: false,
                     nowUpdate: false,
