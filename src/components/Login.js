@@ -21,7 +21,6 @@ export default class Login extends Component {
             isLoggedin: false,
             isEmpty: false, 
             error: {
-                statusCode: '',
                 message: ''
             }
         }
@@ -39,7 +38,6 @@ export default class Login extends Component {
             loginEmail: e.target.value,
             isEmpty: false,
             error: {
-                statusCode: '',
                 message: ''
             }
         })
@@ -51,7 +49,6 @@ export default class Login extends Component {
             loginPassword: e.target.value,
             isEmpty: false,
             error: {
-                statusCode: '',
                 message: ''
             }
         })
@@ -90,16 +87,21 @@ export default class Login extends Component {
                 }
             })
             .catch((error) => {
-                if(error.statusCode === undefined) {
-                    return null;
+                if(!error.response) {
+                    this.setState(() => ({
+                        error: {
+                            ...this.state.error,
+                            message: 'Please check your internet connection and try again!'
+                        }
+                    }))
+                } else {
+                    this.setState(() => ({
+                        error: {
+                            ...this.state.error,
+                            message: 'Email doesn\'t exist OR invalid password!'
+                        }
+                    }))
                 }
-                this.setState(() => ({
-                    error: {
-                        ...this.state.error,
-                        statusCode: error.response.status ? error.response.status : '',
-                        message: error.message ? error.message : ''
-                    }
-                }))
             })
         }
     }
@@ -130,7 +132,7 @@ export default class Login extends Component {
                                     className="alert alert-danger"
                                     role="alert"
                                 >
-                                Email doesn't exist or invalid password!
+                                {this.state.error.message}
                                 </div>
                             )   :   null
                         }
