@@ -6,6 +6,7 @@ import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import Navigation from './Navigation';
 import Rodal from 'rodal';
+import Validator from 'validator';
 import '../App.css';
 import 'rodal/lib/rodal.css';
 
@@ -27,6 +28,7 @@ export default class ManageApplication extends Component {
             isSuccess: false,
             isNotMinimum: false,
             visible: false,
+            nowCancel: false,
             nowDelete: false,
             nowSave: false,
             loaded: false,
@@ -115,6 +117,7 @@ export default class ManageApplication extends Component {
             minDescription: ''
         })
         this.getApplication()
+        this.hide()
     }
 
     handleMinName = () => {
@@ -184,12 +187,25 @@ export default class ManageApplication extends Component {
                 visible: true,
                 nowDelete: true
             })
-        } else {
+        } else if(e.target.innerText === 'Cancel') {
             this.setState({
                 isSuccess: false,
                 visible: true,
-                nowSave: true
+                nowCancel: true
             })
+        } else {
+            if(Validator.isEmpty(this.state.appName)) {
+                this.setState({ minName: 'Should be at least 3 characters!' })
+            }
+            if(Validator.isEmpty(this.state.appDescription)) {
+                this.setState({ minDescription: 'Should be at least 10 characters!' })
+            } else if(this.state.appName !== '' && this.state.appDescription !== '') {
+                this.setState({
+                    isSuccess: false,
+                    visible: true,
+                    nowSave: true
+                })
+            }
         }
     }
     hide = () => {
@@ -343,6 +359,22 @@ export default class ManageApplication extends Component {
                         )
                         :   null
                     }
+                    {
+                        this.state.nowCancel ?
+                        (
+                            <div>
+                                <p>Your changes will be discarded. Are you sure ?</p>
+                                <Button
+                                    positive
+                                    onClick={this.handleCancel}
+                                >
+                                    <Icon name='check' />
+                                    Yes
+                                </Button>
+                            </div>
+                        )
+                        :   null
+                    }
                     </Rodal>
                     :   null
                 }
@@ -456,7 +488,7 @@ export default class ManageApplication extends Component {
                                 <Button
                                     primary
                                     className="btn btn-secondary"
-                                    onClick={this.handleCancel}
+                                    onClick={this.show}
                                 >
                                     <Icon name='cancel' />
                                     Cancel
