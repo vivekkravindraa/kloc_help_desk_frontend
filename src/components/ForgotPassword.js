@@ -16,7 +16,6 @@ export default class ForgotPassword extends Component {
             isEmpty: false,
             isSent: false,
             error: {
-                statusCode: '',
                 message: ''
             }
         }
@@ -34,7 +33,6 @@ export default class ForgotPassword extends Component {
             checkConfirmEmail: '',
             isEmpty: false,
             error: {
-                statusCode: '',
                 message: ''
             }
         })
@@ -60,13 +58,21 @@ export default class ForgotPassword extends Component {
                 }
             })
             .catch((error) => {
-                this.setState(() => ({
-                    error: {
-                        ...this.state.error,
-                        statusCode: error.response.status ? error.response.status : '',
-                        message: error.message ? error.message : ''
-                    }
-                }))
+                if(!error.response) {
+                    this.setState(() => ({
+                        error: {
+                            ...this.state.error,
+                            message: 'Please check your internet connection and try again!'
+                        }
+                    }))
+                } else {
+                    this.setState(() => ({
+                        error: {
+                            ...this.state.error,
+                            message: 'Email doesn\'t exist!'
+                        }
+                    }))
+                }
             })
         }
     }
@@ -89,7 +95,7 @@ export default class ForgotPassword extends Component {
                             className="alert alert-danger"
                             role="alert"
                         >
-                        Email doesn't exist!
+                        {this.state.error.message}
                         </div>
                     )   :   null
                 }

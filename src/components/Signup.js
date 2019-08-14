@@ -27,7 +27,6 @@ export default class Signup extends Component {
             isEmpty: false,
             isIncorrect: false,
             error: {
-                statusCode: '',
                 message: ''
             }
         }
@@ -39,7 +38,6 @@ export default class Signup extends Component {
             firstname: e.target.value,
             isEmpty: false,
             error: {
-                statusCode: '',
                 message: ''
             }
         })
@@ -50,7 +48,6 @@ export default class Signup extends Component {
             lastname: e.target.value,
             isEmpty: false,
             error: {
-                statusCode: '',
                 message: ''
             }
         })
@@ -68,7 +65,6 @@ export default class Signup extends Component {
             signupEmail: e.target.value,
             isEmpty: false,
             error: {
-                statusCode: '',
                 message: ''
             }
         })
@@ -81,7 +77,6 @@ export default class Signup extends Component {
             isEmpty: false,
             isIncorrect: false,
             error: {
-                statusCode: '',
                 message: ''
             }
         })
@@ -94,7 +89,6 @@ export default class Signup extends Component {
             isEmpty: false,
             isIncorrect: false,
             error: {
-                statusCode: '',
                 message: ''
             }
         })   
@@ -149,16 +143,21 @@ export default class Signup extends Component {
                 }
             })
             .catch((error) => {
-                if(error.statusCode === undefined) {
-                    return null;
+                if(!error.response) {
+                    this.setState(() => ({
+                        error: {
+                            ...this.state.error,
+                            message: 'Please check your internet connection and try again!'
+                        }
+                    }))
+                } else {
+                    this.setState(() => ({
+                        error: {
+                            ...this.state.error,
+                            message: 'User might already exists / Make sure you\'ve entered the correct details!'
+                        }
+                    }))
                 }
-                this.setState(() => ({
-                    error: {
-                        ...this.state.error,
-                        statusCode: error.response.status ? error.response.status : '',
-                        message: error.message ? error.message : ''
-                    }
-                }))
             })
         }
     }
@@ -180,7 +179,7 @@ export default class Signup extends Component {
                                 className="alert alert-danger"
                                 role="alert"
                             >
-                                User might already exists / Make sure you've entered the correct details!
+                            {this.state.error.message}
                             </div>
                         )   :   null
                     }
