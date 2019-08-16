@@ -211,6 +211,7 @@ export default class ManageApplication extends Component {
     hide = () => {
         this.setState({
             visible: false,
+            nowCancel: false,
             nowDelete: false,
             nowSave: false
         })
