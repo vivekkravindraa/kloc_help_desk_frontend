@@ -112,11 +112,12 @@ export default class Profile extends Component {
             }
             if(
                 (!Validator.isLength(this.state.mobileNumber, { min: 10, max: 10}) && this.state.mobileNumber.length > 0) ||
-                (this.state.mobileNumber.length > 0 && !Validator.isNumeric(this.state.mobileNumber)))
+                (this.state.mobileNumber.length >= 0 && !Validator.isNumeric(this.state.mobileNumber))
+            )
             {
                 this.setState({ minMobileNumber: `Should be a valid 10 digits!`})
             }
-            else if(this.state.firstName !== '' && this.state.lastName !== '' && this.state.minMobileNumber === '') {
+            else if(this.state.firstName !== '' && this.state.lastName !== '') {
                 this.setState({
                     nowCancel: false,
                     nowChange: false,
