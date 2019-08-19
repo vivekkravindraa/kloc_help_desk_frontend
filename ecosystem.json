@@ -1,17 +1,16 @@
 {
   "apps" : [{
-      "name" : "kloc_help_desk_front_client"
-    }],
+    "name" : "kloc_help_desk_frontend_react"
+  }],
   "deploy": {
     "production": {
-      "key": "~/Downloads/feb142019.pem",
+      "key": "~/Downloads/kloc_help_desk.pem",
       "user": "ubuntu",
-      "host": ["13.234.34.58"],
+      "host": ["13.234.161.99"],
       "ref": "origin/master",
-      "repo": "git@bitbucket.org:klocapps2/kloc_help_desk_frontend.git",
-      "path": "/home/ubuntu/kloc_help_desk_front_client",
+      "repo": "git@bitbucket.org:kloctech/kloc_help_desk_frontend_react.git",
+      "path": "/home/ubuntu/kloc_help_desk_frontend_react",
       "post-deploy": "npm install && pm2 start npm -- start"
     }
   }
 }
-  
