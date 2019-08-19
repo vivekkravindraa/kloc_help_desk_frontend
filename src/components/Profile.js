@@ -111,8 +111,8 @@ export default class Profile extends Component {
                 this.setState({ checkLastname: `field can't be blank`})
             }
             if(
-                (!Validator.isLength(this.state.mobileNumber, { min: 10, max: 10}) && this.state.mobileNumber.length > 0) ||
-                (this.state.mobileNumber.length >= 0 && !Validator.isNumeric(this.state.mobileNumber))
+                (this.state.mobileNumber.length > 0 && !Validator.isLength(this.state.mobileNumber, { min: 10, max: 10})) ||
+                (this.state.mobileNumber.length > 0 && !Validator.isNumeric(this.state.mobileNumber))
             )
             {
                 this.setState({ minMobileNumber: `Should be a valid 10 digits!`})
