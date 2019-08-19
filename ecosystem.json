@@ -8,7 +8,7 @@
       "user": "ubuntu",
       "host": ["13.234.161.99"],
       "ref": "origin/master",
-      "repo": "git@bitbucket.org:kloctech/kloc_help_desk_frontend_react.git",
+      "repo": "git@bitbucket.org:kloctech/kloc_help_desk_frontend_client_react.git",
       "path": "/home/ubuntu/kloc_help_desk_frontend_react",
       "post-deploy": "npm install && pm2 start npm -- start"
     }
