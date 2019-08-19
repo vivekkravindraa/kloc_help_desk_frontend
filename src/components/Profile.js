@@ -767,15 +767,11 @@ export default class Profile extends Component {
                         this.state.loaded ?
                             <div style={{ textAlign: "center" }}>
                                 <h2>User profile</h2>
-                                <Button
-                                    style={{ backgroundColor:"darkblue", color:"white" }}
-                                    onClick={this.handleEditProfile}
-                                >
-                                    <Icon name='edit' />
-                                    Edit
-                                </Button>
                                 <Card className="segment centered">
                                     <Image src={profile} />
+                                    <Card.Content>
+                                        <Icon name='user' />{this.state.role}
+                                    </Card.Content>
                                     <Card.Content>
                                         <Card.Header>
                                         {this.state.profileData.firstName ? this.state.profileData.firstName.toUpperCase()[0] + this.state.profileData.firstName.slice(1) : ''} {this.state.profileData.lastName ? this.state.profileData.lastName.toUpperCase()[0] + this.state.profileData.lastName.slice(1) : ''}
@@ -783,13 +779,16 @@ export default class Profile extends Component {
                                         <Card.Meta>
                                         <span className='date'>{this.state.profileData.mobileNumber}</span>
                                         </Card.Meta>
-                                        <Card.Description>{this.state.profileData.email}</Card.Description>
+                                        <Card.Meta>{this.state.profileData.email}</Card.Meta>
                                     </Card.Content>
                                     <Card.Content extra>
-                                        <button>
-                                        <Icon name='user' />
-                                        {this.state.role}
-                                        </button>
+                                        <Button
+                                            style={{ backgroundColor:"darkblue", color:"white" }}
+                                            onClick={this.handleEditProfile}
+                                        >
+                                            <Icon name='edit' />
+                                            Edit
+                                        </Button>
                                     </Card.Content>
                                 </Card>
                             </div>
