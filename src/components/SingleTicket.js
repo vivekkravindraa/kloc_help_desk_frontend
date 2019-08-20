@@ -375,6 +375,7 @@ export default class SingleTicket extends Component {
 																	onClick={this.handleOpenModal.bind(this, index)}
 																	height={100}
 																	width={100}
+																	style={{ marginRight: "10px" }}
 																	alt=""
 																/>
 															)
