@@ -1,3 +1,3 @@
-const siteKey = '6LddBoUUAAAAAGM3lVaMtcoLW43ulKuCwsIPLJUg';
+// const siteKey = '6LddBoUUAAAAAGM3lVaMtcoLW43ulKuCwsIPLJUg';
 
-module.exports = { siteKey };
+// module.exports = { siteKey };

@@ -5,9 +5,9 @@ import axios from 'axios';
 import { baseURL } from '../base_url';
 import decodeToken from '../helpers/token';
 import Navigation from './Navigation';
-import Recaptcha from 'react-recaptcha';
+// import Recaptcha from 'react-recaptcha';
 import ReactModal from 'react-modal';
-import { siteKey } from '../site_key';
+// import { siteKey } from '../site_key';
 import '../App.css';
 
 export default class Form extends Component {
@@ -35,9 +35,9 @@ export default class Form extends Component {
             descriptionChars: 0,
             isUploaded: false,
             isNotUploaded: false,
-            isLoaded: false,
-            isVerified: false,
-            isNotVerified: false,
+            // isLoaded: false,
+            // isVerified: false,
+            // isNotVerified: false,
             isEmpty: false,
             isVisible: false,
             isGenerated: false,
@@ -95,14 +95,14 @@ export default class Form extends Component {
     }
     
     handleRecipients = (e) => { this.setState({ recipients: e.target.value }) }
-    onloadRecaptcha = () => { this.setState({ isLoaded: true }) }
-    verifyCallback = (token) => {
-        if(token) {
-            this.setState({ isVerified: true, isNotVerified: false }) 
-        } else {
-            this.setState({ isVerified: false, isNotVerified: true })
-        }
-    }
+    // onloadRecaptcha = () => { this.setState({ isLoaded: true }) }
+    // verifyCallback = (token) => {
+    //     if(token) {
+    //         this.setState({ isVerified: true, isNotVerified: false }) 
+    //     } else {
+    //         this.setState({ isVerified: false, isNotVerified: true })
+    //     }
+    // }
 
     handleSelectedFile = (e) => {
         let files = e.target.files;
@@ -213,11 +213,14 @@ export default class Form extends Component {
     handleTicketGeneration = (e) => {
         e.preventDefault();
 
-        if(!this.state.isVerified) {
-            this.setState({ isNotVerified: true })
-        } else if (this.state.subject === '' || this.state.description === '') {
+        // if(!this.state.isVerified) {
+        //     this.setState({ isNotVerified: true })
+        // }
+        if (this.state.subject === '' || this.state.description === '') {
             this.setState({ isEmpty: true })
-        } else if (this.state.subject !== '' && this.state.description !== '' && this.state.isVerified) {
+        } else if (this.state.subject !== '' && this.state.description !== ''
+        // && this.state.isVerified
+        ) {
 
             let recipientsMails = this.state.recipients.length > 0 ? this.state.recipients.split(',') : [];
 
@@ -283,7 +286,7 @@ export default class Form extends Component {
             (
                 <div className="container">
                 <Navigation />
-                {
+                {/* {
                     !this.state.isLoaded ?
                     (
                         <div
@@ -298,7 +301,7 @@ export default class Form extends Component {
                         </div>
                     )
                     :   null
-                }
+                } */}
                 {
                     this.state.isNotUploaded ?
                     (
@@ -347,7 +350,7 @@ export default class Form extends Component {
                     )
                     :   null
                 }
-                {
+                {/* {
                     this.state.isNotVerified ?
                     (
                         <div
@@ -362,7 +365,7 @@ export default class Form extends Component {
                         </div>
                     )
                     :   null
-                }
+                } */}
                 <div>
                     <h2 style={{"textAlign":"center"}}>Issue ticket</h2>
                     <div className="row">
@@ -601,14 +604,14 @@ export default class Form extends Component {
                             </span>
                         :   null
                     }
-                    <div className="g-recaptcha" data-sitekey={siteKey}> 
+                    {/* <div className="g-recaptcha" data-sitekey={siteKey}> 
                         <Recaptcha
                             sitekey={siteKey}
                             render='explicit'
                             onloadCallback={this.onloadRecaptcha}
                             verifyCallback={this.verifyCallback}
                         />
-                    </div>
+                    </div> */}
                     <div className="form-group">
                         <button
                             style={{backgroundColor:"yellowgreen",color:"black",border:0}}
