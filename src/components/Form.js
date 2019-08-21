@@ -33,6 +33,7 @@ export default class Form extends Component {
             loaded: 0,
             subjectChars: 0,
             descriptionChars: 0,
+            isUploading: false,
             isUploaded: false,
             isNotUploaded: false,
             // isLoaded: false,
@@ -44,7 +45,6 @@ export default class Form extends Component {
             isSuccess: false,
             showModal: false,
             error: {
-                statusCode: '',
                 message: ''
             }
         }
@@ -59,7 +59,6 @@ export default class Form extends Component {
             isEmpty: false,
             minSubject: '',
             error: {
-                statusCode: '',
                 message: ''
             }
         })
@@ -72,7 +71,6 @@ export default class Form extends Component {
             isEmpty: false,
             minDescription: '',
             error: {
-                statusCode: '',
                 message: ''
             }
         })
@@ -198,14 +196,22 @@ export default class Form extends Component {
                 })
             })
             .catch((error) => {
-                this.setState(() => ({
-                    error: {
-                        ...this.state.error,
-                        statusCode: error.response.status ? error.response.status : '',
-                        message: `* Unable to upload the file(s)! * Select only valid file formats.`
-                    },
-                    isUploading: false
-                }))
+                if(!error.response) {
+                    this.setState(() => ({
+                        error: {
+                            ...this.state.error,
+                            message: 'Please check your internet connection and try again!'
+                        }
+                    }))
+                } else {
+                    this.setState(() => ({
+                        error: {
+                            ...this.state.error,
+                            message: `* Unable to upload the file(s)! * Select only valid file formats.`
+                        },
+                        isUploading: false
+                    }))
+                }
             })
         }
     }
@@ -244,19 +250,27 @@ export default class Form extends Component {
                     }
                 })
                 .catch((error) => {
-                    this.setState(() => ({
-                        error: {
-                            ...this.state.error,
-                            statusCode: error.response.status ? error.response.status : '',
-                            message: `Unable to generate ticket! Please try again.`
-                        }
-                    }))
+                    if(!error.response) {
+                        this.setState(() => ({
+                            error: {
+                                ...this.state.error,
+                                message: 'Please check your internet connection and try again!'
+                            }
+                        }))
+                    } else {
+                        this.setState(() => ({
+                            error: {
+                                ...this.state.error,
+                                message: `Unable to generate ticket! Please try again.`
+                            }
+                        }))
+                    }
                 })
             } else {
                 this.setState({
                     isNotUploaded: true
                 })
-            }        
+            }
         }
     }
 
@@ -313,7 +327,7 @@ export default class Form extends Component {
                             className="alert alert-warning"
                             role="alert"
                         >
-                        Please upload the selected images and then click submit.
+                        Please upload the selected images and then click generate to raise the ticket.
                         </div>
                     )
                     :   null
